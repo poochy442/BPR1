@@ -1,0 +1,34 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Text.scss';
+
+.header {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	background-color: $main-color;
+	padding: 12px 8px;
+
+	.logo {
+		width: 20%;
+		color: $light-color;
+		font-size: $font-size-large;
+		cursor: default;
+	}
+
+	.nav {
+		width: 70%;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
+
+		.link {
+			height: 100%;
+			
+			p {
+				cursor: pointer;
+				font-size: $font-size-medium;
+			}
+		} 
+	}
+}

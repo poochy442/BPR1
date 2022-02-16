@@ -1,0 +1,38 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Text.scss';
+
+.loginHeader {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+
+	.buttonLink {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: none;
+		text-decoration: none;
+		background-color: transparent;
+		height: 100%;
+		color: $light-color;
+		padding: 0 0.5rem;
+		cursor: pointer;
+		p {
+			font-size: $font-size-medium;
+		}
+	}
+	.buttonLink:hover p {
+		border-bottom: 2px solid $light-color;
+		margin-bottom: -2px !important;
+		color: $light-color;
+		cursor: pointer !important;
+	}
+
+	.authLinks {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+	}
+}

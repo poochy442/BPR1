@@ -1,0 +1,54 @@
+/*
+Collects all the text styles used in this project in one document.
+Guide used for setting up typography:
+https://type-scale.com/
+*/
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Montserrat:wght@500&display=swap');
+
+@import './Colors.scss';
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Montserrat', sans-serif;
+	color: $main-color;
+}
+p {
+	font-family: 'Lora', serif;
+}
+
+/* Font sizes */
+$font-size-xlarge: 2.488rem;
+$font-size-large: 2.074em;
+$font-size-medium: 1.728rem;
+$font-size-small: 1.44rem;
+$font-size-xsmall: 1rem;
+h1 {
+	font-size: $font-size-large;
+}
+h2 {
+	font-size: $font-size-large;
+}
+h3 {
+	font-size: $font-size-medium;
+}
+h4 {
+	font-size: $font-size-small;
+}
+p {
+	font-size: $font-size-xsmall;
+}
+
+/* General text layout */
+h1, h2, h3, h4, h5, h6, p {
+	text-align: left;
+	line-height: 3rem;
+	margin: 0px !important;
+	cursor: default;
+}
+
+// Helper class to center text for quotes
+.quote {
+	text-align: center;
+}

@@ -1,0 +1,21 @@
+@import './Colors.scss';
+@import './Text.scss';
+
+.link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: $light-color;
+	text-decoration: none;
+	padding: 0 0.5rem;
+
+	p{
+		font-size: $font-size-medium;
+		cursor: pointer;
+	}
+}
+.link:hover p {
+	border-bottom: 2px solid $light-color;
+	margin-bottom: -2px !important;
+	color: $light-color;
+}

@@ -1,0 +1,27 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Text.scss';
+
+.footer {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	padding: 2rem 0;
+	background-color: $dark-color;
+	color: $light-color;
+
+	div {
+		width: 45%;
+	}
+
+	.leftFooter,
+	.rightFooter {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-around;
+		align-items: center;
+	}
+
+	.leftFooter p {
+		font-size: $font-size-medium;
+	}
+}

@@ -1,0 +1,98 @@
+@import '../../Reusable/Colors.scss';
+
+.signUp {
+	width: 80%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.signUpContainer {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-around;
+		align-items: center;
+		width: 60vw;
+		min-height: 50vh;
+		background-color: $light-color;
+		border-radius: 2rem;
+		padding: 2rem;
+
+		.inputContainer {
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: center;
+			align-items: center;
+			width: 80%;
+			flex-grow: 1;
+
+			.signUpInput {
+				display: flex;
+				flex-flow: column nowrap;
+				justify-content: center;
+				width: 100%;
+				padding: 0.5rem 0;
+	
+				label {
+					color: $main-color;
+					font-size: 1.5em;
+				}
+				input {
+					border-radius: 0.25rem;
+					border: 1px solid $dark-color;
+				}
+				input:hover, input:focus {
+					outline: 3px solid $light-accent;
+				}
+			}
+			.errorText {
+				color: $danger-color;
+				text-align: center;
+			}
+		}
+
+		.buttonContainer{
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-around;
+			align-items: flex-end;
+			width: 60%;
+
+			.button {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100px;
+				height: 40px;
+				font-size: 18px;
+				border: none;
+				border-radius: 2rem;
+			}
+			.button:hover {
+				outline: 2px solid $light-accent;
+			}
+
+			.signUpButton {
+				background-color: $main-color;
+				color: $light-color;
+			}
+
+			.loginContainer {
+				display: flex;
+				flex-flow: column nowrap;
+				justify-content: center;
+				align-items: center;
+
+				p {
+					color: $main-color;
+					font-size: 0.75rem;
+					margin-bottom: -12px !important;
+				}
+				.loginButton {
+					background-color: $dark-color;
+					color: $light-color;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
