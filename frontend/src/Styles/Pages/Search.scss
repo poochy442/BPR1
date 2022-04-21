@@ -118,5 +118,43 @@
 				}
 			}
 		}
+
+		.resultContainer{
+			width: 100%;
+			display: flex;
+			flex-flow: row wrap;
+
+			.restaurantContainer {
+				display: flex;
+				flex-flow: column nowrap;
+				justify-content: center;
+				align-items: center;
+				margin-left: 1rem;
+				margin-right: 1rem;
+				border-radius: 1rem;
+				background-color: $light-color;
+				padding: 1rem;
+
+				.restaurantImage {
+					width: 8rem;
+					height: 6rem;
+					background-color: $light-accent;
+				}
+
+				.restaurantDetails{
+					margin-top: 1rem;
+
+					.foodName {
+						color: $main-color;
+					}
+				}
+			}
+			.restaurantContainer:first-child {
+				margin-left: 0px;
+			}
+			.restaurantContainer:last-child {
+				margin-left: 0px;
+			}
+		}
 	}
 }

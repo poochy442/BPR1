@@ -1,0 +1,34 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
+
+.scoreContainer {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: baseline;
+	margin-bottom: 0;
+
+	.starContainer {
+		position: relative;
+		font-size: $font-size-large;
+		margin-bottom: 0;
+	}
+
+	.scoreStar {
+		font-size: $font-size-small;
+	}
+
+	.scoreText {
+		text-align: center;
+		font-size: $font-size-small;
+		margin-left: 1rem !important;
+	}
+
+	.scoreMask {
+		display: inline-block;
+		position: absolute;
+		right: 0;
+		background-color: $light-color;
+		opacity: 0.75;
+	}
+}

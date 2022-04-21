@@ -9,6 +9,7 @@ import '../../Styles/Pages/Search.scss';
 import pizzaImage from '../../Assets/Foodtypes/Pizza.jpg';
 import sushiImage from '../../Assets/Foodtypes/Sushi.jpg';
 import thaiImage from '../../Assets/Foodtypes/Thai.jpg';
+import Score from '../Restaurant/Score';
 const foodTypes = [
 	{
 		name: 'Pizza',
@@ -21,7 +22,26 @@ const foodTypes = [
 		img: thaiImage
 	}
 ]
-
+const restaurants = [
+	{
+		name: 'Pizza King',
+		location: 'Slotsgade 10, 8700 Horsens',
+		foodtype: 'Pizza',
+		score: 4.25
+	},
+	{
+		name: 'McDonald\'s',
+		location: 'Slotsgade 9, 8700 Horsens',
+		foodtype: 'Fast Food',
+		score: 3.4
+	},
+	{
+		name: 'Mamma Mia',
+		location: 'Slotsgade 12, 8700 Horsens',
+		foodtype: 'Italian',
+		score: 2.25
+	}
+]
 
 const Search = () => {
 	let location = useLocation(), query = location.state ? location.state.query : null;
@@ -106,6 +126,18 @@ const Search = () => {
 							Confirm
 						</button>
 					</div>
+				</div>
+				<div className="resultContainer">
+					{restaurants.map((restaurant => (
+						<div className="restaurantContainer">
+							<div className="restaurantImage"></div>
+							<div className="restaurantDetails">
+								<p className="foodName"><b>{restaurant.name}</b></p>
+								<p className="location">{restaurant.location}</p>
+								<Score score={restaurant.score} />
+							</div>
+						</div>
+					)))}
 				</div>
 			</div>
 		</div>
