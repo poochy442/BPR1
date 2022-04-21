@@ -1,0 +1,23 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
+
+.inputContainer{
+	width: 80%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	align-items: center;
+	
+	.searchButton{
+		cursor: pointer;
+		font-size: $font-size-medium;
+		background-color: $light-accent;
+		margin-left: 1rem !important;
+		border-radius: 50%;
+		border: none;
+		padding: 1rem;
+	}
+	.searchButton:hover{
+		outline: 0.2rem solid $dark-color;
+	}
+}

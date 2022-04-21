@@ -1,0 +1,85 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
+
+.cookieBar{
+	width: 75%;
+	position: fixed;
+	left: 0;
+	margin-left: auto;
+	right: 0;
+	margin-right: auto;
+	bottom: 2rem;
+
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	
+	padding: 1rem;
+	border-radius: 2rem;
+	background-color: $light-color;
+
+	.cookieOptions{
+		width: 90%;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-around;
+		align-items: center;
+
+		.cookieText{
+			width: 60%;
+		}
+		.checkboxContainer{
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+			align-items: center;
+
+			input {
+				height: $font-size-small * 0.9;
+				width: $font-size-small * 0.9;
+			}
+
+			.required, .analytics{
+				padding: 0.5rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: $font-size-small;
+			}
+		}
+	}
+
+	.cookieButtons{
+		margin-top: 1rem;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		align-items: baseline;
+
+		.button {
+			padding: 1rem;
+			border-radius: 1rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+
+			p {
+				cursor: pointer;
+			}
+		}
+
+		.acceptAllButton{
+			background-color: $success-color;
+		}
+		.confirmButton{
+			margin-left: 1rem;
+			margin-right: 1rem;
+			background-color: $main-color;
+		}
+		.acceptNessecaryButton{
+			background-color: $primary-color;
+		}
+	}
+}

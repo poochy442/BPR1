@@ -1,0 +1,46 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
+
+.home{
+	width: 100%;
+	height: 80vh;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+
+	.searchContainer{
+		width: 60%;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		align-items: center;
+		background-color: $light-color;
+		padding: 2rem;
+		border-radius: 1rem;
+		margin-bottom: 2rem;
+
+		h3 {
+			margin-bottom: 1rem !important;
+		}
+	}
+	.searchDescription{
+		width: 60%;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: baseline;
+
+		.middle{
+			margin-left: 2rem;
+			margin-right: 2rem;
+		}
+
+		.descriptionContainer{
+			width: 100%;
+			p{
+				color: $light-color;
+			}
+		}
+	}
+}

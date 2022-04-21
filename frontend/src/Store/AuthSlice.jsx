@@ -10,8 +10,8 @@ const AuthSlice = createSlice({
 		error: null
 	},
 	reducers: {
+		// TODO: Connect to database
 		logIn(state, action){
-			// TODO: Connect to database
 			const user = action.payload;
 
 			if(user.username && user.password){
@@ -43,9 +43,12 @@ const AuthSlice = createSlice({
 			} else {
 				state.error = 'Login error'
 			}
+		},
+		autoLogIn(state, action){
+			const authKey = action.payload;
 		}
 	}
 })
 
-export const { logIn, logOut, signUp } = AuthSlice.actions
+export const { logIn, logOut, signUp, autoLogIn } = AuthSlice.actions
 export default AuthSlice.reducer

@@ -1,0 +1,11 @@
+@import '../Reusable/Colors.scss';
+
+.restaurant{
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	width: 80%;
+	padding: 1rem;
+	border-radius: 2rem;
+	background-color: $light-color;
+}

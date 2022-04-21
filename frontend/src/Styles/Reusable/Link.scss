@@ -1,5 +1,5 @@
 @import './Colors.scss';
-@import './Text.scss';
+@import './Font.scss';
 
 .link {
 	display: flex;
@@ -7,15 +7,19 @@
 	align-items: center;
 	color: $light-color;
 	text-decoration: none;
-	padding: 0 0.5rem;
+	padding: 1rem 1rem;
 
 	p{
 		font-size: $font-size-medium;
 		cursor: pointer;
 	}
 }
-.link:hover p {
+.link:hover {
 	border-bottom: 2px solid $light-color;
 	margin-bottom: -2px !important;
-	color: $light-color;
+	border-color: $light-accent;
+
+	p {
+		color: $light-accent;
+	}
 }
