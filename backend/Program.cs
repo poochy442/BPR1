@@ -1,33 +1,43 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.AspNetCore.Cors;
 
+using Backend.Helpers;
+using Backend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+{
+	var services = builder.Services;
 
-var corsName = "_corsPolicy";
+	services.AddCors();
+	services.AddControllers();
 
-// Add services to the container.
+	services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+	services.AddDbContext<DBContext>(opt =>
+		opt.UseInMemoryDatabase("Database")
+	);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    }));
+	services.AddEndpointsApiExplorer();
+	services.AddSwaggerGen();
+}
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+	
+	app.UseCors(x => x
+		.AllowAnyOrigin()
+		.AllowAnyMethod()
+		.AllowAnyHeader());
+
+	app.UseMiddleware<JwtMiddleware>();
+
+	app.MapControllers();
 }
 
-app.UseCors();
-app.UseHttpsRedirection();
-app.UseAuthorization();
-
-app.MapControllers();
+// app.UseHttpsRedirection();
+// app.UseAuthorization();
 
 app.Run();
