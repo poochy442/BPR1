@@ -13,12 +13,12 @@ public class Table
 	public string TableNote { get; set; }
 	public string Restrictions { get; set; }
 
-	public Table(int tableNo, int seats, bool available, string tableNote, string restrictions)
+	/*public Table(int tableNo, int seats, bool available, string tableNote, string restrictions)
 	{
 		TableNo = tableNo;
 		Seats = seats;
 		Available = available;
 		TableNote = tableNote;
 		Restrictions = restrictions;
-	}
+	}*/
 }

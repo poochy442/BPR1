@@ -14,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 	services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 	services.AddDbContext<DBContext>(opt =>
-		opt.UseInMemoryDatabase("Database")
+		opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+		//opt.UseInMemoryDatabase("Database")
 	);
 
 	services.AddEndpointsApiExplorer();
