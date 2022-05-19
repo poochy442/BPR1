@@ -24,6 +24,9 @@ public class Booking
 	public Table Table{get; set;}
 	public User User{get;set;}
 
+	//fixed the omnisharp!!!
+	
+
 	/*public Booking(DateTime date, DateTime startDate, DateTime endDate, int guestNo, string note)
 	{
 		Date = date;
