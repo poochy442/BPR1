@@ -7,17 +7,30 @@ public class Restaurant
 {
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	[Key]
-	public long Id { get; set; }
-	public long ManagerId { get; set; }
-	public string TableIds { get; set; }
-	public string Address { get; set; }
-	public float Latitude { get; set; }
-	public float Longitude { get; set; }
+	public int Id { get; set; }
+	[Column(TypeName = "varchar(50)")]
 	public string Name { get; set; }
-	public string FoodTypes { get; set; }
+
+	[Column(TypeName = "varchar(50)")]
+	public string FoodType { get; set; }
+	
+	[Column(TypeName = "int")]
+	public int StudentDiscount { get; set; }
+
+	[Column(TypeName = "varchar(50)")]
+	public string WorkingHours { get; set; }
+
+	[Column(TypeName = "decimal(5,2)")]
 	public float TotalScore { get; set; }
 
-	public Restaurant(long managerId, string tableIds, string address, float latitude, float longitude, string name, string foodTypes)
+	//Relationships
+
+	public List<Booking> Bookings{get;set;}
+	public List<Table> Tables{get;set;}
+	public User? User {get;set;}
+	public Address Address {get; set;}
+
+	/*public Restaurant(long managerId, string tableIds, string address, float latitude, float longitude, string name, string foodTypes)
 	{
 		ManagerId = managerId;
 		TableIds = tableIds;
@@ -27,5 +40,5 @@ public class Restaurant
 		Name = name;
 		FoodTypes = foodTypes;
 		TotalScore = 0;
-	}
+	}*/
 }

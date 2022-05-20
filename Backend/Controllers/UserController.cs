@@ -22,7 +22,7 @@ public class UserController : ControllerBase
         _context = context;
 		_appSettings = appSettings.Value;
     }
-
+/*
 	private string GenerateJwtToken(User user)
     {
         // generate token that is valid for 7 days
@@ -74,4 +74,5 @@ public class UserController : ControllerBase
     {
         return _context.Users.ToList();
     }
+    */
 }

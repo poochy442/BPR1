@@ -20,7 +20,7 @@ public class RatingController : ControllerBase
 		_context = context;
 	}
 
-	[HttpGet]
+	/*[HttpGet]
     public async Task<ActionResult<List<Rating>>> GetRatings(long restaurantId)
     {
 		var r = await _context.Restaurants.FindAsync(restaurantId);
@@ -88,6 +88,6 @@ public class RatingController : ControllerBase
 	private bool RatingExists(long id)
 	{
 		return _context.Ratings.Any(e => e.Id == id);
-	}
+	}*/
 
 }

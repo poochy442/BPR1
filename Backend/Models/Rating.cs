@@ -6,15 +6,21 @@ public class Rating
 {
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	[Key]
-	public long Id { get; set; }
-	public long RestaurantId { get; set; }
+	public int Id { get; set; }
 	public int Score { get; set; }
+	
+	[Column(TypeName = "varchar(200)")]
 	public string Comment { get; set; }
 
-	public Rating(long restaurantId, int score, string comment)
+	//Relationships
+
+	public Restaurant  Restaurant{get;set;}
+	public User User {get;set;}
+
+	/*public Rating(long restaurantId, int score, string comment)
 	{
 		RestaurantId = restaurantId;
 		Score = score;
 		Comment = comment;
-	}
+	}*/
 }

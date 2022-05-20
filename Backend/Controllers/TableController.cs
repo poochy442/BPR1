@@ -19,7 +19,7 @@ public class TableController : ControllerBase
 	{
 		_context = context;
 	}
-
+/*
 	[HttpGet]
     public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
     {
@@ -93,6 +93,6 @@ public class TableController : ControllerBase
 	private bool TableExists(long id)
 	{
 		return _context.Tables.Any(e => e.Id == id);
-	}
+	}*/
 
 }
