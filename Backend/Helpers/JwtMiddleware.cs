@@ -4,8 +4,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Backend.Models;
-using Backend.Services;
+using Backend.DataAccess;
+
 
 public class JwtMiddleware
 {

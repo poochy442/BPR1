@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
+using Backend.DataAccess.Models;
 
-using Backend.Models;
-
-namespace Backend.Services;
+namespace Backend.DataAccess;
 
 public class DBContext : DbContext
 {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Backend.Models;
+namespace Backend.DataAccess.Models;
 
 public class AuthenticateRequest
 {

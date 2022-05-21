@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.Models;
+namespace Backend.DataAccess.Models;
 public class Rating
 {
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -13,7 +13,6 @@ public class Rating
 	public string Comment { get; set; }
 
 	//Relationships
-
 	public Restaurant  Restaurant{get;set;}
 	public User User {get;set;}
 

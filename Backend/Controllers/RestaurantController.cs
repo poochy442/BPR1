@@ -21,7 +21,7 @@ public class RestaurantController : ControllerBase
 		_context = context;
 	}
 
-	[HttpGet]
+	/*[HttpGet]
     public Task<List<Restaurant>> GetRestaurants()
     {
         return _context.Restaurants.ToListAsync();
@@ -85,5 +85,5 @@ public class RestaurantController : ControllerBase
 	{
 		return _context.Restaurants.Any(e => e.Id == id);
 	}
-
+*/
 }

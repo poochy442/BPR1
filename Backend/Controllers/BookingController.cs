@@ -25,7 +25,7 @@ public class BookingController : ControllerBase
         return _context.Bookings.ToListAsync();
     }
 
-	[HttpGet("{id}")]
+	/*[HttpGet("{id}")]
 	public async Task<ActionResult<Booking>> GetBooking(long id)
 	{
 		var booking = await _context.Bookings.FindAsync(id);
@@ -83,5 +83,5 @@ public class BookingController : ControllerBase
 	{
 		return _context.Bookings.Any(e => e.Id == id);
 	}
-
+*/
 }
