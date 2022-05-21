@@ -6,24 +6,25 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BCrypt.Net;
 using Backend.Helpers;
-using Backend.Models;
-using Backend.Services;
+using Backend.DataAccess.Models;
+using Backend.DataAccess;
 
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
     private DBContext _context;
-	private readonly AppSettings _appSettings;
+    private readonly AppSettings _appSettings;
 
     public UserController(DBContext context, IOptions<AppSettings> appSettings)
     {
         _context = context;
-		_appSettings = appSettings.Value;
+        _appSettings = appSettings.Value;
     }
-/*
-	private string GenerateJwtToken(User user)
+
+    private string GenerateJwtToken(User user)
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -41,38 +42,46 @@ public class UserController : ControllerBase
     [HttpPost("Authenticate")]
     public async Task<ActionResult<AuthenticationResponse>> Authenticate(AuthenticateRequest request)
     {
-		var user = _context.Users.SingleOrDefault(user => user.Email == request.Email && user.Password == request.Password);
-        if (user == null) return NotFound();
+        var user = _context.Users.SingleOrDefault(user => user.Email == request.Email);
+
+        // validate email and password(hashed)
+        if(user == null || !BCrypt.Verify(request.Password, user.Password)) {
+            return BadRequest("Username or password is incorrect");
+        }
+        
+        // authentication successfull
+        var token = GenerateJwtToken(user);
+        return new AuthenticationResponse(user, token);
+    }
+
+    [HttpPost("Register")]
+    public async Task<ActionResult<AuthenticationResponse>> Register(RegisterRequest request)
+    {
+        // hash password
+        var hpass = BCrypt.HashPassword(request.Password);
+
+        User user = new User(request.Email, hpass, request.Name, request.PhoneNo);
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
 
         var token = GenerateJwtToken(user);
         return new AuthenticationResponse(user, token);
     }
 
-	[HttpPost("Register")]
-	public async Task<ActionResult<AuthenticationResponse>> Register(RegisterRequest request)
-	{
-		User user = new User(request.Email, request.Password, request.Name, request.PhoneNo);
-		_context.Users.Add(user);
-		await _context.SaveChangesAsync();
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User>> GetUser(long id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null) return NotFound();
 
-		var token = GenerateJwtToken(user);
-		return new AuthenticationResponse(user, token);
-	}
+        return user;
+    }
 
-	[HttpGet("{id}")]
-	public async Task<ActionResult<User>> GetUser(long id)
-	{
-		var user = await _context.Users.FindAsync(id);
-		if(user == null) return NotFound();
-
-		return user;
-	}
-
-	[Authorize]
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<List<User>>> GetUsers()
     {
         return _context.Users.ToList();
     }
-    */
+
 }

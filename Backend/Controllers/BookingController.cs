@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 
-using Backend.Models;
-using Backend.Services;
+using Backend.DataAccess.Models;
+using Backend.DataAccess;
 
 namespace Backend.Controllers;
 

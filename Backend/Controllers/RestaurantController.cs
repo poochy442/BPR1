@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Cors;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using Backend.Models;
-using Backend.Services;
+using Backend.DataAccess.Models;
+using Backend.DataAccess;
 
 namespace Backend.Controllers;
 

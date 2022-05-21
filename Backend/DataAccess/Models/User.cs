@@ -23,11 +23,11 @@ public class User
 	//Relationships
 	//public Role Role {get;set;}
 
-	/*public User(string email, string password, string name, string phoneNo)
+	public User(string email, string password, string name, string phoneNo)
 	{
 		Email = email;
 		Password = password;
 		Name = name;
 		PhoneNo = phoneNo;
-	}*/
+	}
 }
