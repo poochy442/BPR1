@@ -2,6 +2,7 @@ namespace Backend.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,12 +17,21 @@ using Backend.DataAccess;
 public class UserController : ControllerBase
 {
     private DBContext _context;
-    private readonly AppSettings _appSettings;
+    //private readonly AppSettings _appSettings;
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IConfiguration _configuration;
 
-    public UserController(DBContext context, IOptions<AppSettings> appSettings)
+    public UserController(
+        DBContext context,
+        UserManager<IdentityUser> userManager,
+        RoleManager<IdentityRole> roleManager,
+        IConfiguration configuration)
     {
         _context = context;
-        _appSettings = appSettings.Value;
+        _userManager = userManager;
+        _roleManager = roleManager;
+        _configuration = configuration;
     }
 
     private string GenerateJwtToken(User user)
@@ -45,10 +55,11 @@ public class UserController : ControllerBase
         var user = _context.Users.SingleOrDefault(user => user.Email == request.Email);
 
         // validate email and password(hashed)
-        if(user == null || !BCrypt.Verify(request.Password, user.Password)) {
+        if (user == null || !BCrypt.Verify(request.Password, user.Password))
+        {
             return BadRequest("Username or password is incorrect");
         }
-        
+
         // authentication successfull
         var token = GenerateJwtToken(user);
         return new AuthenticationResponse(user, token);
