@@ -20,8 +20,8 @@ public class User
 	[Column(TypeName = "varchar(50)")]
 	public string PhoneNo { get; set; }
 
-	//Relationships
-	//public Role Role {get;set;}
+	//Relationship
+	public Role Role {get;set;}
 
 	public User(string email, string password, string name, string phoneNo)
 	{
@@ -29,5 +29,14 @@ public class User
 		Password = password;
 		Name = name;
 		PhoneNo = phoneNo;
+	}
+
+	public User(string email, string password, string name, string phoneNo, Role role)
+	{
+		Email = email;
+		Password = password;
+		Name = name;
+		PhoneNo = phoneNo;
+		Role = role;
 	}
 }
