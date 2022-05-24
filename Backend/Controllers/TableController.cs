@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
 
-using Backend.DataAccess.DAO_Models;
+using Backend.Models;
 using Backend.DataAccess;
 using Backend.Helpers;
 

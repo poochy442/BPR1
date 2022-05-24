@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 
-using Backend.DataAccess.DAO_Models;
+using Backend.Models;
 using Backend.DataAccess;
 
 namespace Backend.Controllers;

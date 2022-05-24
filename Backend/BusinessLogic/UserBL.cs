@@ -46,40 +46,14 @@ public class UserBL : IUserBL
         // check password is correct
         if (BCrypt.Verify(request.Password, user.Password))
         {
-            // extract user role
-            var userRole = _context.Users.Include(u => u.Role).Where(u => u.Email == user.Email).FirstOrDefault();
+			// create JWT token
+			var token = _tokenService.GetToken();
 
-            // if successfully extracted user role
-            if (userRole != null)
-            {
-                // prepare user claims for JWT token
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, userRole.Role.Claims),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
-
-                // create JWT token
-                var token = _tokenService.GetToken(authClaims);
-
-                return new TokenResponse()
-                {
-                    Success = true,
-                    Token = new JwtSecurityTokenHandler().WriteToken(token)
-                };
-
-            }
-
-            else
-            {
-                return new TokenResponse()
-                {
-                    Success = false,
-                    Error = "Couldn't retrive user's role",
-                    ErrorCode = "500"
-                };
-            }
+			return new TokenResponse()
+			{
+				Success = true,
+				Token = new JwtSecurityTokenHandler().WriteToken(token)
+			};
         }
         else
         {

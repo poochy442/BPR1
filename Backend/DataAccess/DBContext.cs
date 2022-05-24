@@ -1,8 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
-using Backend.DataAccess.DAO_Models;
+using Backend.Models;
 
 namespace Backend.DataAccess;
+
+public enum Role {
+	Admin,
+	RestaurantManager,
+	Customer
+}
 
 public class DBContext : DbContext
 {
@@ -13,7 +19,6 @@ public class DBContext : DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Address> Addresses { get; set; } = null!;
     public DbSet<Restriction> Restrictions { get; set; } = null!;
-    public DbSet<Role> Roles { get; set; } = null!;
 	
     public DBContext(DbContextOptions<DBContext> options)
         : base(options)
