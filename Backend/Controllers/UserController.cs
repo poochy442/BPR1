@@ -134,5 +134,4 @@ public class UserController : ControllerBase
     {
         return await _context.Users.ToListAsync();
     }
-
 }

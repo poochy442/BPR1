@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
 
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
@@ -20,6 +21,13 @@ public class RestaurantController : ControllerBase
 	{
 		_context = context;
 	}
+
+	[AllowAnonymous]
+	[HttpGet]
+    public async Task<ActionResult> GetRestaurnats()
+    {
+        return Ok("All restaurants");
+    }
 
 	/*[HttpGet]
     public Task<List<Restaurant>> GetRestaurants()
