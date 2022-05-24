@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-public class LoginModel
+
+namespace Backend.Helpers.Models;
+public class LoginRequest
 {
     [Required]
 	public string? Email { get; set; }

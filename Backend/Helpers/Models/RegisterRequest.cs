@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-public class RegisterModel
+
+namespace Backend.Helpers.Models;
+public class RegisterRequest
 {
     [Required]
 	public string? Email { get; set; }

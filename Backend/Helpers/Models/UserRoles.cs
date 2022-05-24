@@ -1,3 +1,4 @@
+namespace Backend.Helpers.Models;
 public static class UserRoles
 {
     public const string Customer = "Customer";

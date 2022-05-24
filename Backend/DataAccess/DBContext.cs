@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
-using Backend.DataAccess.Models;
+using Backend.DataAccess.DAO_Models;
 
 namespace Backend.DataAccess;
 

@@ -12,9 +12,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Linq;
 using BCrypt.Net;
+using Backend.Helpers.Models;
 using Backend.Helpers;
-using Backend.DataAccess.Models;
+using Backend.DataAccess.DAO_Models;
 using Backend.DataAccess;
+using Backend.BusinessLogic;
 
 [EnableCors]
 [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
@@ -25,69 +27,49 @@ public class UserController : ControllerBase
     private DBContext _context;
     private ITokenService _tokenService;
 
+    private readonly IBusinessLogic _businessLogic;
+
     public UserController(
         DBContext context,
-        ITokenService tokenService
+        ITokenService tokenService,
+        IBusinessLogic businessLogic
         )
     {
         _context = context;
         _tokenService = tokenService;
+        _businessLogic = businessLogic;
 
     }
 
     [AllowAnonymous]
-    [HttpPost("Authenticate")]
-    public ActionResult Authenticate(LoginModel model)
+    [HttpPost("login")]
+    public async Task<ActionResult> LoginUser(LoginRequest request)
     {
-        // find user with provided email
-        var user = _context.Users.SingleOrDefault(user => user.Email == model.Email);
+        var loginUser = await _businessLogic.LoginUser(request);
 
-        // check user is found
-        // check password is correct
-        if (user != null && BCrypt.Verify(model.Password, user.Password))
-        {
-            // extract user role
-            var userRole = _context.Users.Include(u => u.Role).Where(u => u.Email == user.Email).FirstOrDefault();
-
-            // if successfully extracted user role
-            if (userRole != null)
-            {
-                // prepare user claims for JWT token
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, userRole.Role.Claims),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
-
-                // create JWT token
-                var token = _tokenService.GetToken(authClaims);
-
-                return Ok(new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
-                });
-            }
-            else
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Couldn't retrive user's role");
-            }
+        if(!loginUser.Success) {
+            return Unauthorized(
+                new {
+                    loginUser.ErrorCode,
+                    loginUser.Error
+                }
+            );
         }
-        return Unauthorized("Username or password is incorrect");
+
+        return Ok(loginUser);
     }
 
     [AllowAnonymous]
     [HttpPost("Register")]
-    public async Task<ActionResult> Register(RegisterModel model)
+    public async Task<ActionResult> Register(RegisterRequest request)
     {
         // check if there exists a user with provided email
-        var userExists = _context.Users.SingleOrDefault(user => user.Email == model.Email);
+        var userExists = _context.Users.SingleOrDefault(user => user.Email == request.Email);
         if (userExists != null)
             return StatusCode(StatusCodes.Status500InternalServerError, "User already exists!");
 
         // hash password
-        var hpass = BCrypt.HashPassword(model.Password);
+        var hpass = BCrypt.HashPassword(request.Password);
 
         // get user role
         var role = _context.Roles.SingleOrDefault(role => role.Claims == "Customer");
@@ -98,10 +80,10 @@ public class UserController : ControllerBase
             // create new user
             User user = new User()
             {
-                Email = model.Email,
+                Email = request.Email,
                 Password = hpass,
-                Name = model.Name,
-                PhoneNo = model.PhoneNo,
+                Name = request.Name,
+                PhoneNo = request.PhoneNo,
                 Role = role
             };
 

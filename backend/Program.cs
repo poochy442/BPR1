@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Backend.Helpers;
 using Backend.DataAccess;
+using Backend.BusinessLogic;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +51,13 @@ ConfigurationManager configuration = builder.Configuration;
 
     // Inject TokenService
     services.AddSingleton<ITokenService, TokenService>();
+
+    // Inject BusinessLogic
+    services.AddScoped<IBusinessLogic, BusinessLogic>();
+
+    // Inject UserBL(Business Logic)
+    services.AddScoped<IUserBL, UserBL>();
+    
 
     // Adding swagger
     services.AddSwaggerGen(options =>

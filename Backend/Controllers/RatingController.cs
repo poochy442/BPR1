@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using System.Text.Json;
 
-using Backend.DataAccess.Models;
+using Backend.DataAccess.DAO_Models;
 using Backend.DataAccess;
 
 namespace Backend.Controllers;

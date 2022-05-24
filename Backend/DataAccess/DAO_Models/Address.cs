@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.DataAccess.Models;
+namespace Backend.DataAccess.DAO_Models;
 
 public class Address
 {
