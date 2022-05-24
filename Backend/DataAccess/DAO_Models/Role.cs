@@ -16,6 +16,6 @@ public class Role
 	public string Claims { get; set; }
 
 	//Relationship
-	public List<User> Users {get;set;}
+	//public List<User> Users {get;set;}
 
 }
