@@ -14,23 +14,14 @@ public class Table
 	public bool Available { get; set; }
 
 	[Column(TypeName = "varchar(50)")]
-	public string Notes { get; set; }
-	public DateTime Deadline { get; set; }
+	public string? Notes { get; set; }
+	public DateTime? Deadline { get; set; }
 
 	[Column(TypeName = "varchar(50)")]
-	public string BookingTimes {get;set;}
+	public string? BookingTimes {get;set;}
 
 	//Relationships
 
 	public Restaurant Restaurant {get;set;}
-	public Restriction Restriction {get;set;}
-
-	/*public Table(int tableNo, int seats, bool available, string tableNote, string restrictions)
-	{
-		TableNo = tableNo;
-		Seats = seats;
-		Available = available;
-		TableNote = tableNote;
-		Restrictions = restrictions;
-	}*/
+	public Restriction? Restriction {get;set;}
 }

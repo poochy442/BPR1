@@ -41,7 +41,6 @@ ConfigurationManager configuration = builder.Configuration;
 
     services.AddControllers();
 
-    //services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
     services.AddDbContext<DBContext>(opt =>
         opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
     //opt.UseInMemoryDatabase("Database")
@@ -90,8 +89,6 @@ var app = builder.Build();
         .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader());
-
-    //app.UseMiddleware<JwtMiddleware>();
 }
 
 app.UseHttpsRedirection();

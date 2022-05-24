@@ -15,11 +15,4 @@ public class Rating
 	//Relationships
 	public Restaurant  Restaurant{get;set;}
 	public User User {get;set;}
-
-	/*public Rating(long restaurantId, int score, string comment)
-	{
-		RestaurantId = restaurantId;
-		Score = score;
-		Comment = comment;
-	}*/
 }

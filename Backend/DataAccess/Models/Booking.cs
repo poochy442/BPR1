@@ -9,26 +9,17 @@ public class Booking
 	[Key]
 	public int Id { get; set; }
 	public DateTime Date {get; set;}
-    public DateTime StartDate { get; set; }
-	public DateTime EndDate { get; set; }
+    public DateTime? StartDate { get; set; }
+	public DateTime? EndDate { get; set; }
 
 	[Column(TypeName = "int")]
-	public int GuestNo { get; set; }
+	public int? GuestNo { get; set; }
 
 	[Column(TypeName = "varchar(50)")]
-	public string Note {get; set;}
+	public string? Note {get; set;}
 
 	//Relationships
 	
 	public Table Table {get; set;}
 	public User User{get;set;}
-
-	/*public Booking(DateTime date, DateTime startDate, DateTime endDate, int guestNo, string note)
-	{
-		Date = date;
-		StartDate = startDate;
-		EndDate = endDate;
-		GuestNo = guestNo;
-		Note = note;
-	}*/
 }
