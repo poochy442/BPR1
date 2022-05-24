@@ -134,6 +134,7 @@
 				border-radius: 1rem;
 				background-color: $light-color;
 				padding: 1rem;
+				cursor: pointer;
 
 				.restaurantImage {
 					width: 8rem;
@@ -143,6 +144,10 @@
 
 				.restaurantDetails{
 					margin-top: 1rem;
+					
+					p {
+						cursor: pointer;
+					}
 
 					.foodName {
 						color: $main-color;

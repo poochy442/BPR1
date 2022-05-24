@@ -21,13 +21,15 @@ public class RestaurantController : ControllerBase
 		_context = context;
 	}
 
+	[Route("")]
 	[HttpGet]
     public Task<List<Restaurant>> GetRestaurants()
     {
         return _context.Restaurants.ToListAsync();
     }
 
-	[HttpGet("{id}")]
+	[Route("{id}")]
+	[HttpGet]
 	public async Task<ActionResult<Restaurant>> GetRestaurant(long id)
 	{
 		var restaurant = await _context.Restaurants.FindAsync(id);
@@ -40,6 +42,7 @@ public class RestaurantController : ControllerBase
 		return restaurant;
 	}
 
+	[Route("")]
 	[HttpPost]
 	public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
 	{
@@ -53,7 +56,8 @@ public class RestaurantController : ControllerBase
 		);
 	}
 
-	[HttpPut("{id}")]
+	[Route("{id}")]
+	[HttpPut]
 	public async Task<IActionResult> PutRestaurant(long id, Restaurant restaurant)
 	{
 		if(id != restaurant.Id)
@@ -79,6 +83,13 @@ public class RestaurantController : ControllerBase
 		}
 
 		return NoContent();
+	}
+
+	[Route("Search")]
+	[HttpPost]
+	public Task<List<Restaurant>> SearchRestaurant()
+	{
+		return _context.Restaurants.ToListAsync();
 	}
 
 	private bool RestaurantExists(long id)
