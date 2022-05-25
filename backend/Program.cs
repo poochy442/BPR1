@@ -80,8 +80,7 @@ ConfigurationManager configuration = builder.Configuration;
                     }
                 },
                 new string[] {}
-        }
-    });
+        }});
     });
 
 

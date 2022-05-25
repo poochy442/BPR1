@@ -1,14 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 using Backend.Models;
 
 namespace Backend.DataAccess;
-
-public enum Role {
-	Admin,
-	RestaurantManager,
-	Customer
-}
 
 public class DBContext : DbContext
 {
@@ -24,4 +17,20 @@ public class DBContext : DbContext
         : base(options)
     {
     }
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		base.OnModelCreating(modelBuilder);
+
+		modelBuilder.Entity<User>().HasData(new User()
+		{
+			Id = -1,
+			Email = "admin@test.com",
+			Password = BCrypt.Net.BCrypt.HashPassword("test1234"),
+			Name = "admin",
+			PhoneNo = "88888888",
+			Role = Role.Admin
+		});
+	}
+
 }

@@ -1,9 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Backend.DataAccess;
 
 namespace Backend.Models;
+
+public enum Role {
+	Admin,
+	RestaurantManager,
+	Customer
+}
 public class User
 {
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

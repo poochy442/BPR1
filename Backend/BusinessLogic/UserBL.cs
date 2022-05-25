@@ -47,12 +47,13 @@ public class UserBL : IUserBL
         if (BCrypt.Verify(request.Password, user.Password))
         {
 			// create JWT token
-			var token = _tokenService.GetToken();
+			var token = _tokenService.GetToken(user.Role);
 
 			return new TokenResponse()
 			{
 				Success = true,
-				Token = new JwtSecurityTokenHandler().WriteToken(token)
+				Token = new JwtSecurityTokenHandler().WriteToken(token),
+				User = user
 			};
         }
         else

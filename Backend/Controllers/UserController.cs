@@ -85,13 +85,11 @@ public class UserController : ControllerBase
 		_context.Users.Add(user);
 		await _context.SaveChangesAsync();
 
-		
-
 		return Ok("User created successfully!");
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = UserRoles.Customer)]
+    [Authorize(Roles = nameof(Role.Customer))]
     public async Task<ActionResult<User>> GetUser(int id)
     {
         var user = await _context.Users.FindAsync(id);
@@ -102,7 +100,7 @@ public class UserController : ControllerBase
 
 
     [HttpGet]
-    [Authorize(Roles = UserRoles.RestaurantManager)]
+    [Authorize(Roles = nameof(Role.RestaurantManager) + "," + nameof(Role.Admin))]
     public async Task<ActionResult<List<User>>> GetUsers()
     {
         return await _context.Users.ToListAsync();
