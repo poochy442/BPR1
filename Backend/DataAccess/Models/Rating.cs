@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.DataAccess.DAO_Models;
+namespace Backend.DataAccess.Models;
 public class Rating
 {
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -10,9 +10,9 @@ public class Rating
 	public int Score { get; set; }
 	
 	[Column(TypeName = "varchar(200)")]
-	public string Comment { get; set; }
+	public string? Comment { get; set; }
 
 	//Relationships
-	public Restaurant  Restaurant{get;set;}
-	public User User {get;set;}
+	public Restaurant?  Restaurant{get;set;}
+	public User? User {get;set;}
 }

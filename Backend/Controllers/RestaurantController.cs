@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 
-using Backend.DataAccess.DAO_Models;
+using Backend.DataAccess.Models;
 using Backend.DataAccess;
 
 namespace Backend.Controllers;

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.DataAccess.DAO_Models;
+namespace Backend.DataAccess.Models;
 
 public class Address
 {
@@ -9,19 +9,19 @@ public class Address
 	[Key]
 	public int Id { get; set; }
 	[Column(TypeName = "varchar(50)")]
-	public string PostalCode { get; set; }
+	public string? PostalCode { get; set; }
 
 	[Column(TypeName = "varchar(50)")]
-	public string City { get; set; }
+	public string? City { get; set; }
 	
 	[Column(TypeName = "varchar(50)")]
-	public string Street { get; set; }
+	public string? Street { get; set; }
 
 	[Column(TypeName = "varchar(50)")]
 	public string? StreetNo { get; set; }
 
 	[Column(TypeName = "varchar(50)")]
-	public string Location { get; set; }
+	public string? Location { get; set; }
 	
 	//Relationships
 
