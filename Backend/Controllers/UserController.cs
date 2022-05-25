@@ -14,7 +14,7 @@ using System.Linq;
 using BCrypt.Net;
 using Backend.Helpers.Models;
 using Backend.Helpers;
-using Backend.DataAccess.DAO_Models;
+using Backend.DataAccess.Models;
 using Backend.DataAccess;
 using Backend.BusinessLogic;
 
@@ -26,7 +26,6 @@ public class UserController : ControllerBase
 {
     private DBContext _context;
     private ITokenService _tokenService;
-
     private readonly IBusinessLogic _businessLogic;
 
     public UserController(

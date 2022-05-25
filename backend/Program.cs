@@ -55,8 +55,9 @@ ConfigurationManager configuration = builder.Configuration;
     // Inject BusinessLogic
     services.AddScoped<IBusinessLogic, BusinessLogic>();
 
-    // Inject UserBL(Business Logic)
+    // Inject .BL(s)(Business Logic)
     services.AddScoped<IUserBL, UserBL>();
+    services.AddScoped<ITableBL, TableBL>();
     
 
     // Adding swagger

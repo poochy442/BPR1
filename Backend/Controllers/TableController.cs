@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
 
-using Backend.DataAccess.DAO_Models;
+using Backend.DataAccess.Models;
 using Backend.DataAccess;
 using Backend.Helpers;
+using Backend.BusinessLogic;
 
 namespace Backend.Controllers;
 
@@ -17,10 +18,12 @@ namespace Backend.Controllers;
 public class TableController : ControllerBase
 {
     private readonly DBContext _context;
+    private readonly IBusinessLogic _businessLogic;
 
-    public TableController(DBContext context)
+    public TableController(DBContext context, IBusinessLogic businessLogic)
     {
         _context = context;
+        _businessLogic = businessLogic;
     }
 
     // [HttpGet]
@@ -49,52 +52,18 @@ public class TableController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult> GetAvailableTables([FromQuery] long restaurantId, int guests, DateTime start, DateTime end)
     {
-        // find restaurant
-        var restaurant = await _context.Restaurants.FindAsync((int)restaurantId);
+        var availableTables = await _businessLogic.GetAvailableTables(restaurantId, guests, start, end);
 
-        if (restaurant != null)
-        {
-
-            // extract restaurant's working hours
-            var restaurantHours = JsonSerializer.Deserialize<List<WorkingHours>>(restaurant.WorkingHours);
-
-            // find tables suited for guests No
-            var tables = _context.Tables.Where(t => t.Seats >= guests).ToList();
-            if (tables.Count >= 0)
-            {
-                // base date
-                var date = start.Date;
-
-                // find restaurant's open and close time
-                var workTime = restaurantHours.Find(wh => wh.Day == ((int)start.DayOfWeek + 5) % 6);
-
-                //  find restaurant's open and close hours
-                var openHours = Int32.Parse(workTime.From.Substring(0, 2));
-                var closeHours = Int32.Parse(workTime.Till.Substring(0, 2));
-
-                //  find restaurant's open and close minutes
-                var openMinutes = Int32.Parse(workTime.From.Substring(3, 2));
-                var closeMinutes = Int32.Parse(workTime.Till.Substring(3, 2));
-
-                // build restaurant's open and close datetime objects
-                var open = date.Date.Add(new TimeSpan(openHours, openMinutes, 0));
-                var close = date.Date.Add(new TimeSpan(closeHours, closeMinutes, 0));
-
-                if (start >= open && end <= close)
-                {
-                    return Ok("possible");
+        if(!availableTables.Success) {
+            return Unauthorized(
+                new {
+                    availableTables.ErrorCode,
+                    availableTables.Error
                 }
-                return BadRequest("time period doesnt fit in working hours of restaurant " +
-                open + "  " + close);
-
-            }
-
-            return NotFound("Couldn't find table that would fit guests");
-
-
+            );
         }
 
-        return NotFound("Couldnt find restaurant with id:" + restaurantId);
+        return Ok(availableTables);
     }
 
     // [HttpPost]

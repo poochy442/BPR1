@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.DataAccess.DAO_Models;
+namespace Backend.DataAccess.Models;
 
 public class Restaurant
 {
@@ -9,7 +9,7 @@ public class Restaurant
 	[Key]
 	public int Id { get; set; }
 	[Column(TypeName = "varchar(50)")]
-	public string Name { get; set; }
+	public string? Name { get; set; }
 
 	[Column(TypeName = "varchar(50)")]
 	public string? FoodType { get; set; }
@@ -26,9 +26,9 @@ public class Restaurant
 	//Relationships
 
 	// better not to create lists -> it will create object loop
-	public List<Booking> Bookings{get;set;}
-	public List<Table> Tables{get;set;}
+	// public List<Booking> Bookings{get;set;}
+	// public List<Table> Tables{get;set;}
 	public User? User {get;set;}
-	public Address Address {get; set;}
+	public Address? Address {get; set;}
 	
 }

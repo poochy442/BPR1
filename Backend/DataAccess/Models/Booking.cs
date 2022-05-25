@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.DataAccess.DAO_Models;
+namespace Backend.DataAccess.Models;
 
 public class Booking
 {
@@ -20,6 +20,6 @@ public class Booking
 
 	//Relationships
 	
-	public Table Table {get; set;}
-	public User User{get;set;}
+	public Table? Table {get; set;}
+	public User? User{get;set;}
 }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.DataAccess.DAO_Models;
+namespace Backend.DataAccess.Models;
 public class Table
 {
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,6 +22,6 @@ public class Table
 
 	//Relationships
 
-	public Restaurant Restaurant {get;set;}
+	public Restaurant? Restaurant {get;set;}
 	public Restriction? Restriction {get;set;}
 }
