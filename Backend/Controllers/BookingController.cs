@@ -25,6 +25,11 @@ public class BookingController : ControllerBase
         return _context.Bookings.ToListAsync();
     }
 
+	/*[HttpPost]
+	public async Task<IActionResult> PostBookingFromManager(){
+
+	}*/
+
 	/*[HttpGet("{id}")]
 	public async Task<ActionResult<Booking>> GetBooking(long id)
 	{

@@ -48,7 +48,7 @@ public class UserBL : IUserBL
         {
             // extract user role
             var userRole = _context.Users.Include(u => u.Role).Where(u => u.Email == user.Email).FirstOrDefault();
-
+            
             // if successfully extracted user role
             if (userRole != null)
             {
