@@ -19,4 +19,22 @@ public class DBContext : DbContext
         : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Role>().HasData(new Role(){
+            Id = 1,
+            Name = "CustomerRole",
+            Claims = "Customer"
+        });
+        modelBuilder.Entity<Role>().HasData(new Role(){
+            Id = 2,
+            Name = "RestauranManagerRole",
+            Claims = "RestaurantManager" 
+        });
+    }
+        
 }
+    
+   
+    
