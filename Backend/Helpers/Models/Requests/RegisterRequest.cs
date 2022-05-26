@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Backend.Helpers.Models;
+namespace Backend.Helpers.Models.Requests;
 public class RegisterRequest
 {
     [Required]

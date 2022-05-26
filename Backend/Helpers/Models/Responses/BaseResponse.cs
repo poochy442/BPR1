@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Backend.Helpers.Models;
+namespace Backend.Helpers.Models.Responses;
 
 public abstract class BaseResponse
 {

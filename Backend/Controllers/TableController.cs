@@ -6,7 +6,8 @@ using System.Text.Json;
 
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
-using Backend.Helpers;
+using Backend.Helpers.Models.Requests;
+using Backend.Helpers.Models.Responses;
 using Backend.BusinessLogic;
 
 namespace Backend.Controllers;

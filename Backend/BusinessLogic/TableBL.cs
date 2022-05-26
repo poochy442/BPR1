@@ -14,17 +14,17 @@ using System.Linq;
 using System.Text.Json;
 using Backend.Helpers;
 using Backend.Helpers.Models;
+using Backend.Helpers.Models.Requests;
+using Backend.Helpers.Models.Responses;
 using Backend.DataAccess;
 
 public class TableBL : ITableBL
 {
     private readonly DBContext _context;
-    private readonly ITokenService _tokenService;
 
-    public TableBL(DBContext context, ITokenService tokenService)
+    public TableBL(DBContext context)
     {
         _context = context;
-        _tokenService = tokenService;
     }
 
     public async Task<AvailableTablesResponse> GetAvailableTables(long restaurantId, int guests, DateTime start, DateTime end)
@@ -35,7 +35,6 @@ public class TableBL : ITableBL
         // check if could find restaurant
         if (restaurant == null)
         {
-            //return NotFound("Couldnt find restaurant with id:" + restaurantId);
             return new AvailableTablesResponse()
             {
                 Success = false,
@@ -50,8 +49,6 @@ public class TableBL : ITableBL
         // check if restaurant's hours are valid
         if (restaurantHours == null || restaurantHours.Count == 0)
         {
-
-            //return StatusCode(500, "restaurant has empty working hours");
             return new AvailableTablesResponse()
             {
                 Success = false,
@@ -85,7 +82,6 @@ public class TableBL : ITableBL
         // check booking time period sorts with restaurant's working hours
         if (start < open || end > close)
         {
-            //return BadRequest("time period doesnt fit in working hours of restaurant " + open + "  " + close);
             return new AvailableTablesResponse()
             {
                 Success = false,
@@ -100,11 +96,10 @@ public class TableBL : ITableBL
         // check retrieved some tables
         if (tables == null || tables.Count == 0)
         {
-            //return StatusCode(500, "no tables retrived from db");
             return new AvailableTablesResponse()
             {
                 Success = false,
-                Error = "no tables retrived from db",
+                Error = "no tables retrived from db " + (tables.Count),
                 ErrorCode = "500"
             };
         }
@@ -112,7 +107,7 @@ public class TableBL : ITableBL
         // check if there is at least one table that can fit all guests
         if (tables.Where(t => t.Seats >= guests).ToList().Count == 0)
         {
-            //return NotFound("couldnt find a table that would fit all guests");
+
             return new AvailableTablesResponse()
             {
                 Success = false,
@@ -142,10 +137,9 @@ public class TableBL : ITableBL
         {
             foreach (var t in tables)
             {
-                if (overlapBookings.Where(booking => booking.Table.Id == t.Id).FirstOrDefault() != null)
+                if (overlapBookings.Where(booking => booking.TableId == t.Id).FirstOrDefault() != null)
                 {
                     t.Available = false;
-                    break;
                 }
             }
         }
@@ -156,6 +150,7 @@ public class TableBL : ITableBL
         foreach(var t in tables) {
             resultTables.Add(new AvailableTable(){
                 TableId = t.Id,
+                TableNo = t.TableNo,
                 Available = t.Available
             });
         }

@@ -13,6 +13,8 @@ using System.Text;
 using System.Linq;
 using BCrypt.Net;
 using Backend.Helpers.Models;
+using Backend.Helpers.Models.Requests;
+using Backend.Helpers.Models.Responses;
 using Backend.Helpers;
 using Backend.DataAccess.Models;
 using Backend.DataAccess;

@@ -24,9 +24,9 @@ public class RestaurantController : ControllerBase
 
 	[AllowAnonymous]
 	[HttpGet]
-    public async Task<ActionResult> GetRestaurnats()
+    public async Task<ActionResult<Restaurant>> GetRestaurnats()
     {
-        return Ok("All restaurants");
+        return await _context.Restaurants.FindAsync(1);
     }
 
 	/*[HttpGet]

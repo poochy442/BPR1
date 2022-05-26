@@ -14,6 +14,8 @@ using System.Linq;
 using BCrypt.Net;
 using Backend.Helpers;
 using Backend.Helpers.Models;
+using Backend.Helpers.Models.Requests;
+using Backend.Helpers.Models.Responses;
 using Backend.DataAccess;
 
 public class UserBL : IUserBL
