@@ -88,6 +88,29 @@ public class DBContext : DbContext
         });
 
 
+        // Restrictions
+        modelBuilder.Entity<Restriction>().HasData(new Restriction()
+        {
+            Id = 1,
+            Age = 20,
+            Handicap = false
+        });
+
+        modelBuilder.Entity<Restriction>().HasData(new Restriction()
+        {
+            Id = 2,
+            Age = 60,
+            Handicap = false
+        });
+
+        modelBuilder.Entity<Restriction>().HasData(new Restriction()
+        {
+            Id = 3,
+            Age = 0,
+            Handicap = true
+        });
+
+
         // Tables
         modelBuilder.Entity<Table>().HasData(new Table()
         {
@@ -96,6 +119,7 @@ public class DBContext : DbContext
             Seats = 2,
             Available = true,
             RestaurantId = 1,
+            RestrictionId = 3
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()
@@ -114,6 +138,7 @@ public class DBContext : DbContext
             Seats = 4,
             Available = true,
             RestaurantId = 1,
+            RestrictionId = 2
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()
@@ -132,6 +157,7 @@ public class DBContext : DbContext
             Seats = 6,
             Available = true,
             RestaurantId = 1,
+            RestrictionId = 1
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()

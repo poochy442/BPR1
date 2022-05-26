@@ -27,6 +27,37 @@ public class TableBL : ITableBL
         _context = context;
     }
 
+    public async Task<GetTablesResponse> GetTables(long restaurantId)
+    {
+        // check if there exists restaurant
+        var restaurantExists = await _context.Restaurants
+        .AsNoTracking()
+        .FirstOrDefaultAsync(r => r.Id == restaurantId);
+
+        if (restaurantExists == null)
+        {
+            return new GetTablesResponse()
+            {
+                Success = false,
+                Error = "Couldnt find restaurant with id:" + restaurantId,
+                ErrorCode = "404"
+            };
+        }
+
+        var tables = await _context.Tables
+        .AsNoTracking()
+        .Include(t => t.Restriction)
+        .Where(t => t.RestaurantId == restaurantId)
+        .ToListAsync();
+
+        return new GetTablesResponse()
+        {
+            Success = true,
+            Tables = tables
+        };
+    }
+
+
     public async Task<AvailableTablesResponse> GetAvailableTables(long restaurantId, int guests, DateTime start, DateTime end)
     {
         // find restaurant
@@ -147,8 +178,10 @@ public class TableBL : ITableBL
         // build response
         var resultTables = new List<AvailableTable>();
 
-        foreach(var t in tables) {
-            resultTables.Add(new AvailableTable(){
+        foreach (var t in tables)
+        {
+            resultTables.Add(new AvailableTable()
+            {
                 TableId = t.Id,
                 TableNo = t.TableNo,
                 Available = t.Available

@@ -31,19 +31,15 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("StreetNo")
@@ -52,6 +48,17 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Horsens",
+                            Location = "longtitude: 1025623; latitude: 1025623",
+                            PostalCode = "8700",
+                            Street = "Slotsgade",
+                            StreetNo = "10"
+                        });
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.Booking", b =>
@@ -80,10 +87,10 @@ namespace backend.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TableId")
+                    b.Property<int?>("TableId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -95,6 +102,63 @@ namespace backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 2,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 2,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.Rating", b =>
@@ -106,16 +170,15 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("varchar(200)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -135,14 +198,13 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("FoodType")
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<int?>("StudentDiscount")
@@ -164,6 +226,19 @@ namespace backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Restaurants");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressId = 1,
+                            FoodType = "Pizza",
+                            Name = "Pizza King",
+                            StudentDiscount = 5,
+                            TotalScore = 4m,
+                            UserId = 2,
+                            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n}\r\n]"
+                        });
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.Restriction", b =>
@@ -174,8 +249,8 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("Age")
-                        .HasColumnType("bit");
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Handicap")
                         .HasColumnType("bit");
@@ -183,6 +258,26 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Restrictions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 20,
+                            Handicap = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Age = 60,
+                            Handicap = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Age = 0,
+                            Handicap = true
+                        });
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.Role", b =>
@@ -194,16 +289,28 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Claims")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Claims = "Customer",
+                            Name = "CustomerRole"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Claims = "RestaurantManager",
+                            Name = "RestaurantManagerRole"
+                        });
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.Table", b =>
@@ -226,7 +333,7 @@ namespace backend.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RestrictionId")
@@ -245,6 +352,59 @@ namespace backend.Migrations
                     b.HasIndex("RestrictionId");
 
                     b.ToTable("Tables");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Available = true,
+                            RestaurantId = 1,
+                            RestrictionId = 3,
+                            Seats = 2,
+                            TableNo = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Available = true,
+                            RestaurantId = 1,
+                            Seats = 2,
+                            TableNo = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Available = true,
+                            RestaurantId = 1,
+                            RestrictionId = 2,
+                            Seats = 4,
+                            TableNo = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Available = true,
+                            RestaurantId = 1,
+                            Seats = 4,
+                            TableNo = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Available = true,
+                            RestaurantId = 1,
+                            RestrictionId = 1,
+                            Seats = 6,
+                            TableNo = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Available = true,
+                            RestaurantId = 1,
+                            Seats = 6,
+                            TableNo = 6
+                        });
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.User", b =>
@@ -256,22 +416,18 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNo")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -279,25 +435,43 @@ namespace backend.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "user@email.com",
+                            Name = "Steve G",
+                            Password = "$2a$11$YPB10zErqK1sD2h61D0xkupRJMObqFlaGoXcZ5TcVuIij.oWZlZGy",
+                            PhoneNo = "+4596254585",
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "manager@email.com",
+                            Name = "Clive L",
+                            Password = "$2a$11$Y7zhcGWJn.Ym8gp6XmvOe.m09CcAnynFZtV6eL7Hc9Tk9ffMCYWVK",
+                            PhoneNo = "+4532124565",
+                            RoleId = 2
+                        });
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.Booking", b =>
                 {
-                    b.HasOne("Backend.DataAccess.Models.Restaurant", null)
-                        .WithMany("Bookings")
+                    b.HasOne("Backend.DataAccess.Models.Restaurant", "Restaurant")
+                        .WithMany()
                         .HasForeignKey("RestaurantId");
 
                     b.HasOne("Backend.DataAccess.Models.Table", "Table")
                         .WithMany()
-                        .HasForeignKey("TableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TableId");
 
                     b.HasOne("Backend.DataAccess.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Restaurant");
 
                     b.Navigation("Table");
 
@@ -308,15 +482,11 @@ namespace backend.Migrations
                 {
                     b.HasOne("Backend.DataAccess.Models.Restaurant", "Restaurant")
                         .WithMany()
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.HasOne("Backend.DataAccess.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Restaurant");
 
@@ -327,9 +497,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("Backend.DataAccess.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Backend.DataAccess.Models.User", "User")
                         .WithMany()
@@ -343,10 +511,8 @@ namespace backend.Migrations
             modelBuilder.Entity("Backend.DataAccess.Models.Table", b =>
                 {
                     b.HasOne("Backend.DataAccess.Models.Restaurant", "Restaurant")
-                        .WithMany("Tables")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("RestaurantId");
 
                     b.HasOne("Backend.DataAccess.Models.Restriction", "Restriction")
                         .WithMany()
@@ -361,18 +527,9 @@ namespace backend.Migrations
                 {
                     b.HasOne("Backend.DataAccess.Models.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Backend.DataAccess.Models.Restaurant", b =>
-                {
-                    b.Navigation("Bookings");
-
-                    b.Navigation("Tables");
                 });
 
             modelBuilder.Entity("Backend.DataAccess.Models.Role", b =>

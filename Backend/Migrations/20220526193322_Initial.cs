@@ -15,11 +15,11 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PostalCode = table.Column<string>(type: "varchar(50)", nullable: false),
-                    City = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Street = table.Column<string>(type: "varchar(50)", nullable: false),
+                    PostalCode = table.Column<string>(type: "varchar(50)", nullable: true),
+                    City = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Street = table.Column<string>(type: "varchar(50)", nullable: true),
                     StreetNo = table.Column<string>(type: "varchar(50)", nullable: true),
-                    Location = table.Column<string>(type: "varchar(50)", nullable: false)
+                    Location = table.Column<string>(type: "varchar(50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,7 +32,7 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Age = table.Column<bool>(type: "bit", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
                     Handicap = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -46,8 +46,8 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Claims = table.Column<string>(type: "varchar(50)", nullable: false)
+                    Name = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Claims = table.Column<string>(type: "varchar(50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,11 +60,11 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
-                    PhoneNo = table.Column<string>(type: "varchar(50)", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: true),
+                    PhoneNo = table.Column<string>(type: "varchar(50)", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,8 +73,7 @@ namespace backend.Migrations
                         name: "FK_Users_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -83,13 +82,13 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: true),
                     FoodType = table.Column<string>(type: "varchar(50)", nullable: true),
                     StudentDiscount = table.Column<int>(type: "int", nullable: true),
                     WorkingHours = table.Column<string>(type: "varchar(400)", nullable: true),
                     TotalScore = table.Column<decimal>(type: "decimal(5,2)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
+                    AddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -98,8 +97,7 @@ namespace backend.Migrations
                         name: "FK_Restaurants_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Restaurants_Users_UserId",
                         column: x => x.UserId,
@@ -114,9 +112,9 @@ namespace backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Score = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "varchar(200)", nullable: false),
-                    RestaurantId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    Comment = table.Column<string>(type: "varchar(200)", nullable: true),
+                    RestaurantId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,14 +123,12 @@ namespace backend.Migrations
                         name: "FK_Ratings_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Ratings_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -147,7 +143,7 @@ namespace backend.Migrations
                     Notes = table.Column<string>(type: "varchar(50)", nullable: true),
                     Deadline = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BookingTimes = table.Column<string>(type: "varchar(50)", nullable: true),
-                    RestaurantId = table.Column<int>(type: "int", nullable: false),
+                    RestaurantId = table.Column<int>(type: "int", nullable: true),
                     RestrictionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -157,8 +153,7 @@ namespace backend.Migrations
                         name: "FK_Tables_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tables_Restrictions_RestrictionId",
                         column: x => x.RestrictionId,
@@ -177,9 +172,9 @@ namespace backend.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GuestNo = table.Column<int>(type: "int", nullable: true),
                     Note = table.Column<string>(type: "varchar(50)", nullable: true),
-                    TableId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    RestaurantId = table.Column<int>(type: "int", nullable: true)
+                    RestaurantId = table.Column<int>(type: "int", nullable: true),
+                    TableId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -193,14 +188,76 @@ namespace backend.Migrations
                         name: "FK_Bookings_Tables_TableId",
                         column: x => x.TableId,
                         principalTable: "Tables",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Bookings_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Addresses",
+                columns: new[] { "Id", "City", "Location", "PostalCode", "Street", "StreetNo" },
+                values: new object[] { 1, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Slotsgade", "10" });
+
+            migrationBuilder.InsertData(
+                table: "Restrictions",
+                columns: new[] { "Id", "Age", "Handicap" },
+                values: new object[,]
+                {
+                    { 1, 20, false },
+                    { 2, 60, false },
+                    { 3, 0, true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Claims", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Customer", "CustomerRole" },
+                    { 2, "RestaurantManager", "RestaurantManagerRole" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "Name", "Password", "PhoneNo", "RoleId" },
+                values: new object[] { 1, "user@email.com", "Steve G", "$2a$11$YPB10zErqK1sD2h61D0xkupRJMObqFlaGoXcZ5TcVuIij.oWZlZGy", "+4596254585", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "Name", "Password", "PhoneNo", "RoleId" },
+                values: new object[] { 2, "manager@email.com", "Clive L", "$2a$11$Y7zhcGWJn.Ym8gp6XmvOe.m09CcAnynFZtV6eL7Hc9Tk9ffMCYWVK", "+4532124565", 2 });
+
+            migrationBuilder.InsertData(
+                table: "Restaurants",
+                columns: new[] { "Id", "AddressId", "FoodType", "Name", "StudentDiscount", "TotalScore", "UserId", "WorkingHours" },
+                values: new object[] { 1, 1, "Pizza", "Pizza King", 5, 4m, 2, "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n}\r\n]" });
+
+            migrationBuilder.InsertData(
+                table: "Tables",
+                columns: new[] { "Id", "Available", "BookingTimes", "Deadline", "Notes", "RestaurantId", "RestrictionId", "Seats", "TableNo" },
+                values: new object[,]
+                {
+                    { 1, true, null, null, null, 1, 3, 2, 1 },
+                    { 2, true, null, null, null, 1, null, 2, 2 },
+                    { 3, true, null, null, null, 1, 2, 4, 3 },
+                    { 4, true, null, null, null, 1, null, 4, 4 },
+                    { 5, true, null, null, null, 1, 1, 6, 5 },
+                    { 6, true, null, null, null, 1, null, 6, 6 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Bookings",
+                columns: new[] { "Id", "Date", "EndDate", "GuestNo", "Note", "RestaurantId", "StartDate", "TableId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 5, 24, 9, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 3, new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 5, 24, 20, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 5, 24, 17, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 4, new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 },
+                    { 5, new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 5, 24, 17, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 }
                 });
 
             migrationBuilder.CreateIndex(

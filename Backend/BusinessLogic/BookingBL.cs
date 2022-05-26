@@ -28,6 +28,112 @@ public class BookingBL : IBookingBL
         _context = context;
     }
 
+    public async Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId)
+    {
+        // check if there exists restaurant
+        var restaurantExists = await _context.Restaurants
+        .AsNoTracking()
+        .FirstOrDefaultAsync(r => r.Id == restaurantId);
+
+        if (restaurantExists == null)
+        {
+            //return NotFound("Couldnt find restaurant with id:" + restaurantId);
+            return new GetTableBookingsResponse() 
+            {
+                Success = false,
+                Error = "404",
+                ErrorCode =  "Couldnt find restaurant with id:" + restaurantId
+            };
+        }
+
+        // join request to get bookings of tables
+        var joinBookings = await _context.Tables
+        .AsNoTracking()
+        .Join(_context.Bookings.Include(b => b.User),
+        t => t.Id,
+        b => b.TableId,
+        (t, b) => new
+        {
+            Table = t,
+            Booking = b
+        }
+        )
+        .Where(join => join.Table.RestaurantId == 1
+                    && join.Booking.RestaurantId == 1)
+        .ToListAsync();
+
+        // check if there are bookings of tables
+        if (joinBookings == null || joinBookings.Count == 0)
+        {
+            //return StatusCode(500, "Couldn't retrieve bookings of tables");
+            return new GetTableBookingsResponse() 
+            {
+                Success = false,
+                Error = "500",
+                ErrorCode =  "Couldn't retrieve bookings of tables"
+            };
+        }
+
+
+        // building response
+        #region BuildResponse
+
+        // response variable
+        var response = new List<TableBooking>();
+
+        // saving tableNo for the loop
+        var tableNo = joinBookings[0].Table.TableNo;
+
+        // create object for TableBooking
+        var tableBooking = new TableBooking()
+        {
+            TableNo = tableNo,
+            Bookings = new List<Booking>()
+        };
+
+        // iterate through joinBookings 
+        for (int i = 0; i < joinBookings.Count; i++)
+        {
+
+            if (joinBookings[i].Table.TableNo == tableNo)
+            {
+                tableBooking.Bookings.Add(joinBookings[i].Booking);
+            }
+
+            else
+            {
+                // set new tableNo
+                tableNo = joinBookings[i].Table.TableNo;
+
+                // add TableBooking to response variale
+                response.Add(tableBooking);
+
+                // create new TableBooking
+                tableBooking = new TableBooking()
+                {
+                    TableNo = tableNo,
+                    Bookings = new List<Booking>()
+                };
+
+                // add current Booking to new TableBooking
+                tableBooking.Bookings.Add(joinBookings[i].Booking);
+            }
+
+            // add the last TableBooking
+            if (i == joinBookings.Count - 1)
+            {
+                response.Add(tableBooking);
+            }
+        }
+
+        #endregion
+
+        return new GetTableBookingsResponse(){
+            Success = true,
+            TableBookings = response
+        };
+    }
+
     public async Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request)
     {
         // check if there is already such a booking

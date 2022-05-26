@@ -7,6 +7,10 @@ using Backend.Helpers.Models.Responses;
 public interface IBusinessLogic
 {
     Task<TokenResponse> LoginUser(LoginRequest request);
+
+    Task<GetTablesResponse> GetTables(long restaurantId);
     Task<AvailableTablesResponse> GetAvailableTables(long restaurantId, int guests, DateTime start, DateTime end);
+
+    Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId);
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
 }

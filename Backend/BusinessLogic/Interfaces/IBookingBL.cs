@@ -3,8 +3,10 @@ namespace Backend.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
+using System.Text;
 
 public interface IBookingBL
 {
+    Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId);
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
 }

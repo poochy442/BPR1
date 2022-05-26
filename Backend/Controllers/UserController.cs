@@ -61,7 +61,7 @@ public class UserController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost("Register")]
+    [HttpPost("register")]
     public async Task<ActionResult> Register(RegisterRequest request)
     {
         // check if there exists a user with provided email

@@ -6,6 +6,9 @@ using Backend.DataAccess.Models;
 using Backend.DataAccess;
 using Backend.Helpers.Models.Requests;
 using Backend.BusinessLogic;
+using Backend.DataAccess.Models;
+using Backend.Helpers.Models.Responses;
+using Backend.Helpers.Models;
 
 namespace Backend.Controllers;
 
@@ -16,12 +19,12 @@ namespace Backend.Controllers;
 public class BookingController : ControllerBase
 {
     private readonly DBContext _context;
-	private readonly IBusinessLogic _businessLogic;
+    private readonly IBusinessLogic _businessLogic;
 
     public BookingController(DBContext context, IBusinessLogic businessLogic)
     {
         _context = context;
-		_businessLogic = businessLogic;
+        _businessLogic = businessLogic;
     }
 
     [HttpGet]
@@ -41,6 +44,27 @@ public class BookingController : ControllerBase
         }
 
         return booking;
+    }
+
+    [HttpGet("bookings-for-tables")]
+    [AllowAnonymous]
+    public async Task<ActionResult<GetTableBookingsResponse>> GetBookingsForTables(long restaurantId)
+    {
+
+        var getTableBookings = await _businessLogic.GetBookingsForTables(restaurantId);
+
+        if (!getTableBookings.Success)
+        {
+            return Unauthorized(
+                new
+                {
+                    getTableBookings.ErrorCode,
+                    getTableBookings.Error
+                }
+            );
+        }
+
+        return Ok(getTableBookings);
     }
 
     [HttpPost]

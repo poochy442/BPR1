@@ -27,16 +27,6 @@ public class TableController : ControllerBase
         _businessLogic = businessLogic;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
-    // {
-    // 	var r = await _context.Restaurants.FindAsync(restaurantId);
-    // 	if(r == null) return NotFound();
-
-    // 	List<long> ids = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
-    // 	List<Table> tables = _context.Tables.ToList().FindAll((element) => ids.Contains(element.Id));
-    //     return tables;
-    // }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Table>> GetTable(long id)
@@ -46,6 +36,23 @@ public class TableController : ControllerBase
         if (table == null) return NotFound();
 
         return table;
+    }
+
+    [HttpGet("tables")]
+    [AllowAnonymous]
+    public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
+    {
+    	var tables = await _businessLogic.GetTables(restaurantId);
+
+        if(!tables.Success) {
+            return Unauthorized(new {
+                tables.ErrorCode,
+                tables.Error
+            });
+        }
+
+        return Ok(tables);
+        
     }
 
     [HttpGet]

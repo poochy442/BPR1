@@ -9,8 +9,7 @@ public class Restriction
 	[Key]
 	public int Id { get; set; }
 
-	[Column(TypeName = "bit")]
-	public bool Age { get; set; }
+	public int Age { get; set; }
 
 	[Column(TypeName = "bit")]
 	public bool Handicap { get; set; }
