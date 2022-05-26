@@ -1,4 +1,4 @@
-namespace Backend.Helpers.Models;
+namespace Backend.Helpers.Models.Responses;
 
 public class TokenResponse : BaseResponse
 {

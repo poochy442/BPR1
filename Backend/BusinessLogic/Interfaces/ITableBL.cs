@@ -1,7 +1,8 @@
 namespace Backend.BusinessLogic;
 
 using Microsoft.AspNetCore.Mvc;
-using Backend.Helpers.Models;
+using Backend.Helpers.Models.Requests;
+using Backend.Helpers.Models.Responses;
 
 public interface ITableBL
 {
