@@ -194,4 +194,31 @@ public class TableBL : ITableBL
             AvailableTables = resultTables
         };
     }
+
+    public async Task<UpdateTableResponse> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request) {
+
+        // check if table exists
+        var table = await _context.Tables.AsNoTracking().FirstOrDefaultAsync(t => t.Id == request.TableId);
+
+        if(table == null) {
+            return new UpdateTableResponse() {
+                Success = false,
+                Error = "Couldn't find table with id: " + request.TableId,
+                ErrorCode = "404"
+            };
+        }
+
+        // update booking times
+        var times = JsonSerializer.Serialize(request.BookingTimes);
+        table.BookingTimes = times;
+        _context.Entry(table).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+
+        return new UpdateTableResponse() {
+            Success = true,
+            SuccessMessage = "Table updated with booking times"
+        };
+
+
+    }
 }

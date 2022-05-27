@@ -3,6 +3,7 @@ namespace Backend.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
+using Backend.Helpers;
 public class BusinessLogic : IBusinessLogic
 {
     private readonly IUserBL _userBL;
@@ -45,6 +46,10 @@ public class BusinessLogic : IBusinessLogic
 
     public async Task<AvailableTablesResponse> GetAvailableTables(long restaurantId, int guests, DateTime start, DateTime end) {
         return await _tableBL.GetAvailableTables(restaurantId, guests, start, end);
+    }
+
+    public async Task<UpdateTableResponse> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request) {
+        return await _tableBL.UpdateTableBookingTimes(request);
     }
 
     public async Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId) {

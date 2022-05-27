@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
-
+using Backend.Helpers;
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
 using Backend.Helpers.Models.Requests;
@@ -77,6 +77,26 @@ public class TableController : ControllerBase
         }
 
         return Ok(availableTables);
+    }
+
+    // manager
+    [HttpPut("update")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request)
+    {
+
+        var updateBookingTimes = await _businessLogic.UpdateTableBookingTimes(request);
+
+        if (!updateBookingTimes.Success)
+        {
+            return Unauthorized(new
+            {
+                updateBookingTimes.ErrorCode,
+                updateBookingTimes.Error
+            });
+        }
+
+        return Ok(updateBookingTimes);
     }
 
     // [HttpPost]

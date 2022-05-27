@@ -17,7 +17,7 @@ public class Table
     public string? Notes { get; set; }
     public DateTime? Deadline { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
+    [Column(TypeName = "varchar(400)")]
     public string? BookingTimes { get; set; }
 
     //Relationships

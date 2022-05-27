@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20220527193042_Initial")]
+    [Migration("20220527204041_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -367,7 +367,7 @@ namespace backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("BookingTimes")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(400)");
 
                     b.Property<DateTime?>("Deadline")
                         .HasColumnType("datetime2");

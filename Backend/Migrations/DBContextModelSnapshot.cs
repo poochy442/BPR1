@@ -365,7 +365,7 @@ namespace backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("BookingTimes")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(400)");
 
                     b.Property<DateTime?>("Deadline")
                         .HasColumnType("datetime2");
