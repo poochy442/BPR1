@@ -16,5 +16,6 @@ public interface IBusinessLogic
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
     Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request);
     Task<DeleteBookingResponse> DeleteBooking(long id);
+    Task<DeleteBookingResponse> CancelBooking(long id);
     Task<GetRestaurantsResponse> GetRestaurants(string city);
 }

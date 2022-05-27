@@ -125,55 +125,55 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
                             RestaurantId = 1,
-                            StartDate = new DateTime(2022, 5, 24, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2022, 6, 24, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             TableId = 1,
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
                             RestaurantId = 1,
-                            StartDate = new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             TableId = 1,
                             UserId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2022, 5, 24, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 6, 24, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
                             RestaurantId = 1,
-                            StartDate = new DateTime(2022, 5, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             TableId = 1,
                             UserId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
                             RestaurantId = 1,
-                            StartDate = new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             TableId = 2,
                             UserId = 1
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2022, 5, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
                             RestaurantId = 1,
-                            StartDate = new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             TableId = 2,
                             UserId = 1
                         });
@@ -398,6 +398,7 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             Available = true,
+                            Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
                             RestrictionId = 3,
                             Seats = 2,
@@ -407,6 +408,7 @@ namespace backend.Migrations
                         {
                             Id = 2,
                             Available = true,
+                            Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
                             Seats = 2,
                             TableNo = 2
@@ -415,6 +417,7 @@ namespace backend.Migrations
                         {
                             Id = 3,
                             Available = true,
+                            Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
                             RestrictionId = 2,
                             Seats = 4,
@@ -424,6 +427,7 @@ namespace backend.Migrations
                         {
                             Id = 4,
                             Available = true,
+                            Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
                             Seats = 4,
                             TableNo = 4
@@ -432,6 +436,7 @@ namespace backend.Migrations
                         {
                             Id = 5,
                             Available = true,
+                            Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
                             RestrictionId = 1,
                             Seats = 6,
@@ -441,6 +446,7 @@ namespace backend.Migrations
                         {
                             Id = 6,
                             Available = true,
+                            Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
                             Seats = 6,
                             TableNo = 6

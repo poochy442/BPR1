@@ -162,6 +162,25 @@ public class BookingController : ControllerBase
 
     }
 
+    [HttpDelete("cancel")]
+    [AllowAnonymous]
+    public async Task<ActionResult> CancelBooking(long bookingId) {
+
+        var cancelBooking = await _businessLogic.CancelBooking(bookingId);
+
+        if(!cancelBooking.Success) {
+            return Unauthorized(
+                new {
+                    cancelBooking.ErrorCode,
+                    cancelBooking.Error
+                }
+            );
+        }
+
+        return Ok(cancelBooking.SuccessMessage);
+
+    }
+
     // private bool BookingExists(long id)
     // {
     //     return _context.Bookings.Any(e => e.Id == id);

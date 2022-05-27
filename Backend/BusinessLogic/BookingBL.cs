@@ -283,13 +283,16 @@ public class BookingBL : IBookingBL
         };
     }
 
-    public async Task<DeleteBookingResponse> DeleteBooking(long id) {
+    public async Task<DeleteBookingResponse> DeleteBooking(long id)
+    {
 
         // check if booking exists
         var booking = await _context.Bookings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
 
-        if(booking == null) {
-            return new DeleteBookingResponse() {
+        if (booking == null)
+        {
+            return new DeleteBookingResponse()
+            {
                 Success = false,
                 Error = "Couldn't find booking with id: " + id,
                 ErrorCode = "404"
@@ -300,9 +303,56 @@ public class BookingBL : IBookingBL
         _context.Bookings.Remove(booking);
         await _context.SaveChangesAsync();
 
-        return new DeleteBookingResponse() {
+        return new DeleteBookingResponse()
+        {
             Success = true,
             SuccessMessage = "Booking deleted"
         };
+    }
+
+    public async Task<DeleteBookingResponse> CancelBooking(long id)
+    {
+
+        // check if booking exists
+        var booking = await _context.Bookings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+
+        if (booking == null)
+        {
+            return new DeleteBookingResponse()
+            {
+                Success = false,
+                Error = "Couldn't find booking with id: " + id,
+                ErrorCode = "404"
+            };
+        }
+
+        // check if booking can be deleted given Table's deadline for cancellation
+        var table = await _context.Tables.Where(t => t.Id == booking.TableId).FirstOrDefaultAsync();
+        var deadline = table.Deadline.Value;
+        var now = DateTime.Now;
+        var nowWithDeadline = new DateTime(now.Year, now.Month, now.Day,
+                                           now.Hour + deadline.Hour, now.Minute + deadline.Minute, now.Second);
+        var difference = nowWithDeadline - booking.StartDate;
+        if (difference.Value.TotalMilliseconds > 0)
+        {
+            return new DeleteBookingResponse()
+            {
+                Success = false,
+                Error = "Too late to cancel booking, deadline is: " + deadline.Hour + " hour(s), " + deadline.Minute + " minutes",
+                ErrorCode = "404"
+            };
+        }
+
+        // remove booking
+        _context.Bookings.Remove(booking);
+        await _context.SaveChangesAsync();
+
+        return new DeleteBookingResponse()
+        {
+            Success = true,
+            SuccessMessage = "Booking deleted"
+        };
+
+
     }
 }

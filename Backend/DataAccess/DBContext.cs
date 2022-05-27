@@ -164,6 +164,7 @@ public class DBContext : DbContext
             TableNo = 1,
             Seats = 2,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
             RestrictionId = 3
         });
@@ -174,6 +175,7 @@ public class DBContext : DbContext
             TableNo = 2,
             Seats = 2,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
         });
 
@@ -183,6 +185,7 @@ public class DBContext : DbContext
             TableNo = 3,
             Seats = 4,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
             RestrictionId = 2
         });
@@ -193,6 +196,7 @@ public class DBContext : DbContext
             TableNo = 4,
             Seats = 4,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
         });
 
@@ -202,6 +206,7 @@ public class DBContext : DbContext
             TableNo = 5,
             Seats = 6,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
             RestrictionId = 1
         });
@@ -212,6 +217,7 @@ public class DBContext : DbContext
             TableNo = 6,
             Seats = 6,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
         });
 
@@ -220,9 +226,9 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 1,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 9, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 10, 0, 0),
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 9, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 10, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 1,
@@ -232,9 +238,9 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 2,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 12, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 15, 0, 0),
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 12, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 15, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 1,
@@ -244,9 +250,9 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 3,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 17, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 20, 0, 0),
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 17, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 20, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 1,
@@ -256,9 +262,9 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 4,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 10, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 12, 0, 0),
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 10, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 12, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 2,
@@ -268,9 +274,9 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 5,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 15, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 17, 0, 0),
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 15, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 17, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 2,
