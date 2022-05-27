@@ -27,17 +27,14 @@ using Backend.BusinessLogic;
 public class UserController : ControllerBase
 {
     private DBContext _context;
-    private ITokenService _tokenService;
     private readonly IBusinessLogic _businessLogic;
 
     public UserController(
         DBContext context,
-        ITokenService tokenService,
         IBusinessLogic businessLogic
         )
     {
         _context = context;
-        _tokenService = tokenService;
         _businessLogic = businessLogic;
 
     }
@@ -75,42 +72,23 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult> Register(RegisterRequest request)
+    public async Task<ActionResult> RegisterUser(RegisterRequest request)
     {
-        // check if there exists a user with provided email
-        var userExists = _context.Users.SingleOrDefault(user => user.Email == request.Email);
-        if (userExists != null)
-            return StatusCode(StatusCodes.Status500InternalServerError, "User already exists!");
+        var registerUser = await _businessLogic.RegisterUser(request);
 
-        // hash password
-        var hpass = BCrypt.HashPassword(request.Password);
-
-        // get user role
-        var role = _context.Roles.SingleOrDefault(role => role.Claims == "Customer");
-
-        // if successfully got user role 
-        if (role != null)
+        if (!registerUser.Success)
         {
-            // create new user
-            User user = new User()
-            {
-                Email = request.Email,
-                Password = hpass,
-                Name = request.Name,
-                PhoneNo = request.PhoneNo,
-                Role = role
-            };
-
-            //write user to db
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return Ok("User created successfully!");
+            return Unauthorized(
+                new
+                {
+                    registerUser.ErrorCode,
+                    registerUser.Error
+                }
+            );
         }
-        else
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Couldn't retrive role from db");
-        }
+
+        return Ok(registerUser);
+
     }
 
     [HttpGet("{id}")]

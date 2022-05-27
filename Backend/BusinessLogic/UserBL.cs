@@ -17,6 +17,7 @@ using Backend.Helpers.Models;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
 using Backend.DataAccess;
+using Backend.DataAccess.Models;
 
 public class UserBL : IUserBL
 {
@@ -29,7 +30,8 @@ public class UserBL : IUserBL
         _tokenService = tokenService;
     }
 
-    public async Task<GetUsersResponse> GetUsers() {
+    public async Task<GetUsersResponse> GetUsers()
+    {
         var users = await _context.Users.Where(u => u.Role.Claims == UserRoles.Customer).ToListAsync();
 
         return new GetUsersResponse()
@@ -102,5 +104,61 @@ public class UserBL : IUserBL
                 ErrorCode = "401"
             };
         }
+    }
+
+    public async Task<RegisterUserResponse> RegisterUser(RegisterRequest request)
+    {
+        // check if there exists a user with provided email
+        var userExists = _context.Users.SingleOrDefault(user => user.Email == request.Email);
+        if (userExists != null)
+            //return StatusCode(StatusCodes.Status500InternalServerError, "User already exists!");
+            return new RegisterUserResponse()
+            {
+                Success = false,
+                Error = "User already exists!",
+                ErrorCode = "500"
+            };
+
+        // hash password
+        var hpass = BCrypt.HashPassword(request.Password);
+
+        // get user role
+        var role = _context.Roles.SingleOrDefault(role => role.Claims == "Customer");
+
+        // if couldnt get user role 
+        if (role == null)
+        {
+            //return StatusCode(StatusCodes.Status500InternalServerError, "Couldn't retrive role from db");
+            return new RegisterUserResponse()
+            {
+                Success = false,
+                Error = "Couldn't retrive role from db",
+                ErrorCode = "500"
+            };
+        }
+
+
+        // create new user
+        User user = new User()
+        {
+            Email = request.Email,
+            Password = hpass,
+            Name = request.Name,
+            PhoneNo = request.PhoneNo,
+            Role = role
+        };
+
+        //write user to db
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+
+
+        return new RegisterUserResponse()
+        {
+            Success = true,
+            SuccessMessage = "User created successfully!"
+        };
+
+
     }
 }

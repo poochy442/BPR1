@@ -28,6 +28,10 @@ public class BusinessLogic : IBusinessLogic
         return await _userBL.LoginUser(request);
     }
 
+    public async Task<RegisterUserResponse> RegisterUser(RegisterRequest request) {
+        return await _userBL.RegisterUser(request);
+    }
+
     public async Task<GetTablesResponse> GetTables(long restaurantId) {
         return await _tableBL.GetTables(restaurantId);
     }
