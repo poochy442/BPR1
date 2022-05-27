@@ -199,7 +199,12 @@ namespace backend.Migrations
             migrationBuilder.InsertData(
                 table: "Addresses",
                 columns: new[] { "Id", "City", "Location", "PostalCode", "Street", "StreetNo" },
-                values: new object[] { 1, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Slotsgade", "10" });
+                values: new object[,]
+                {
+                    { 1, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Borgergade", "15" },
+                    { 2, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Flintebakken", "1" },
+                    { 3, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Borgergade", "25" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Restrictions",
@@ -234,6 +239,16 @@ namespace backend.Migrations
                 table: "Restaurants",
                 columns: new[] { "Id", "AddressId", "FoodType", "Name", "StudentDiscount", "TotalScore", "UserId", "WorkingHours" },
                 values: new object[] { 1, 1, "Pizza", "Pizza King", 5, 4m, 2, "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n}\r\n]" });
+
+            migrationBuilder.InsertData(
+                table: "Restaurants",
+                columns: new[] { "Id", "AddressId", "FoodType", "Name", "StudentDiscount", "TotalScore", "UserId", "WorkingHours" },
+                values: new object[] { 2, 2, "Fast Food", "Mc Donald's", 7, 4.4m, 2, "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n}\r\n]" });
+
+            migrationBuilder.InsertData(
+                table: "Restaurants",
+                columns: new[] { "Id", "AddressId", "FoodType", "Name", "StudentDiscount", "TotalScore", "UserId", "WorkingHours" },
+                values: new object[] { 3, 3, "Italian", "Venezia", 5, 4.2m, 2, "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"00:00\",\r\n\"Till\": \"00:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n}\r\n]" });
 
             migrationBuilder.InsertData(
                 table: "Tables",

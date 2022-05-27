@@ -4,32 +4,45 @@ using Microsoft.AspNetCore.Cors;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
-
+using Backend.BusinessLogic;
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
 
 namespace Backend.Controllers;
 
 [EnableCors]
+[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
 [ApiController]
 [Route("[controller]")]
 public class RestaurantController : ControllerBase
 {
-	private readonly DBContext _context;
+    private readonly DBContext _context;
+	private readonly IBusinessLogic _businessLogic;
 
-	public RestaurantController(DBContext context)
-	{
-		_context = context;
-	}
-
-	[AllowAnonymous]
-	[HttpGet]
-    public async Task<ActionResult<Restaurant>> GetRestaurnats()
+    public RestaurantController(DBContext context, IBusinessLogic businessLogic)
     {
-        return await _context.Restaurants.FindAsync(1);
+        _context = context;
+		_businessLogic = businessLogic;
     }
 
-	/*[HttpGet]
+    // [AllowAnonymous]
+    // [HttpGet]
+    // public async Task<ActionResult<Restaurant>> GetRestaurnats()
+    // {
+    //     return await _context.Restaurants.FindAsync(1);
+    // }
+
+	// customer
+    [AllowAnonymous]
+    [HttpGet("restaurants")]
+    public async Task<ActionResult<List<Restaurant>>> GetRestaurants(string city)
+    {
+        var restaurants = await _businessLogic.GetRestaurants(city);
+
+        return Ok(restaurants.Restaurants); 
+    }
+
+    /*[HttpGet]
     public Task<List<Restaurant>> GetRestaurants()
     {
         return _context.Restaurants.ToListAsync();

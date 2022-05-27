@@ -45,8 +45,30 @@ public class DBContext : DbContext
             Id = 1,
             PostalCode = "8700",
             City = "Horsens",
-            Street = "Slotsgade",
-            StreetNo = "10",
+            Street = "Borgergade",
+            StreetNo = "15",
+            Location = "longtitude: 1025623; latitude: 1025623"
+
+        });
+
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 2,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Flintebakken",
+            StreetNo = "1",
+            Location = "longtitude: 1025623; latitude: 1025623"
+
+        });
+
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 3,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Borgergade",
+            StreetNo = "25",
             Location = "longtitude: 1025623; latitude: 1025623"
 
         });
@@ -85,6 +107,30 @@ public class DBContext : DbContext
             TotalScore = 4,
             UserId = 2,
             AddressId = 1
+        });
+
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 2,
+            Name = "Mc Donald's",
+            FoodType = "Fast Food",
+            StudentDiscount = 7,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n}\r\n]",
+            TotalScore = 4.4f,
+            UserId = 2,
+            AddressId = 2
+        });
+
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 3,
+            Name = "Venezia",
+            FoodType = "Italian",
+            StudentDiscount = 5,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"00:00\",\r\n\"Till\": \"00:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n}\r\n]",
+            TotalScore = 4.2f,
+            UserId = 2,
+            AddressId = 3
         });
 
 

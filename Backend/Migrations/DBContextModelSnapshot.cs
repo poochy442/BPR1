@@ -56,8 +56,26 @@ namespace backend.Migrations
                             City = "Horsens",
                             Location = "longtitude: 1025623; latitude: 1025623",
                             PostalCode = "8700",
-                            Street = "Slotsgade",
-                            StreetNo = "10"
+                            Street = "Borgergade",
+                            StreetNo = "15"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Horsens",
+                            Location = "longtitude: 1025623; latitude: 1025623",
+                            PostalCode = "8700",
+                            Street = "Flintebakken",
+                            StreetNo = "1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Horsens",
+                            Location = "longtitude: 1025623; latitude: 1025623",
+                            PostalCode = "8700",
+                            Street = "Borgergade",
+                            StreetNo = "25"
                         });
                 });
 
@@ -238,6 +256,28 @@ namespace backend.Migrations
                             TotalScore = 4m,
                             UserId = 2,
                             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"09:00\",\r\n\"Till\": \"20:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"22:00\"\r\n}\r\n]"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddressId = 2,
+                            FoodType = "Fast Food",
+                            Name = "Mc Donald's",
+                            StudentDiscount = 7,
+                            TotalScore = 4.4m,
+                            UserId = 2,
+                            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n}\r\n]"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddressId = 3,
+                            FoodType = "Italian",
+                            Name = "Venezia",
+                            StudentDiscount = 5,
+                            TotalScore = 4.2m,
+                            UserId = 2,
+                            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"00:00\",\r\n\"Till\": \"00:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n}\r\n]"
                         });
                 });
 

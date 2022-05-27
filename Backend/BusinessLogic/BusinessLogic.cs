@@ -8,16 +8,19 @@ public class BusinessLogic : IBusinessLogic
     private readonly IUserBL _userBL;
     private readonly ITableBL _tableBL;
     private readonly IBookingBL _bookingBL;
+    private readonly IRestaurantBL _restaurantBL;
 
     public BusinessLogic(
       IUserBL userBL,
       ITableBL tableBL,
-      IBookingBL bookingBL
+      IBookingBL bookingBL,
+      IRestaurantBL restaurantBL
       )
     {
         _userBL = userBL;
         _tableBL = tableBL;
         _bookingBL = bookingBL;
+        _restaurantBL = restaurantBL;
     }
 
     public async Task<GetUsersResponse> GetUsers() {
@@ -50,6 +53,10 @@ public class BusinessLogic : IBusinessLogic
 
     public async Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request) {
         return await _bookingBL.CreateInCallBooking(request);
+    }
+
+    public async Task<GetRestaurantsResponse> GetRestaurants(string city) {
+        return await _restaurantBL.GetRestaurants(city);
     }
 
 }

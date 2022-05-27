@@ -59,6 +59,7 @@ ConfigurationManager configuration = builder.Configuration;
     services.AddScoped<IUserBL, UserBL>();
     services.AddScoped<ITableBL, TableBL>();
     services.AddScoped<IBookingBL, BookingBL>();
+    services.AddScoped<IRestaurantBL, RestaurantBL>();
     
 
     // Adding swagger

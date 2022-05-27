@@ -18,4 +18,6 @@ public interface IBusinessLogic
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
 
     Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request);
+
+    Task<GetRestaurantsResponse> GetRestaurants(string city);
 }
