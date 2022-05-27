@@ -66,7 +66,6 @@ const Search = () => {
 			setRestrictionFilters({...restrictionFilters, [element]: false})
 		})
 		let newRestaurants = await searchRestaurants(collectFilters());
-		console.log("New restaurants", newRestaurants);
 		setRestaurants(newRestaurants);
 	}, [])
 
@@ -105,7 +104,6 @@ const Search = () => {
 
 	const searchRestaurants = async (filters) => {
 		const res = await Client.post("Restaurant/Search", {}, filters);
-		console.log('search data', res.data);
 		return res.data;
 	}
 
@@ -184,7 +182,7 @@ const Search = () => {
 										<p className="restaurantName"><b>{restaurant.name}</b></p>
 										<p className="location">{restaurant.address}</p>
 									</div>
-									<Score score={restaurant.score} mini={true}/>
+									<Score score={restaurant.totalScore} mini={true}/>
 								</div>
 							)))}
 						</div>
