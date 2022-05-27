@@ -80,7 +80,7 @@ public class TableController : ControllerBase
     }
 
     // manager
-    [HttpPut("update")]
+    [HttpPut("update-booking-times")]
     [AllowAnonymous]
     public async Task<ActionResult> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request)
     {
@@ -97,6 +97,25 @@ public class TableController : ControllerBase
         }
 
         return Ok(updateBookingTimes);
+    }
+
+    // manager
+    [HttpPut("update-deadline")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTablesDeadline(long restaurantId, DateTime deadline)
+    {
+        var updateDeadline = await _businessLogic.UpdateTablesDeadline(restaurantId, deadline);
+
+        if (!updateDeadline.Success)
+        {
+            return Unauthorized(new
+            {
+                updateDeadline.ErrorCode,
+                updateDeadline.Error
+            });
+        }
+
+        return Ok(updateDeadline);
     }
 
     // [HttpPost]

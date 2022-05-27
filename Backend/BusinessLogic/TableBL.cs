@@ -195,13 +195,16 @@ public class TableBL : ITableBL
         };
     }
 
-    public async Task<UpdateTableResponse> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request) {
+    public async Task<UpdateTableResponse> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request)
+    {
 
         // check if table exists
         var table = await _context.Tables.AsNoTracking().FirstOrDefaultAsync(t => t.Id == request.TableId);
 
-        if(table == null) {
-            return new UpdateTableResponse() {
+        if (table == null)
+        {
+            return new UpdateTableResponse()
+            {
                 Success = false,
                 Error = "Couldn't find table with id: " + request.TableId,
                 ErrorCode = "404"
@@ -214,11 +217,52 @@ public class TableBL : ITableBL
         _context.Entry(table).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
-        return new UpdateTableResponse() {
+        return new UpdateTableResponse()
+        {
             Success = true,
             SuccessMessage = "Table updated with booking times"
         };
+    }
 
+    public async Task<UpdateTableResponse> UpdateTablesDeadline(long restaurantId, DateTime deadline)
+    {
 
+        // check if could find restaurant
+        var restaurant = await _context.Restaurants.AsNoTracking().FirstOrDefaultAsync(r => r.Id == restaurantId);
+        if (restaurant == null)
+        {
+            return new UpdateTableResponse()
+            {
+                Success = false,
+                Error = "Couldnt find restaurant with id:" + restaurantId,
+                ErrorCode = "404"
+            };
+        }
+
+        // check if deadline is valid
+        if (deadline == null || deadline.Hour == 0)
+        {
+            return new UpdateTableResponse()
+            {
+                Success = false,
+                Error = "Deadline invalid or hours = 0",
+                ErrorCode = "400"
+            };
+        }
+
+        // retrieve tables
+        var tables = await _context.Tables.AsNoTracking().Where(t => t.RestaurantId == restaurantId).ToListAsync();
+        foreach (var t in tables)
+        {
+            t.Deadline = deadline;
+            _context.Entry(t).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        return new UpdateTableResponse()
+        {
+            Success = true,
+            SuccessMessage = "Tables updated with new deadline"
+        };
     }
 }

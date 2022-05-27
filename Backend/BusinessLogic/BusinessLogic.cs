@@ -52,6 +52,10 @@ public class BusinessLogic : IBusinessLogic
         return await _tableBL.UpdateTableBookingTimes(request);
     }
 
+    public async Task<UpdateTableResponse> UpdateTablesDeadline(long restaurantId, DateTime deadline) {
+        return await _tableBL.UpdateTablesDeadline(restaurantId, deadline);
+    }
+
     public async Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId) {
         return await _bookingBL.GetBookingsForTables(restaurantId);
     }
