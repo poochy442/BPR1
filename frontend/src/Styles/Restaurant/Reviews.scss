@@ -1,0 +1,62 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
+
+.reviewsController {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba($color: #000000, $alpha: 0.75);
+
+	.reviews {
+		position: relative;
+		min-height: 40%;
+		min-width: 40%;
+		padding: 1rem;
+		border-radius: 1rem;
+		background-color: $light-color;
+
+		h2 {
+			text-align: center;
+			padding-bottom: 0.5rem;
+			border-bottom: 1px solid $dark-accent;
+			margin-bottom: 0.5rem !important;
+		}
+
+		.review {
+			padding-bottom: 0.5rem;
+			border-bottom: 1px solid $dark-accent;
+
+			h3 {
+				margin-bottom: 1rem !important;
+			}
+
+			.reviewDetails {
+				display: flex;
+				flex-flow: row nowrap;
+				align-items: center;
+
+				p {
+					width: 80%;
+				}
+			}
+		}
+
+		.review:last-child {
+			padding-bottom: 0;
+			border-bottom: none;
+		}
+	}
+	
+	.closeButton {
+		position: absolute;
+		right: 1.5rem;
+		top: 1rem;
+		font-size: $font-size-medium;
+		cursor: pointer;
+	}
+}
