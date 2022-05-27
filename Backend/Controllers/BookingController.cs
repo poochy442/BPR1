@@ -46,6 +46,7 @@ public class BookingController : ControllerBase
         return booking;
     }
 
+    // manager
     [HttpGet("bookings-for-tables")]
     [AllowAnonymous]
     public async Task<ActionResult<GetTableBookingsResponse>> GetBookingsForTables(long restaurantId)
@@ -67,6 +68,7 @@ public class BookingController : ControllerBase
         return Ok(getTableBookings);
     }
 
+    // both customer and manager
     [HttpPost]
     [AllowAnonymous]
     public async Task<ActionResult> CreateBooking(CreateBookingRequest request)
@@ -87,6 +89,30 @@ public class BookingController : ControllerBase
 
         return Ok(createBooking);
     }
+
+    // manager
+    [HttpPost("incall-booking")]
+    [AllowAnonymous]
+    public async Task<ActionResult> CreateInCallBooking(CreateInCallBookingRequest request)
+    {
+
+        var createBooking = await _businessLogic.CreateInCallBooking(request);
+
+        if (!createBooking.Success)
+        {
+            return Unauthorized(
+                new
+                {
+                    createBooking.ErrorCode,
+                    createBooking.Error
+                }
+            );
+        }
+
+        return Ok(createBooking);
+    }
+
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutBooking(long id, Booking booking)

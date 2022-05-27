@@ -29,6 +29,16 @@ public class UserBL : IUserBL
         _tokenService = tokenService;
     }
 
+    public async Task<GetUsersResponse> GetUsers() {
+        var users = await _context.Users.Where(u => u.Role.Claims == UserRoles.Customer).ToListAsync();
+
+        return new GetUsersResponse()
+        {
+            Success = true,
+            Users = users
+        };
+    }
+
     public async Task<TokenResponse> LoginUser(LoginRequest request)
     {
         // find user with provided email

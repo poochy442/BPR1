@@ -38,33 +38,38 @@ public class TableController : ControllerBase
         return table;
     }
 
+    // manager
     [HttpGet("tables")]
     [AllowAnonymous]
     public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
     {
-    	var tables = await _businessLogic.GetTables(restaurantId);
+        var tables = await _businessLogic.GetTables(restaurantId);
 
-        if(!tables.Success) {
-            return Unauthorized(new {
+        if (!tables.Success)
+        {
+            return Unauthorized(new
+            {
                 tables.ErrorCode,
                 tables.Error
             });
         }
 
         return Ok(tables);
-        
+
     }
 
-    [HttpGet]
-    [Route("available-tables")]
+    // both customer and manager
+    [HttpGet("available-tables")]
     [AllowAnonymous]
     public async Task<ActionResult> GetAvailableTables([FromQuery] long restaurantId, int guests, DateTime start, DateTime end)
     {
         var availableTables = await _businessLogic.GetAvailableTables(restaurantId, guests, start, end);
 
-        if(!availableTables.Success) {
+        if (!availableTables.Success)
+        {
             return Unauthorized(
-                new {
+                new
+                {
                     availableTables.ErrorCode,
                     availableTables.Error
                 }

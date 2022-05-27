@@ -9,4 +9,6 @@ public interface IBookingBL
 {
     Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId);
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
+
+    Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request);
 }

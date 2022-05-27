@@ -42,15 +42,28 @@ public class UserController : ControllerBase
 
     }
 
+    // manager
+    [HttpGet("users")]
+    //[Authorize(Roles = UserRoles.RestaurantManager)]
+    [AllowAnonymous]
+    public async Task<ActionResult<List<User>>> GetUsers()
+    {
+        var users = await _businessLogic.GetUsers();
+
+        return Ok(users.Users);
+    }
+
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult> LoginUser(LoginRequest request)
     {
         var loginUser = await _businessLogic.LoginUser(request);
 
-        if(!loginUser.Success) {
+        if (!loginUser.Success)
+        {
             return Unauthorized(
-                new {
+                new
+                {
                     loginUser.ErrorCode,
                     loginUser.Error
                 }
@@ -111,10 +124,5 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpGet]
-    [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult<List<User>>> GetUsers()
-    {
-        return await _context.Users.ToListAsync();
-    }
+
 }

@@ -6,5 +6,6 @@ using Backend.Helpers.Models.Responses;
 
 public interface IUserBL
 {
+    Task<GetUsersResponse> GetUsers();
     Task<TokenResponse> LoginUser(LoginRequest request);
 }

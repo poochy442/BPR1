@@ -6,6 +6,7 @@ using Backend.Helpers.Models.Responses;
 
 public interface IBusinessLogic
 {
+    Task<GetUsersResponse> GetUsers();
     Task<TokenResponse> LoginUser(LoginRequest request);
 
     Task<GetTablesResponse> GetTables(long restaurantId);
@@ -13,4 +14,6 @@ public interface IBusinessLogic
 
     Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId);
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
+
+    Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request);
 }

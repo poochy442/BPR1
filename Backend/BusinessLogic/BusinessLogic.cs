@@ -20,6 +20,10 @@ public class BusinessLogic : IBusinessLogic
         _bookingBL = bookingBL;
     }
 
+    public async Task<GetUsersResponse> GetUsers() {
+        return await _userBL.GetUsers();
+    }
+
     public async Task<TokenResponse> LoginUser(LoginRequest request) {
         return await _userBL.LoginUser(request);
     }
@@ -38,6 +42,10 @@ public class BusinessLogic : IBusinessLogic
 
     public async Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request) {
         return await _bookingBL.CreateBooking(request);
+    }
+
+    public async Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request) {
+        return await _bookingBL.CreateInCallBooking(request);
     }
 
 }
