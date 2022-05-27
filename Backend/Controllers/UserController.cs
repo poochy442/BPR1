@@ -111,15 +111,15 @@ public class UserController : ControllerBase
 
     }
 
-    [HttpGet("{id}")]
-    [Authorize(Roles = UserRoles.Customer)]
-    public async Task<ActionResult<User>> GetUser(int id)
-    {
-        var user = await _context.Users.FindAsync(id);
-        if (user == null) return NotFound();
+    // [HttpGet("{id}")]
+    // [Authorize(Roles = UserRoles.Customer)]
+    // public async Task<ActionResult<User>> GetUser(int id)
+    // {
+    //     var user = await _context.Users.FindAsync(id);
+    //     if (user == null) return NotFound();
 
-        return user;
-    }
+    //     return user;
+    // }
 
 
 

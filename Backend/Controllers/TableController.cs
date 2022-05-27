@@ -28,15 +28,15 @@ public class TableController : ControllerBase
     }
 
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Table>> GetTable(long id)
-    {
-        var table = await _context.Tables.FindAsync(id);
+    // [HttpGet("{id}")]
+    // public async Task<ActionResult<Table>> GetTable(long id)
+    // {
+    //     var table = await _context.Tables.FindAsync(id);
 
-        if (table == null) return NotFound();
+    //     if (table == null) return NotFound();
 
-        return table;
-    }
+    //     return table;
+    // }
 
     // manager
     [HttpGet("tables")]
@@ -100,37 +100,37 @@ public class TableController : ControllerBase
     // 	);
     // }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutTable(long id, Table table)
-    {
-        if (id != table.Id)
-        {
-            return BadRequest();
-        }
+    // [HttpPut("{id}")]
+    // public async Task<IActionResult> PutTable(long id, Table table)
+    // {
+    //     if (id != table.Id)
+    //     {
+    //         return BadRequest();
+    //     }
 
-        var putTable = await _context.Tables.FindAsync(table.Id);
-        if (putTable == null)
-        {
-            return NotFound();
-        }
+    //     var putTable = await _context.Tables.FindAsync(table.Id);
+    //     if (putTable == null)
+    //     {
+    //         return NotFound();
+    //     }
 
-        putTable = table;
+    //     putTable = table;
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException) when (!TableExists(id))
-        {
-            return NotFound();
-        }
+    //     try
+    //     {
+    //         await _context.SaveChangesAsync();
+    //     }
+    //     catch (DbUpdateConcurrencyException) when (!TableExists(id))
+    //     {
+    //         return NotFound();
+    //     }
 
-        return NoContent();
-    }
+    //     return NoContent();
+    // }
 
-    private bool TableExists(long id)
-    {
-        return _context.Tables.Any(e => e.Id == id);
-    }
+    // private bool TableExists(long id)
+    // {
+    //     return _context.Tables.Any(e => e.Id == id);
+    // }
 
 }

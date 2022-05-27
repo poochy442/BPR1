@@ -27,24 +27,24 @@ public class BookingController : ControllerBase
         _businessLogic = businessLogic;
     }
 
-    [HttpGet]
-    public Task<List<Booking>> GetBookings()
-    {
-        return _context.Bookings.ToListAsync();
-    }
+    // [HttpGet]
+    // public Task<List<Booking>> GetBookings()
+    // {
+    //     return _context.Bookings.ToListAsync();
+    // }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Booking>> GetBooking(long id)
-    {
-        var booking = await _context.Bookings.FindAsync(id);
+    // [HttpGet("{id}")]
+    // public async Task<ActionResult<Booking>> GetBooking(long id)
+    // {
+    //     var booking = await _context.Bookings.FindAsync(id);
 
-        if (booking == null)
-        {
-            return NotFound();
-        }
+    //     if (booking == null)
+    //     {
+    //         return NotFound();
+    //     }
 
-        return booking;
-    }
+    //     return booking;
+    // }
 
     // manager
     [HttpGet("bookings-for-tables")]
@@ -114,37 +114,59 @@ public class BookingController : ControllerBase
 
 
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutBooking(long id, Booking booking)
-    {
-        if (id != booking.Id)
-        {
-            return BadRequest();
+    // [HttpPut("{id}")]
+    // public async Task<IActionResult> PutBooking(long id, Booking booking)
+    // {
+    //     if (id != booking.Id)
+    //     {
+    //         return BadRequest();
+    //     }
+
+    //     var putBooking = await _context.Bookings.FindAsync(booking.Id);
+    //     if (putBooking == null)
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     putBooking = booking;
+
+    //     try
+    //     {
+    //         await _context.SaveChangesAsync();
+    //     }
+    //     catch (DbUpdateConcurrencyException) when (!BookingExists(id))
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     return NoContent();
+    // }
+
+    // for manager
+    [HttpDelete("delete")]
+    [AllowAnonymous]
+    public async Task<ActionResult> DeleteBooking(long bookingId) {
+
+        var deleteBooking = await _businessLogic.DeleteBooking(bookingId);
+
+        if(!deleteBooking.Success) {
+            return Unauthorized(
+                new {
+                    deleteBooking.ErrorCode,
+                    deleteBooking.Error
+                }
+            );
         }
 
-        var putBooking = await _context.Bookings.FindAsync(booking.Id);
-        if (putBooking == null)
-        {
-            return NotFound();
-        }
+        return Ok(deleteBooking.SuccessMessage);
 
-        putBooking = booking;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException) when (!BookingExists(id))
-        {
-            return NotFound();
-        }
-
-        return NoContent();
     }
 
-    private bool BookingExists(long id)
-    {
-        return _context.Bookings.Any(e => e.Id == id);
-    }
+    // private bool BookingExists(long id)
+    // {
+    //     return _context.Bookings.Any(e => e.Id == id);
+    // }
+
+    
 
 }

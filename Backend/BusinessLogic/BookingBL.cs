@@ -282,4 +282,27 @@ public class BookingBL : IBookingBL
             SuccessMessage = "Booking created successfully!"
         };
     }
+
+    public async Task<DeleteBookingResponse> DeleteBooking(long id) {
+
+        // check if booking exists
+        var booking = await _context.Bookings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+
+        if(booking == null) {
+            return new DeleteBookingResponse() {
+                Success = false,
+                Error = "Couldn't find booking with id: " + id,
+                ErrorCode = "404"
+            };
+        }
+
+        // remove booking
+        _context.Bookings.Remove(booking);
+        await _context.SaveChangesAsync();
+
+        return new DeleteBookingResponse() {
+            Success = true,
+            SuccessMessage = "Booking deleted"
+        };
+    }
 }
