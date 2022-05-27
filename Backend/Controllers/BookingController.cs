@@ -17,6 +17,13 @@ public class BookingController : ControllerBase
 	public BookingController(DBContext context)
 	{
 		_context = context;
+
+		if(context.Bookings.Count() == 0)
+		{
+			PostBooking(new Booking(DateTime.Now, DateTime.Now.AddDays(1), 2));
+			PostBooking(new Booking(DateTime.Now, DateTime.Now.AddDays(1), 6));
+			PostBooking(new Booking(DateTime.Now, DateTime.Now.AddDays(1), 4)); 
+		}
 	}
 
 	[HttpGet]

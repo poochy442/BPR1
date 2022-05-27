@@ -18,6 +18,30 @@ public class TableController : ControllerBase
 	public TableController(DBContext context)
 	{
 		_context = context;
+
+		if(context.Tables.Count() == 0)
+		{
+			List<string> r1 = new List<string>(new string[] {"Handicap"});
+			string r1String = JsonSerializer.Serialize(r1);
+			List<string> r2 = new List<string>(new string[] {"Senior"});
+			string r2String = JsonSerializer.Serialize(r2);
+			// Delon's tables
+			PostTable(1, new Table(1, 4, true, "", r1String));
+			PostTable(1, new Table(2, 4, true, "", r2String));
+			PostTable(1, new Table(3, 2, true, "", ""));
+			PostTable(1, new Table(4, 6, true, "", ""));
+			// McDonald's tables
+			PostTable(2, new Table(1, 4, true, "", r1String));
+			PostTable(2, new Table(2, 4, true, "", r2String));
+			PostTable(2, new Table(3, 2, true, "", ""));
+			PostTable(2, new Table(4, 2, true, "", ""));
+			PostTable(2, new Table(5, 8, true, "", ""));
+			PostTable(2, new Table(6, 6, true, "", ""));
+			// Bone's tables
+			PostTable(3, new Table(1, 4, true, "", r1String));
+			PostTable(3, new Table(2, 2, true, "", ""));
+			PostTable(3, new Table(3, 2, true, "", ""));
+		}
 	}
 
 	[HttpGet]

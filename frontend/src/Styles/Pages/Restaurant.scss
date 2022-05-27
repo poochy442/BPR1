@@ -1,11 +1,123 @@
 @import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
 
 .restaurant{
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
 	width: 80%;
-	padding: 1rem;
-	border-radius: 2rem;
-	background-color: $light-color;
+
+	.details{
+		width: 100%;
+	}
+
+	h2 {
+		margin-bottom: 1rem !important;
+	}
+
+	.reservationForm {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		align-items: center;
+		width: 80%;
+
+		.reservationLabel {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+			width: 80%;
+			color: $light-accent;
+
+			p {
+				width: 35%;
+			}
+
+			.reservationInput {
+				width: 100%;
+			}
+		}
+		.reservationLabel:first-child {
+			margin-top: 0;
+		}
+		.reservationLabel:last-child {
+			margin-bottom: 0;
+		}
+
+		.button {
+			padding: 1.5rem;
+			border-radius: 1rem;
+			font-size: $font-size-small;
+			margin-top: 1rem;
+		}
+		.searchButton {
+			background-color: $dark-accent;
+		}
+		.placeButton {
+			background-color: $main-color;
+		}
+
+		.errorText {
+			color: $danger-color;
+			text-align: center;
+		}
+
+		.restaurantMap {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 40vw;
+			height: 24vh;
+			background-color: $main-color;
+		}
+	}
+
+	.confirmation {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba($color: #000000, $alpha: 0.75);
+
+		.confirmationModal {
+			position: relative;
+			width: 60%;
+			padding: 1rem;
+			border-radius: 1rem;
+			background-color: $light-color;
+
+			.closeButton {
+				position: absolute;
+				right: 1.5rem;
+				top: 1rem;
+				font-size: $font-size-medium;
+				cursor: pointer;
+			}
+
+			.bookingInfo {
+				display: flex;
+				flex-flow: row nowrap;
+
+				div {
+					display: flex;
+					flex-flow: row nowrap;
+					align-items: center;
+					width: 100%;
+
+					p {
+						margin-left: 1rem !important;
+						margin-bottom: 1rem !important;
+						font-size: $font-size-medium !important;
+					}
+				}
+			}
+		}
+	}
 }

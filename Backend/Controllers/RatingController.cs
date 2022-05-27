@@ -18,6 +18,17 @@ public class RatingController : ControllerBase
 	public RatingController(DBContext context)
 	{
 		_context = context;
+
+		if(context.Ratings.Count() == 0)
+		{
+			PostRating(new Rating(1, 4, "Pretty good service, decent food"));
+			PostRating(new Rating(2, 4, "Pretty good service, decent food"));
+			PostRating(new Rating(3, 4, "Pretty good service, decent food"));
+			PostRating(new Rating(1, 2, "Pretty bad service"));
+			PostRating(new Rating(3, 2, "Pretty bad service"));
+			PostRating(new Rating(1, 1, "Absolutely awful"));
+			PostRating(new Rating(2, 1, "Absolutely awful"));
+		}
 	}
 
 	[HttpGet]
@@ -47,6 +58,10 @@ public class RatingController : ControllerBase
 	[HttpPost]
 	public async Task<ActionResult<Rating>> PostRating(Rating rating)
 	{
+		var restaurant = _context.Restaurants.Single(res => res.Id == rating.RestaurantId);
+		var ratings = _context.Ratings.Select(rating => rating.RestaurantId == restaurant.Id).ToList();
+		restaurant.TotalScore = (restaurant.TotalScore * ratings.Count + rating.Score) / (ratings.Count + 1);
+
 		_context.Ratings.Add(rating);
 		await _context.SaveChangesAsync();
 

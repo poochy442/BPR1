@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router';
 
@@ -174,17 +174,20 @@ const Search = () => {
 						No restaurants found, please try again.
 					</div>
 				) : (
-					<div className="resultContainer">
-						{restaurants.map(((restaurant, index) => (
-							<div key={index} className="restaurantContainer" onClick={() => handleRestaurantClick(restaurant)}>
-								<div className="restaurantImage"></div>
-								<div className="restaurantDetails">
-									<p className="foodName"><b>{restaurant.name}</b></p>
-									<p className="location">{restaurant.location}</p>
-									<Score score={restaurant.score} />
+					<div>
+						<h2 className='resultTitle'>Restaurants</h2>
+						<div className="resultContainer">
+							{restaurants.map(((restaurant, index) => (
+								<div key={index} className="restaurantCard" onClick={() => handleRestaurantClick(restaurant)}>
+									<div className="restaurantImage"></div>
+									<div className="restaurantInformation">
+										<p className="restaurantName"><b>{restaurant.name}</b></p>
+										<p className="location">{restaurant.address}</p>
+									</div>
+									<Score score={restaurant.score} mini={true}/>
 								</div>
-							</div>
-						)))}
+							)))}
+						</div>
 					</div>
 				)}
 			</div>

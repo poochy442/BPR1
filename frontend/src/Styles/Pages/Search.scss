@@ -119,12 +119,15 @@
 			}
 		}
 
+		.resultTitle {
+			margin-bottom: 1rem !important;
+		}
 		.resultContainer{
 			width: 100%;
 			display: flex;
-			flex-flow: row wrap;
+			flex-flow: wrap;
 
-			.restaurantContainer {
+			.restaurantCard {
 				display: flex;
 				flex-flow: column nowrap;
 				justify-content: center;
@@ -142,14 +145,16 @@
 					background-color: $light-accent;
 				}
 
-				.restaurantDetails{
+				.restaurantInformation{
+					display: flex;
+					flex-flow: column nowrap;
 					margin-top: 1rem;
 					
 					p {
 						cursor: pointer;
 					}
 
-					.foodName {
+					.restaurantName {
 						color: $main-color;
 					}
 				}

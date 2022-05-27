@@ -1,6 +1,4 @@
 // Imports
-import Header from './Layout/Header';
-import Footer from './Layout/Footer';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 // Pages
@@ -10,6 +8,8 @@ import Restaurant from './Pages/Restaurant';
 import LogIn from './Pages/Auth/LogIn';
 import SignUp from './Pages/Auth/SignUp';
 
+import Header from './Layout/Header';
+import Footer from './Layout/Footer';
 import CookieBar from './Cookies/CookieBar';
 
 // Style imports
