@@ -71,6 +71,26 @@ public class UserController : ControllerBase
     }
 
     [AllowAnonymous]
+    [HttpPost("login-manager")]
+    public async Task<ActionResult> LoginManager(LoginRequest request)
+    {
+        var loginManager = await _businessLogic.LoginManager(request);
+
+        if (!loginManager.Success)
+        {
+            return Unauthorized(
+                new
+                {
+                    loginManager.ErrorCode,
+                    loginManager.Error
+                }
+            );
+        }
+
+        return Ok(loginManager);
+    }
+
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<ActionResult> RegisterUser(RegisterRequest request)
     {

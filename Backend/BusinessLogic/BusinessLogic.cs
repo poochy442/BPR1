@@ -31,6 +31,10 @@ public class BusinessLogic : IBusinessLogic
         return await _userBL.LoginUser(request);
     }
 
+    public async Task<TokenResponse> LoginManager(LoginRequest request) {
+        return await _userBL.LoginManager(request);
+    }
+
     public async Task<RegisterUserResponse> RegisterUser(RegisterRequest request) {
         return await _userBL.RegisterUser(request);
     }
