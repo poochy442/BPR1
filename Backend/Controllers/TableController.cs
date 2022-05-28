@@ -118,6 +118,44 @@ public class TableController : ControllerBase
         return Ok(updateDeadline);
     }
 
+    // manager
+    [HttpPut("update-age")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTableAge(long tableId, bool age)
+    {
+        var updateAge = await _businessLogic.UpdateTableAge(tableId, age);
+
+        if (!updateAge.Success)
+        {
+            return Unauthorized(new
+            {
+                updateAge.ErrorCode,
+                updateAge.Error
+            });
+        }
+
+        return Ok(updateAge);
+    }
+
+    // manager
+    [HttpPut("update-handicap")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTableHandicap(long tableId, bool handicap)
+    {
+        var updateHandicap = await _businessLogic.UpdateTableHandicap(tableId, handicap);
+
+        if (!updateHandicap.Success)
+        {
+            return Unauthorized(new
+            {
+                updateHandicap.ErrorCode,
+                updateHandicap.Error
+            });
+        }
+
+        return Ok(updateHandicap);
+    }
+
     // [HttpPost]
     // public async Task<ActionResult<Restaurant>> PostTable(long restaurantId, [FromBody] Table table)
     // {

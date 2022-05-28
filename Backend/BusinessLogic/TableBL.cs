@@ -17,6 +17,7 @@ using Backend.Helpers.Models;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
 using Backend.DataAccess;
+using Backend.DataAccess.Models;
 
 public class TableBL : ITableBL
 {
@@ -263,6 +264,122 @@ public class TableBL : ITableBL
         {
             Success = true,
             SuccessMessage = "Tables updated with new deadline"
+        };
+    }
+
+    public async Task<UpdateTableResponse> UpdateTableAge(long tableId, bool age)
+    {
+
+        // check if table existst
+        var table = await _context.Tables.AsNoTracking().Include(t => t.Restriction).FirstOrDefaultAsync(t => t.Id == tableId);
+
+        if (table == null)
+        {
+            return new UpdateTableResponse()
+            {
+                Success = false,
+                Error = "Couldn't find table with id: " + tableId,
+                ErrorCode = "404"
+            };
+        }
+
+        // if restrictions exists/not
+        var restriction = await _context.Restrictions.AsNoTracking().FirstOrDefaultAsync(r => r.Id == table.RestrictionId);
+
+        if (table.Restriction != null)
+        {
+            // 2 scenarios
+            // Handicap(true) Age(false) -> true, true
+            // Handicap(true) Age(true) -> true, false
+            if (restriction.Handicap == true)
+            {
+                restriction = await _context.Restrictions.AsNoTracking().Where(r => r.Age == age && r.Handicap == true).FirstOrDefaultAsync();
+                table.RestrictionId = restriction.Id;
+                _context.Entry(table).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            // 1 scenario
+            // Handicap(false) Age(true) -> false, false
+            else
+            {
+                table.RestrictionId = null;
+                _context.Entry(table).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+        }
+        // 1 scenario
+        // Handicap(false) Age(false) -> false, true
+        else
+        {
+            restriction = await _context.Restrictions.AsNoTracking().Where(r => r.Age == age && r.Handicap == false).FirstOrDefaultAsync();
+            table.RestrictionId = restriction.Id;
+            _context.Entry(table).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+        }
+
+        return new UpdateTableResponse()
+        {
+            Success = true,
+            SuccessMessage = "Table age restriction updated"
+        };
+
+    }
+
+    public async Task<UpdateTableResponse> UpdateTableHandicap(long tableId, bool handicap)
+    {
+        // check if table existst
+        var table = await _context.Tables.AsNoTracking().Include(t => t.Restriction).FirstOrDefaultAsync(t => t.Id == tableId);
+
+        if (table == null)
+        {
+            return new UpdateTableResponse()
+            {
+                Success = false,
+                Error = "Couldn't find table with id: " + tableId,
+                ErrorCode = "404"
+            };
+        }
+
+        // if restrictions exists/not
+        var restriction = await _context.Restrictions.AsNoTracking().FirstOrDefaultAsync(r => r.Id == table.RestrictionId);
+
+        if (table.Restriction != null)
+        {
+            // 2 scenarios
+            // Age(true) Handicap(false) -> true, true
+            // Age(true) handicap(true) -> true, false
+            if (restriction.Age == true)
+            {
+                restriction = await _context.Restrictions.AsNoTracking().Where(r => r.Handicap == handicap && r.Age == true).FirstOrDefaultAsync();
+                table.RestrictionId = restriction.Id;
+                _context.Entry(table).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            // 1 scenario
+            // Age(false) Handicap(true) -> false, false
+            else
+            {
+                table.RestrictionId = null;
+                _context.Entry(table).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+        }
+        // 1 scenario
+        // Age(false) Handicap(false) -> false, true
+        else
+        {
+            restriction = await _context.Restrictions.AsNoTracking().Where(r => r.Handicap == handicap && r.Age == false).FirstOrDefaultAsync();
+            table.RestrictionId = restriction.Id;
+            _context.Entry(table).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+        }
+
+        return new UpdateTableResponse()
+        {
+            Success = true,
+            SuccessMessage = "Table handicap restriction updated"
         };
     }
 }

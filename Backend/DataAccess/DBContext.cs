@@ -138,21 +138,21 @@ public class DBContext : DbContext
         modelBuilder.Entity<Restriction>().HasData(new Restriction()
         {
             Id = 1,
-            Age = 20,
+            Age =true,
             Handicap = false
         });
 
         modelBuilder.Entity<Restriction>().HasData(new Restriction()
         {
             Id = 2,
-            Age = 60,
-            Handicap = false
+            Age = false,
+            Handicap = true
         });
 
         modelBuilder.Entity<Restriction>().HasData(new Restriction()
         {
             Id = 3,
-            Age = 0,
+            Age = true,
             Handicap = true
         });
 
@@ -166,7 +166,7 @@ public class DBContext : DbContext
             Available = true,
             Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
-            RestrictionId = 3
+            RestrictionId = 1
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()
@@ -207,8 +207,7 @@ public class DBContext : DbContext
             Seats = 6,
             Available = true,
             Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
-            RestaurantId = 1,
-            RestrictionId = 1
+            RestaurantId = 1
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()

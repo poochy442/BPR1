@@ -32,7 +32,7 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Age = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<bool>(type: "bit", nullable: false),
                     Handicap = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -211,9 +211,9 @@ namespace backend.Migrations
                 columns: new[] { "Id", "Age", "Handicap" },
                 values: new object[,]
                 {
-                    { 1, 20, false },
-                    { 2, 60, false },
-                    { 3, 0, true }
+                    { 1, true, false },
+                    { 2, false, true },
+                    { 3, true, true }
                 });
 
             migrationBuilder.InsertData(
@@ -255,11 +255,11 @@ namespace backend.Migrations
                 columns: new[] { "Id", "Available", "BookingTimes", "Deadline", "Notes", "RestaurantId", "RestrictionId", "Seats", "TableNo" },
                 values: new object[,]
                 {
-                    { 1, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, 3, 2, 1 },
+                    { 1, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, 1, 2, 1 },
                     { 2, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, 2, 2 },
                     { 3, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, 2, 4, 3 },
                     { 4, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, 4, 4 },
-                    { 5, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, 1, 6, 5 },
+                    { 5, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, 6, 5 },
                     { 6, true, null, new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, 6, 6 }
                 });
 

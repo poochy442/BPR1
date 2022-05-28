@@ -289,8 +289,8 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<bool>("Age")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Handicap")
                         .HasColumnType("bit");
@@ -303,19 +303,19 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
-                            Age = 20,
+                            Age = true,
                             Handicap = false
                         },
                         new
                         {
                             Id = 2,
-                            Age = 60,
-                            Handicap = false
+                            Age = false,
+                            Handicap = true
                         },
                         new
                         {
                             Id = 3,
-                            Age = 0,
+                            Age = true,
                             Handicap = true
                         });
                 });
@@ -400,7 +400,7 @@ namespace backend.Migrations
                             Available = true,
                             Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
-                            RestrictionId = 3,
+                            RestrictionId = 1,
                             Seats = 2,
                             TableNo = 1
                         },
@@ -438,7 +438,6 @@ namespace backend.Migrations
                             Available = true,
                             Deadline = new DateTime(1970, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             RestaurantId = 1,
-                            RestrictionId = 1,
                             Seats = 6,
                             TableNo = 5
                         },

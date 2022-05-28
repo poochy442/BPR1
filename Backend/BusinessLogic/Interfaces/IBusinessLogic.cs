@@ -15,6 +15,8 @@ public interface IBusinessLogic
     Task<AvailableTablesResponse> GetAvailableTables(long restaurantId, int guests, DateTime start, DateTime end);
     Task<UpdateTableResponse> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request);
     Task<UpdateTableResponse> UpdateTablesDeadline(long restaurantId, DateTime deadline);
+    Task<UpdateTableResponse> UpdateTableAge(long tableId, bool age);
+    Task<UpdateTableResponse> UpdateTableHandicap(long tableId, bool handicap);
     Task<GetBookingsResponse> GetBookingsForCustomer(int customerId);
     Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId);
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);

@@ -56,6 +56,14 @@ public class BusinessLogic : IBusinessLogic
         return await _tableBL.UpdateTablesDeadline(restaurantId, deadline);
     }
 
+    public async Task<UpdateTableResponse> UpdateTableAge(long tableId, bool age) {
+        return await _tableBL.UpdateTableAge(tableId, age);
+    }
+
+    public async Task<UpdateTableResponse> UpdateTableHandicap(long tableId, bool handicap) {
+        return await _tableBL.UpdateTableHandicap(tableId, handicap);
+    }
+
     public async Task<GetBookingsResponse> GetBookingsForCustomer(int customerId) {
         return await _bookingBL.GetBookingsForCustomer(customerId);
     }
