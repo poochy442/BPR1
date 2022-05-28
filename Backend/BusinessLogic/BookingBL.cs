@@ -28,6 +28,36 @@ public class BookingBL : IBookingBL
         _context = context;
     }
 
+    public async Task<GetBookingsResponse> GetBookingsForCustomer(int customerId)
+    {
+        // check if customer exists
+        var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == customerId);
+        if (user == null)
+        {
+            return new GetBookingsResponse()
+            {
+                Success = false,
+                Error = "Couldnt find user",
+                ErrorCode = "404"
+            };
+        }
+
+        // retrieve customer bookings
+        var bookings = await _context.Bookings
+        .AsNoTracking()
+        .Include(b => b.Table)
+        .Include(b => b.Restaurant)
+        .ThenInclude(r => r.Address)
+        .Where(b => b.UserId == customerId && b.StartDate > DateTime.Now)
+        .ToListAsync();
+
+        return new GetBookingsResponse()
+        {
+            Success = true,
+            Bookings = bookings
+        };
+    }
+
     public async Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId)
     {
         // check if there exists restaurant

@@ -9,6 +9,7 @@ using Backend.BusinessLogic;
 using Backend.DataAccess.Models;
 using Backend.Helpers.Models.Responses;
 using Backend.Helpers.Models;
+using System.Security.Claims;
 
 namespace Backend.Controllers;
 
@@ -45,6 +46,34 @@ public class BookingController : ControllerBase
 
     //     return booking;
     // }
+
+    [HttpGet("customer")]
+    [Authorize(Roles = UserRoles.Customer)]
+    public async Task<ActionResult<List<Booking>>> GetBookingsForCustomer() {
+
+        // get claims out of token
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        IEnumerable<Claim> claims = identity.Claims;
+        var userId = claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault();
+
+        // checkif claims valid
+        if(userId == null) {
+            return StatusCode(500, "invalid customer claims");
+        }
+
+        var customerId = Int32.Parse(userId.Value);
+        var bookings = await _businessLogic.GetBookingsForCustomer(customerId);
+
+        if(!bookings.Success) {
+            return Unauthorized(new {
+                bookings.ErrorCode,
+                bookings.Error
+            });
+        }
+
+        return Ok(bookings);
+        
+    }
 
     // manager
     [HttpGet("bookings-for-tables")]
