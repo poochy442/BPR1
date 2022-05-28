@@ -8,6 +8,7 @@ import { Client } from '../Api/Client';
 import '../../Styles/Pages/Restaurant.scss';
 
 const Restaurant = (props) => {
+	const {manage} = props;
 	const params = useParams();
 	const restaurantId = params.restaurantId;
 	const navigate = useNavigate();
@@ -79,7 +80,7 @@ const Restaurant = (props) => {
 			</label>
 			<input className='button searchButton' type='submit' value='Search for tables' />
 		</form>
-	) : tables == null || tables.count == 0 ? (
+	) : tables == null || tables.count === 0 ? (
 		<form className='reservationForm' onSubmit={handlePlaceReservation}>
 			<label className='reservationLabel' htmlFor='datePicker'>
 				<p>Choose date</p>
@@ -147,12 +148,24 @@ const Restaurant = (props) => {
 		</div>
 	) : (null)
 
-	return (
-		<div className = 'restaurant'>
-			{details}
+	const customerRestaurant = (
+		<div className='restaurantContainer'>
 			<h2>Table reservation</h2>
 			{form}
 			{confirmation}
+		</div>
+	)
+
+	const managerRestaurant = (
+		<div className='restaurantContainer'>
+			<h2>Manage restaurant</h2>
+		</div>
+	)
+
+	return (
+		<div className = 'restaurant'>
+			{details}
+			{manage ? managerRestaurant : customerRestaurant}
 		</div>
 	)
 };
