@@ -58,15 +58,20 @@ const Search = () => {
 	const [foodTypeFilters, setFoodTypeFilters] = useState({})
 	const [restrictionFilters, setRestrictionFilters] = useState({})
 
-	useEffect(async () => {
+	useEffect(() => {
+		async function getRestaurants()
+		{
+			setRestaurants(await searchRestaurants(collectFilters()));
+		}
+
+		// TODO: Call backend for food types and restrictions
 		foodTypes.forEach((element) => {
 			setFoodTypeFilters({...foodTypeFilters, [element.name]: false})
 		})
 		restrictions.forEach((element) => {
 			setRestrictionFilters({...restrictionFilters, [element]: false})
 		})
-		let newRestaurants = await searchRestaurants(collectFilters());
-		setRestaurants(newRestaurants);
+		getRestaurants();
 	}, [])
 
 	// Guard statement

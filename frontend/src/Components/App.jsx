@@ -4,7 +4,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 // Pages
 import Home from './Pages/Home';
 import Search from './Pages/Search';
-import Booking from './Pages/Booking';
+import Bookings from './Pages/Bookings';
 import Restaurant from './Pages/Restaurant';
 import LogIn from './Pages/Auth/LogIn';
 import SignUp from './Pages/Auth/SignUp';
@@ -29,12 +29,12 @@ const App = () => {
 				<Routes>
 					<Route exact path='/' element={<Home />} />
 					<Route path='/search' element={<Search />} />
-					<Route path='/booking' element={<Booking manage={false} />} />
+					<Route path='/booking' element={<Bookings manage={false} />} />
 					<Route path='/restaurant/:restaurantId' element={<Restaurant manage={false} />} />
 					<Route path='/login' element={<LogIn />} />
 					<Route path='/signup' element={<SignUp />} />
 					<Route path='/manage'>
-						<Route path='booking' element={<Booking manage={true} />} />
+						<Route path='booking' element={<Bookings manage={true} />} />
 						<Route path='restaurant/:restaurantId' element={<Restaurant manage={true} />} />
 					</Route>
 				</Routes>
