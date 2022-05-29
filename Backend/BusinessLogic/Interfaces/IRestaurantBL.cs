@@ -6,4 +6,5 @@ using Backend.Helpers.Models.Responses;
 public interface IRestaurantBL
 {
     Task<GetRestaurantsResponse> GetRestaurants(string city);
+    Task<GetRestaurantsResponse> GetRestaurantsByLocation(RestaurantsByLocationRequest request);
 }

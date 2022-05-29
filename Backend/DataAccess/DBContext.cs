@@ -75,6 +75,30 @@ public class DBContext : DbContext
 
         });
 
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 4,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Levysgade",
+            StreetNo = "2",
+            Latitude = 55.8617897m,
+            Longtitude = 9.84358882m
+
+        });
+
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 5,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Søndergade",
+            StreetNo = "15",
+            Latitude = 55.862095m,
+            Longtitude = 9.8471868m
+
+        });
+
 
         // Users
         modelBuilder.Entity<User>().HasData(new User()
@@ -135,12 +159,36 @@ public class DBContext : DbContext
             AddressId = 3
         });
 
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 4,
+            Name = "Ming Hao",
+            FoodType = "Asian",
+            StudentDiscount = 5,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"12:30\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n}\r\n]",
+            TotalScore = 4.0m,
+            UserId = 2,
+            AddressId = 4
+        });
+
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 5,
+            Name = "GranBar",
+            FoodType = "Danish",
+            StudentDiscount = 5,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n}\r\n]",
+            TotalScore = 4.2m,
+            UserId = 2,
+            AddressId = 5
+        });
+
 
         // Restrictions
         modelBuilder.Entity<Restriction>().HasData(new Restriction()
         {
             Id = 1,
-            Age =true,
+            Age = true,
             Handicap = false
         });
 

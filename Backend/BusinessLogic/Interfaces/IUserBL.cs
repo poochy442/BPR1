@@ -8,6 +8,5 @@ public interface IUserBL
 {
     Task<GetUsersResponse> GetUsers();
     Task<TokenResponse> LoginUser(LoginRequest request);
-    Task<TokenResponse> LoginManager(LoginRequest request);
     Task<RegisterUserResponse> RegisterUser(RegisterRequest request);
 }

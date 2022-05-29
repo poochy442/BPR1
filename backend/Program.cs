@@ -51,6 +51,9 @@ ConfigurationManager configuration = builder.Configuration;
 
     // Inject TokenService
     services.AddSingleton<ITokenService, TokenService>();
+    
+    // Inject RestaurantService
+    services.AddSingleton<IRestaurantService, RestaurantService>();
 
     // Inject BusinessLogic
     services.AddScoped<IBusinessLogic, BusinessLogic>();

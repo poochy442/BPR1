@@ -32,10 +32,6 @@ public class BusinessLogic : IBusinessLogic
         return await _userBL.LoginUser(request);
     }
 
-    public async Task<TokenResponse> LoginManager(LoginRequest request) {
-        return await _userBL.LoginManager(request);
-    }
-
     public async Task<RegisterUserResponse> RegisterUser(RegisterRequest request) {
         return await _userBL.RegisterUser(request);
     }
@@ -64,6 +60,10 @@ public class BusinessLogic : IBusinessLogic
         return await _tableBL.UpdateTableHandicap(tableId, handicap);
     }
 
+    public async Task<UpdateTableResponse> UpdateTablesNotes(long tableId, string note) {
+        return await _tableBL.UpdateTablesNotes(tableId, note);
+    }
+
     public async Task<GetBookingsResponse> GetBookingsForCustomer(int customerId) {
         return await _bookingBL.GetBookingsForCustomer(customerId);
     }
@@ -90,6 +90,10 @@ public class BusinessLogic : IBusinessLogic
 
     public async Task<GetRestaurantsResponse> GetRestaurants(string city) {
         return await _restaurantBL.GetRestaurants(city);
+    }
+
+    public async Task<GetRestaurantsResponse> GetRestaurantsByLocation(RestaurantsByLocationRequest request) {
+        return await _restaurantBL.GetRestaurantsByLocation(request);
     }
 
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
-using Backend.Helpers;
+using Backend.Helpers.Models;
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
 using Backend.Helpers.Models.Requests;
@@ -18,12 +18,10 @@ namespace Backend.Controllers;
 [Route("[controller]")]
 public class TableController : ControllerBase
 {
-    private readonly DBContext _context;
     private readonly IBusinessLogic _businessLogic;
 
-    public TableController(DBContext context, IBusinessLogic businessLogic)
+    public TableController(IBusinessLogic businessLogic)
     {
-        _context = context;
         _businessLogic = businessLogic;
     }
 
@@ -40,7 +38,7 @@ public class TableController : ControllerBase
 
     // manager
     [HttpGet("tables")]
-    [AllowAnonymous]
+    [Authorize(Roles = UserRoles.RestaurantManager)]
     public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
     {
         var tables = await _businessLogic.GetTables(restaurantId);
@@ -81,7 +79,7 @@ public class TableController : ControllerBase
 
     // manager
     [HttpPut("update-booking-times")]
-    [AllowAnonymous]
+    [Authorize(Roles = UserRoles.RestaurantManager)]
     public async Task<ActionResult> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request)
     {
 
@@ -101,7 +99,7 @@ public class TableController : ControllerBase
 
     // manager
     [HttpPut("update-deadline")]
-    [AllowAnonymous]
+    [Authorize(Roles = UserRoles.RestaurantManager)]
     public async Task<ActionResult> UpdateTablesDeadline(long restaurantId, DateTime deadline)
     {
         var updateDeadline = await _businessLogic.UpdateTablesDeadline(restaurantId, deadline);
@@ -120,7 +118,7 @@ public class TableController : ControllerBase
 
     // manager
     [HttpPut("update-age")]
-    [AllowAnonymous]
+    [Authorize(Roles = UserRoles.RestaurantManager)]
     public async Task<ActionResult> UpdateTableAge(long tableId, bool age)
     {
         var updateAge = await _businessLogic.UpdateTableAge(tableId, age);
@@ -139,7 +137,7 @@ public class TableController : ControllerBase
 
     // manager
     [HttpPut("update-handicap")]
-    [AllowAnonymous]
+    [Authorize(Roles = UserRoles.RestaurantManager)]
     public async Task<ActionResult> UpdateTableHandicap(long tableId, bool handicap)
     {
         var updateHandicap = await _businessLogic.UpdateTableHandicap(tableId, handicap);
@@ -154,6 +152,25 @@ public class TableController : ControllerBase
         }
 
         return Ok(updateHandicap);
+    }
+
+    // manager
+    [HttpPut("update-notes")]
+    [Authorize(Roles = UserRoles.RestaurantManager)]
+    public async Task<ActionResult> UpdateTablesNotes(long tableId, string note)
+    {
+        var updateNotes = await _businessLogic.UpdateTablesNotes(tableId, note);
+
+        if (!updateNotes.Success)
+        {
+            return Unauthorized(new
+            {
+                updateNotes.ErrorCode,
+                updateNotes.Error
+            });
+        }
+
+        return Ok(updateNotes);
     }
 
     // [HttpPost]

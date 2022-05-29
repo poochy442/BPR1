@@ -9,7 +9,7 @@ using Backend.DataAccess.Models;
 using BingMapsRESTToolkit;
 using Backend.Helpers.Models.Requests;
 
-public class RestaurantService
+public class RestaurantService : IRestaurantService
 {
     public List<Restaurant> ExecuteDbQuery(decimal origLat, decimal origLong, int radius)
     {
@@ -108,9 +108,9 @@ public class RestaurantService
 
     }
 
-    public async Task<Dictionary<decimal, decimal>> GetAddressLocation(RestaurantsByLocationRequest req)
+    public async Task<Dictionary<string, decimal>> GetAddressLocation(RestaurantsByLocationRequest req)
     {
-        var location = new Dictionary<decimal, decimal>();
+        var location = new Dictionary<string, decimal>();
 
         var request = new GeocodeRequest();
         request.BingMapsKey = "ApJM9msqWQ6egjptqHy9oAMivkE6r0xuKZxr1xSzn_eWy2yGQE4AW0hA4_YcGpeD";
@@ -132,7 +132,8 @@ public class RestaurantService
             var longitude = (decimal)toolkitLocation.Point.Coordinates[1];
 
             // Use latitude and longitude
-            location.Add(latitude, longitude);
+            location.Add("latitude", latitude);
+            location.Add("longitude", longitude);
         }
 
         return location;
