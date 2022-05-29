@@ -1,3 +1,29 @@
+@import '../Reusable/Colors.scss';
+
 .restaurantDetails{
-	
+	display: flex;
+	flex-flow: row nowrap;
+	padding: 1.5rem;
+	border-radius: 2rem;
+	background-color: $light-color;
+	margin-bottom: 1rem;
+
+	.restaurantImage{
+		width: 20%;
+		background-color: $main-color;
+
+		//Test
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.information {
+		width: 50%;
+		margin-left: 1rem;
+	}
+
+	.scoreContainer {
+		width: fit-content;
+	}
 }

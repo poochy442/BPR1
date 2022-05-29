@@ -1,9 +1,13 @@
-import React from 'react'
-
 import '../../Styles/Restaurant/Score.scss';
 
 function Score(props) {
-	const { score } = props;
+	const { score = 0, mini = false } = props;
+
+	const scoreText = mini ? (
+		<p className='scoreText'>{score.toFixed(2)}</p>
+	) : (
+		<p className='scoreText'>{score.toFixed(2)} with 8 reviews</p>
+	)
 
 	return (
 		<div className="scoreContainer">
@@ -19,7 +23,8 @@ function Score(props) {
 					&nbsp;
 				</div>
 			</div>
-			<p className='scoreText'>{score}</p>
+			{/* TODO: Actual reviewcount */}
+			{scoreText}
 		</div>
 	)
 }

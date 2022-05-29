@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 
 import LocationSearch from '../Input/LocationSearch';
 
@@ -10,6 +10,7 @@ import pizzaImage from '../../Assets/Foodtypes/Pizza.jpg';
 import sushiImage from '../../Assets/Foodtypes/Sushi.jpg';
 import thaiImage from '../../Assets/Foodtypes/Thai.jpg';
 import Score from '../Restaurant/Score';
+import { Client } from '../Api/Client';
 const foodTypes = [
 	{
 		name: 'Pizza',
@@ -22,44 +23,50 @@ const foodTypes = [
 		img: thaiImage
 	}
 ]
-const restaurants = [
-	{
-		name: 'Pizza King',
-		location: 'Slotsgade 10, 8700 Horsens',
-		foodtype: 'Pizza',
-		score: 4.25
-	},
-	{
-		name: 'McDonald\'s',
-		location: 'Slotsgade 9, 8700 Horsens',
-		foodtype: 'Fast Food',
-		score: 3.4
-	},
-	{
-		name: 'Mamma Mia',
-		location: 'Slotsgade 12, 8700 Horsens',
-		foodtype: 'Italian',
-		score: 2.25
-	}
-]
+const restrictions = ['studyDiscount', 'open_24_7', 'LGBT']
+// const restaurants = [
+// 	{
+// 		name: 'Pizza King',
+// 		location: 'Slotsgade 10, 8700 Horsens',
+// 		foodtype: 'Pizza',
+// 		score: 4.25,
+// 		id: 1
+// 	},
+// 	{
+// 		name: 'McDonald\'s',
+// 		location: 'Slotsgade 9, 8700 Horsens',
+// 		foodtype: 'Fast Food',
+// 		score: 3.4,
+// 		id: 2
+// 	},
+// 	{
+// 		name: 'Mamma Mia',
+// 		location: 'Slotsgade 12, 8700 Horsens',
+// 		foodtype: 'Italian',
+// 		score: 2.25,
+// 		id: 3
+// 	}
+// ]
 
 const Search = () => {
-	let location = useLocation(), query = location.state ? location.state.query : null;
+	let routerLocation = useLocation(), query = routerLocation.state ? routerLocation.state.query : null;
 	const guardCheck = !!query;
-	const [search, setSearch] = useState([]);
+	const navigate = useNavigate();
 	const [city, setCity] = useState(query);
+	const [location, setLocation] = useState({lat: 10, long: 10});
+	const [restaurants, setRestaurants] = useState([]);
 	const [foodTypeFilters, setFoodTypeFilters] = useState({})
-	const [advancedFilters, setAdvancedFilters] = useState({
-		studyDiscount: false,
-		open_24_7: false,
-		LGBT: false
-	})
+	const [restrictionFilters, setRestrictionFilters] = useState({})
 
-	useEffect(() => {
+	useEffect(async () => {
 		foodTypes.forEach((element) => {
 			setFoodTypeFilters({...foodTypeFilters, [element.name]: false})
 		})
-		console.log(foodTypes);
+		restrictions.forEach((element) => {
+			setRestrictionFilters({...restrictionFilters, [element]: false})
+		})
+		let newRestaurants = await searchRestaurants(collectFilters());
+		setRestaurants(newRestaurants);
 	}, [])
 
 	// Guard statement
@@ -68,8 +75,36 @@ const Search = () => {
 
 	const handleSearchSubmit = (e) => {
 		e.preventDefault();
-		// TODO: Reset search
-		console.log('Reset search');
+		setRestaurants(searchRestaurants(collectFilters()));
+	}
+
+	const handleRestaurantClick = (restaurant) => {
+		navigate("/restaurant/" + restaurant.id);
+	}
+
+	const collectFilters = () => {
+		let selectedfoodTypeFilter = {}
+		foodTypes.forEach((element) => {
+			if(foodTypeFilters[element])
+				selectedfoodTypeFilter = {...selectedfoodTypeFilter, [element.name]: true}
+		})
+
+		let selectedrestrictionFilter = {}
+		restrictions.forEach((element) => {
+			if(restrictionFilters[element])
+				selectedrestrictionFilter = {...selectedrestrictionFilter, [element]: true}
+		})
+
+		return {
+			location: location,
+			foodtype: selectedfoodTypeFilter,
+			advanced: selectedrestrictionFilter
+		};
+	}
+
+	const searchRestaurants = async (filters) => {
+		const res = await Client.post("Restaurant/Search", {}, filters);
+		return res.data;
 	}
 
 	return (
@@ -88,7 +123,7 @@ const Search = () => {
 								onClick={() => {
 									setFoodTypeFilters({...foodTypeFilters, [foodtype.name]: !foodTypeFilters[foodtype.name]});
 								}}>
-								<img className="foodImage" src={foodtype.img} />
+								<img className="foodImage" src={foodtype.img} alt={foodtype.name} />
 								<p className="foodName">{foodtype.name}</p>
 							</div>
 						))}
@@ -96,28 +131,28 @@ const Search = () => {
 					<div className="bottomRow">
 						<div className="advancedFilters">
 							<div
-								className={advancedFilters.studyDiscount ? 'advancedOption chosen' : 'advancedOption'}
+								className={restrictionFilters.studyDiscount ? 'advancedOption chosen' : 'advancedOption'}
 								onClick={() => {
-									setAdvancedFilters({
-										...advancedFilters,
-										studyDiscount: !advancedFilters.studyDiscount
+									setRestrictionFilters({
+										...restrictionFilters,
+										studyDiscount: !restrictionFilters.studyDiscount
 									})
 								}}>
 									Study discount
 								</div>
 							<div
-								className={advancedFilters.open_24_7 ? 'advancedOption chosen' : 'advancedOption'}
-								onClick={() => {setAdvancedFilters({
-									...advancedFilters,
-									open_24_7: !advancedFilters.open_24_7
+								className={restrictionFilters.open_24_7 ? 'advancedOption chosen' : 'advancedOption'}
+								onClick={() => {setRestrictionFilters({
+									...restrictionFilters,
+									open_24_7: !restrictionFilters.open_24_7
 								})}}>
 								Open 24/7
 								</div>
 							<div
-								className={advancedFilters.LGBT ? 'advancedOption chosen' : 'advancedOption'}
-								onClick={() => {setAdvancedFilters({
-									...advancedFilters,
-									LGBT: !advancedFilters.LGBT
+								className={restrictionFilters.LGBT ? 'advancedOption chosen' : 'advancedOption'}
+								onClick={() => {setRestrictionFilters({
+									...restrictionFilters,
+									LGBT: !restrictionFilters.LGBT
 								})}}>
 								LGBT-owned
 								</div>
@@ -127,18 +162,32 @@ const Search = () => {
 						</button>
 					</div>
 				</div>
-				<div className="resultContainer">
-					{restaurants.map((restaurant => (
-						<div className="restaurantContainer">
-							<div className="restaurantImage"></div>
-							<div className="restaurantDetails">
-								<p className="foodName"><b>{restaurant.name}</b></p>
-								<p className="location">{restaurant.location}</p>
-								<Score score={restaurant.score} />
-							</div>
+
+				{!restaurants ? (
+					<div className='error'>
+						Error
+					</div>
+				) : restaurants.length === 0 ? (
+					<div className='notFound'>
+						No restaurants found, please try again.
+					</div>
+				) : (
+					<div>
+						<h2 className='resultTitle'>Restaurants</h2>
+						<div className="resultContainer">
+							{restaurants.map(((restaurant, index) => (
+								<div key={index} className="restaurantCard" onClick={() => handleRestaurantClick(restaurant)}>
+									<div className="restaurantImage"></div>
+									<div className="restaurantInformation">
+										<p className="restaurantName"><b>{restaurant.name}</b></p>
+										<p className="location">{restaurant.address}</p>
+									</div>
+									<Score score={restaurant.totalScore} mini={true}/>
+								</div>
+							)))}
 						</div>
-					)))}
-				</div>
+					</div>
+				)}
 			</div>
 		</div>
 	)

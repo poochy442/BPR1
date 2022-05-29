@@ -1,0 +1,37 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
+
+.customerBooking {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	width: 80%;
+
+	.filters {
+		display: flex;
+		flex-flow: row nowrap;
+		width: 100%;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid $dark-accent;
+		margin-bottom: 1rem;
+
+		.filter {
+			cursor: pointer;
+			font-size: $font-size-small;
+			color: $light-accent;
+			padding: 1rem;
+		}
+
+		.active {
+			cursor: default !important;
+			font-weight: 700;
+			border-bottom: 1px solid $light-accent;
+		}
+	}
+
+	.bookingList {
+		width: 100%;
+	}
+}
