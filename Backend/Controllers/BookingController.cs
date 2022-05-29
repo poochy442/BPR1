@@ -23,9 +23,9 @@ public class BookingController : ControllerBase
         _businessLogic = businessLogic;
     }
 
-    [HttpGet("customer")]
+    [HttpGet("customer-current-bookings")]
     [Authorize(Roles = UserRoles.Customer)]
-    public async Task<ActionResult<List<Booking>>> GetBookingsForCustomer()
+    public async Task<ActionResult<List<Booking>>> GetCurrentBookingsForCustomer()
     {
 
         // get claims out of token
@@ -40,7 +40,39 @@ public class BookingController : ControllerBase
         }
 
         var customerId = Int32.Parse(userId.Value);
-        var bookings = await _businessLogic.GetBookingsForCustomer(customerId);
+        var bookings = await _businessLogic.GetCurrentBookingsForCustomer(customerId);
+
+        if (!bookings.Success)
+        {
+            return Unauthorized(new
+            {
+                bookings.ErrorCode,
+                bookings.Error
+            });
+        }
+
+        return Ok(bookings);
+
+    }
+
+    [HttpGet("customer-past-bookings")]
+    [Authorize(Roles = UserRoles.Customer)]
+    public async Task<ActionResult<List<Booking>>> GetPastBookingsForCustomer()
+    {
+
+        // get claims out of token
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        IEnumerable<Claim> claims = identity.Claims;
+        var userId = claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault();
+
+        // checkif claims valid
+        if (userId == null)
+        {
+            return StatusCode(500, "invalid customer claims");
+        }
+
+        var customerId = Int32.Parse(userId.Value);
+        var bookings = await _businessLogic.GetPastBookingsForCustomer(customerId);
 
         if (!bookings.Success)
         {

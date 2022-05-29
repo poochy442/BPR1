@@ -7,7 +7,8 @@ using System.Text;
 
 public interface IBookingBL
 {
-    Task<GetBookingsResponse> GetBookingsForCustomer(int customerId);
+    Task<GetBookingsResponse> GetCurrentBookingsForCustomer(int customerId);
+    Task<GetBookingsResponse> GetPastBookingsForCustomer(int customerId);
     Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId);
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
     Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request);
