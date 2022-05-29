@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const URL = 'https://localhost:7076/';
-
 export async function Client(endpoint, { method, params, body}){
 	return axios({
 		method,

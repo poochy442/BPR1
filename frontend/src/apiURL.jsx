@@ -1,0 +1,1 @@
+export default apiURL = 'https://localhost:7076/';
