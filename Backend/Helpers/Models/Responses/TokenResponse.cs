@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 public class TokenResponse : BaseResponse
 {
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Token { get; set; }
 
     public User? User { get; set; }
