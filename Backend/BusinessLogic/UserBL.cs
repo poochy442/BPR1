@@ -18,6 +18,7 @@ using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
 using Backend.DataAccess;
 using Backend.DataAccess.Models;
+using System.Security.Claims;
 
 public class UserBL : IUserBL
 {
@@ -99,7 +100,7 @@ public class UserBL : IUserBL
                     {
                         Success = true,
                         Token = new JwtSecurityTokenHandler().WriteToken(token),
-                        User = null,
+                        User = user,
                         Restaurants = restaurants
                     };
                 }
@@ -129,6 +130,52 @@ public class UserBL : IUserBL
             };
         }
     }
+
+
+    public async Task<TokenResponse> AutoLogin(int userId, Claim claims)
+    {
+        // check if user exists
+        var user = await _context.Users.AsNoTracking().Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == userId);
+        if (user == null)
+        {
+            return new TokenResponse()
+            {
+                Success = false,
+                Error = "Couldnt find user",
+                ErrorCode = "404"
+            };
+        }
+
+        // get rid of loop of user -> role -> list of users -> user...
+        user.Role.Users = null;
+
+        // check customer claims
+        if (claims.Value == UserRoles.Customer)
+        {
+            return new TokenResponse()
+            {
+                Success = true,
+                User = user
+            };
+        }
+
+
+        // check manager claims
+        if (claims.Value == UserRoles.RestaurantManager)
+        {
+            var restaurants = _context.Restaurants.AsNoTracking().Where(r => r.UserId == userId).ToList();
+
+            return new TokenResponse()
+            {
+                Success = true,
+                User = user,
+                Restaurants = restaurants
+            };
+        }
+
+        return null;
+    }
+
 
     public async Task<RegisterUserResponse> RegisterUser(RegisterRequest request)
     {

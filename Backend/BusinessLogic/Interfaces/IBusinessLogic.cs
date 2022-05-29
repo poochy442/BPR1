@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
 using Backend.Helpers;
+using System.Security.Claims;
 
 public interface IBusinessLogic
 {
     Task<GetUsersResponse> GetUsers();
     Task<TokenResponse> LoginUser(LoginRequest request);
+    Task<TokenResponse> AutoLogin(int userId, Claim claims);
     Task<RegisterUserResponse> RegisterUser(RegisterRequest request);
     Task<GetTablesResponse> GetTables(long restaurantId);
     Task<AvailableTablesResponse> GetAvailableTables(long restaurantId, int guests, DateTime start, DateTime end);

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
 using Backend.Helpers;
+using System.Security.Claims;
 public class BusinessLogic : IBusinessLogic
 {
     private readonly IUserBL _userBL;
@@ -30,6 +31,10 @@ public class BusinessLogic : IBusinessLogic
 
     public async Task<TokenResponse> LoginUser(LoginRequest request) {
         return await _userBL.LoginUser(request);
+    }
+
+    public async Task<TokenResponse> AutoLogin(int userId, Claim claims) {
+        return await _userBL.AutoLogin(userId, claims);
     }
 
     public async Task<RegisterUserResponse> RegisterUser(RegisterRequest request) {

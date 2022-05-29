@@ -6,6 +6,7 @@ using Backend.Helpers.Models;
 using Backend.Helpers.Models.Requests;
 using Backend.DataAccess.Models;
 using Backend.BusinessLogic;
+using System.Security.Claims;
 
 [EnableCors]
 [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
@@ -52,26 +53,36 @@ public class UserController : ControllerBase
     }
 
 
-    // // manager
-    // [HttpPost("login-manager")]
-    // [Authorize(Roles = UserRoles.RestaurantManager)]
-    // public async Task<ActionResult> LoginManager(LoginRequest request)
-    // {
-    //     var loginManager = await _businessLogic.LoginManager(request);
+    // anonymous
+    [AllowAnonymous]
+    [HttpPost("autologin")]
+    public async Task<ActionResult> AutoLogin()
+    {
+        // get claims out of token
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        IEnumerable<Claim> claims = identity.Claims;
+        var userId = claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault();
+        var userRole = claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault();
 
-    //     if (!loginManager.Success)
-    //     {
-    //         return Unauthorized(
-    //             new
-    //             {
-    //                 loginManager.ErrorCode,
-    //                 loginManager.Error
-    //             }
-    //         );
-    //     }
+        // checkif claims valid
+        if (userId == null || userRole == null)
+        {
+            return StatusCode(500, "invalid customer claims(id/role)");
+        }
 
-    //     return Ok(loginManager);
-    // }
+        var autologin = await _businessLogic.AutoLogin(Int32.Parse(userId.Value), userRole);
+
+        if (!autologin.Success)
+        {
+            return Unauthorized(new
+            {
+                autologin.ErrorCode,
+                autologin.Error
+            });
+        }
+
+        return Ok(autologin);
+    }
 
     // anonymous
     [AllowAnonymous]
