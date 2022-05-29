@@ -19,7 +19,8 @@ namespace backend.Migrations
                     City = table.Column<string>(type: "varchar(50)", nullable: true),
                     Street = table.Column<string>(type: "varchar(50)", nullable: true),
                     StreetNo = table.Column<string>(type: "varchar(50)", nullable: true),
-                    Location = table.Column<string>(type: "varchar(50)", nullable: true)
+                    Longtitude = table.Column<decimal>(type: "decimal(12,9)", nullable: false),
+                    Latitude = table.Column<decimal>(type: "decimal(12,9)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -198,12 +199,12 @@ namespace backend.Migrations
 
             migrationBuilder.InsertData(
                 table: "Addresses",
-                columns: new[] { "Id", "City", "Location", "PostalCode", "Street", "StreetNo" },
+                columns: new[] { "Id", "City", "Latitude", "Longtitude", "PostalCode", "Street", "StreetNo" },
                 values: new object[,]
                 {
-                    { 1, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Borgergade", "15" },
-                    { 2, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Flintebakken", "1" },
-                    { 3, "Horsens", "longtitude: 1025623; latitude: 1025623", "8700", "Borgergade", "25" }
+                    { 1, "Horsens", 55.86155m, 9.85451m, "8700", "Borgergade", "15" },
+                    { 2, "Horsens", 55.87022m, 9.8643m, "8700", "Flintebakken", "1" },
+                    { 3, "Horsens", 55.86142m, 9.85619m, "8700", "Borgergade", "25" }
                 });
 
             migrationBuilder.InsertData(

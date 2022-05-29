@@ -20,8 +20,11 @@ public class Address
 	[Column(TypeName = "varchar(50)")]
 	public string? StreetNo { get; set; }
 
-	[Column(TypeName = "varchar(50)")]
-	public string? Location { get; set; }
+	[Column(TypeName = "decimal(12,9)")]
+	public decimal Longtitude { get; set; }
+
+	[Column(TypeName = "decimal(12,9)")]
+	public decimal Latitude { get; set; }
 	
 	//Relationships
 

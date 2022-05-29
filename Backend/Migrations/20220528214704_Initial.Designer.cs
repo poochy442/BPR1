@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20220528172259_Initial")]
+    [Migration("20220528214704_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,8 +35,11 @@ namespace backend.Migrations
                     b.Property<string>("City")
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Location")
-                        .HasColumnType("varchar(50)");
+                    b.Property<decimal>("Latitude")
+                        .HasColumnType("decimal(12,9)");
+
+                    b.Property<decimal>("Longtitude")
+                        .HasColumnType("decimal(12,9)");
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("varchar(50)");
@@ -56,7 +59,8 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             City = "Horsens",
-                            Location = "longtitude: 1025623; latitude: 1025623",
+                            Latitude = 55.86155m,
+                            Longtitude = 9.85451m,
                             PostalCode = "8700",
                             Street = "Borgergade",
                             StreetNo = "15"
@@ -65,7 +69,8 @@ namespace backend.Migrations
                         {
                             Id = 2,
                             City = "Horsens",
-                            Location = "longtitude: 1025623; latitude: 1025623",
+                            Latitude = 55.87022m,
+                            Longtitude = 9.8643m,
                             PostalCode = "8700",
                             Street = "Flintebakken",
                             StreetNo = "1"
@@ -74,7 +79,8 @@ namespace backend.Migrations
                         {
                             Id = 3,
                             City = "Horsens",
-                            Location = "longtitude: 1025623; latitude: 1025623",
+                            Latitude = 55.86142m,
+                            Longtitude = 9.85619m,
                             PostalCode = "8700",
                             Street = "Borgergade",
                             StreetNo = "25"

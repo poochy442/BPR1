@@ -21,7 +21,7 @@ public class Restaurant
     public string? WorkingHours { get; set; }
 
     [Column(TypeName = "decimal(5,2)")]
-    public float? TotalScore { get; set; }
+    public decimal? TotalScore { get; set; }
 
     //Relationships
 

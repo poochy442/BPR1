@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Backend.BusinessLogic;
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
+using Backend.Helpers;
+using Backend.Helpers.Models.Requests;
 
 namespace Backend.Controllers;
 
@@ -17,12 +19,15 @@ namespace Backend.Controllers;
 public class RestaurantController : ControllerBase
 {
     private readonly DBContext _context;
-	private readonly IBusinessLogic _businessLogic;
+    private readonly IBusinessLogic _businessLogic;
+
+	private readonly RestaurantService restaurantService;
 
     public RestaurantController(DBContext context, IBusinessLogic businessLogic)
     {
         _context = context;
-		_businessLogic = businessLogic;
+        _businessLogic = businessLogic;
+		restaurantService = new RestaurantService();
     }
 
     // [AllowAnonymous]
@@ -32,14 +37,27 @@ public class RestaurantController : ControllerBase
     //     return await _context.Restaurants.FindAsync(1);
     // }
 
-	// customer
+    // customer
     [AllowAnonymous]
     [HttpGet("restaurants")]
     public async Task<ActionResult<List<Restaurant>>> GetRestaurants(string city)
     {
         var restaurants = await _businessLogic.GetRestaurants(city);
 
-        return Ok(restaurants.Restaurants); 
+        return Ok(restaurants.Restaurants);
+    }
+
+    [HttpGet("restaurants-location")]
+    [AllowAnonymous]
+    public async Task<ActionResult> GetRestaurantsByLocation(RestaurantsByLocationRequest request)
+    {
+
+		var location = await restaurantService.GetAddressLocation(request);
+		var restaurants = restaurantService.ExecuteDbQuery(55.861690m, 9.858280m, request.Radius);
+		return Ok(new {
+			location = location,
+			restaurants = restaurants
+		});
     }
 
     /*[HttpGet]

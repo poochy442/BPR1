@@ -75,7 +75,7 @@ public class BookingController : ControllerBase
         
     }
 
-    // manager
+    // manager and customer
     [HttpGet("bookings-for-tables")]
     [AllowAnonymous]
     public async Task<ActionResult<GetTableBookingsResponse>> GetBookingsForTables(long restaurantId)
