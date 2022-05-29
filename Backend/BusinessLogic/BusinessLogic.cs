@@ -92,6 +92,10 @@ public class BusinessLogic : IBusinessLogic
         return await _restaurantBL.GetRestaurants(city);
     }
 
+    public async Task<GetRestaurantsResponse> GetRestaurantsByLocation(RestaurantsByLocationRequest request) {
+        return await _restaurantBL.GetRestaurantsByLocation(request);
+    }
+
 }
 
 

@@ -21,13 +21,10 @@ public class RestaurantController : ControllerBase
     private readonly DBContext _context;
     private readonly IBusinessLogic _businessLogic;
 
-	private readonly RestaurantService restaurantService;
-
     public RestaurantController(DBContext context, IBusinessLogic businessLogic)
     {
         _context = context;
         _businessLogic = businessLogic;
-		restaurantService = new RestaurantService();
     }
 
     // [AllowAnonymous]
@@ -47,17 +44,25 @@ public class RestaurantController : ControllerBase
         return Ok(restaurants.Restaurants);
     }
 
+	// customer
     [HttpGet("restaurants-location")]
     [AllowAnonymous]
     public async Task<ActionResult> GetRestaurantsByLocation(RestaurantsByLocationRequest request)
     {
 
-		var location = await restaurantService.GetAddressLocation(request);
-		var restaurants = restaurantService.ExecuteDbQuery(55.861690m, 9.858280m, request.Radius);
-		return Ok(new {
-			location = location,
-			restaurants = restaurants
-		});
+        var restaurants = await _businessLogic.GetRestaurantsByLocation(request);
+
+        if (!restaurants.Success)
+        {
+            return Unauthorized(new
+            {
+                restaurants.ErrorCode,
+                restaurants.Error
+            });
+        }
+
+        return Ok(restaurants);
+
     }
 
     /*[HttpGet]
