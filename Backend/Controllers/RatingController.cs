@@ -21,26 +21,28 @@ public class RatingController : ControllerBase
 
 		if(context.Ratings.Count() == 0)
 		{
-			PostRating(new Rating(1, 4, "Pretty good service, decent food"));
-			PostRating(new Rating(2, 4, "Pretty good service, decent food"));
-			PostRating(new Rating(3, 4, "Pretty good service, decent food"));
-			PostRating(new Rating(1, 2, "Pretty bad service"));
-			PostRating(new Rating(3, 2, "Pretty bad service"));
-			PostRating(new Rating(1, 1, "Absolutely awful"));
-			PostRating(new Rating(2, 1, "Absolutely awful"));
+			// PostRating(new Rating(1, 4, "Pretty good service, decent food"));
+			// PostRating(new Rating(2, 4, "Pretty good service, decent food"));
+			// PostRating(new Rating(3, 4, "Pretty good service, decent food"));
+			// PostRating(new Rating(1, 2, "Pretty bad service"));
+			// PostRating(new Rating(3, 2, "Pretty bad service"));
+			// PostRating(new Rating(1, 1, "Absolutely awful"));
+			// PostRating(new Rating(2, 1, "Absolutely awful"));
 		}
 	}
 
-	/*[HttpGet]
-    public async Task<ActionResult<List<Rating>>> GetRatings(long restaurantId)
-    {
-		var r = await _context.Restaurants.FindAsync(restaurantId);
-		if(r == null) return NotFound();
+	
 
-        List<long> ids = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
-		List<Rating> ratings = _context.Ratings.ToList().FindAll((element) => ids.Contains(element.Id));
-        return ratings;
-    }
+	// [HttpGet]
+    // public async Task<ActionResult<List<Rating>>> GetRatings(long restaurantId)
+    // {
+	// 	var r = await _context.Restaurants.FindAsync(restaurantId);
+	// 	if(r == null) return NotFound();
+
+    //     List<long> ids = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
+	// 	List<Rating> ratings = _context.Ratings.ToList().FindAll((element) => ids.Contains(element.Id));
+    //     return ratings;
+    // }
 
 	[HttpGet("{id}")]
 	public async Task<ActionResult<Rating>> GetRating(long id)
@@ -103,6 +105,6 @@ public class RatingController : ControllerBase
 	private bool RatingExists(long id)
 	{
 		return _context.Ratings.Any(e => e.Id == id);
-	}*/
+	}
 
 }
