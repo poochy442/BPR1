@@ -1,94 +1,220 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-
-using Backend.Models;
-using Backend.Services;
+using Microsoft.AspNetCore.Authorization;
+using Backend.DataAccess.Models;
+using Backend.DataAccess;
+using Backend.Helpers.Models.Requests;
+using Backend.BusinessLogic;
+using Backend.DataAccess.Models;
+using Backend.Helpers.Models.Responses;
+using Backend.Helpers.Models;
+using System.Security.Claims;
 
 namespace Backend.Controllers;
 
 [EnableCors]
 [ApiController]
+[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
 [Route("[controller]")]
 public class BookingController : ControllerBase
 {
-	private readonly DBContext _context;
+    private readonly DBContext _context;
+    private readonly IBusinessLogic _businessLogic;
 
-	public BookingController(DBContext context)
-	{
-		_context = context;
-
-		if(context.Bookings.Count() == 0)
-		{
-			PostBooking(new Booking(DateTime.Now, DateTime.Now.AddDays(1), 2));
-			PostBooking(new Booking(DateTime.Now, DateTime.Now.AddDays(1), 6));
-			PostBooking(new Booking(DateTime.Now, DateTime.Now.AddDays(1), 4)); 
-		}
-	}
-
-	[HttpGet]
-    public Task<List<Booking>> GetBookings()
+    public BookingController(DBContext context, IBusinessLogic businessLogic)
     {
-        return _context.Bookings.ToListAsync();
+        _context = context;
+        _businessLogic = businessLogic;
     }
 
-	[HttpGet("{id}")]
-	public async Task<ActionResult<Booking>> GetBooking(long id)
-	{
-		var booking = await _context.Bookings.FindAsync(id);
+    // [HttpGet]
+    // public Task<List<Booking>> GetBookings()
+    // {
+    //     return _context.Bookings.ToListAsync();
+    // }
 
-		if(booking == null)
-		{
-			return NotFound();
-		}
+    // [HttpGet("{id}")]
+    // public async Task<ActionResult<Booking>> GetBooking(long id)
+    // {
+    //     var booking = await _context.Bookings.FindAsync(id);
 
-		return booking;
-	}
+    //     if (booking == null)
+    //     {
+    //         return NotFound();
+    //     }
 
-	[HttpPost]
-	public async Task<ActionResult<Booking>> PostBooking(Booking booking)
-	{
-		_context.Bookings.Add(booking);
-		await _context.SaveChangesAsync();
+    //     return booking;
+    // }
 
-		return CreatedAtAction(
-			nameof(GetBooking),
-			new { id = booking.Id },
-			booking
-		);
-	}
+    [HttpGet("customer")]
+    [Authorize(Roles = UserRoles.Customer)]
+    public async Task<ActionResult<List<Booking>>> GetBookingsForCustomer() {
 
-	[HttpPut("{id}")]
-	public async Task<IActionResult> PutBooking(long id, Booking booking)
-	{
-		if(id != booking.Id)
-		{
-			return BadRequest();
-		}
+        // get claims out of token
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        IEnumerable<Claim> claims = identity.Claims;
+        var userId = claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault();
 
-		var putBooking = await _context.Bookings.FindAsync(booking.Id);
-		if(putBooking == null)
-		{
-			return NotFound();
-		}
+        // checkif claims valid
+        if(userId == null) {
+            return StatusCode(500, "invalid customer claims");
+        }
 
-		putBooking = booking;
+        var customerId = Int32.Parse(userId.Value);
+        var bookings = await _businessLogic.GetBookingsForCustomer(customerId);
 
-		try
-		{
-			await _context.SaveChangesAsync();
-		}
-		catch (DbUpdateConcurrencyException) when (!BookingExists(id))
-		{
-			return NotFound();
-		}
+        if(!bookings.Success) {
+            return Unauthorized(new {
+                bookings.ErrorCode,
+                bookings.Error
+            });
+        }
 
-		return NoContent();
-	}
+        return Ok(bookings);
+        
+    }
 
-	private bool BookingExists(long id)
-	{
-		return _context.Bookings.Any(e => e.Id == id);
-	}
+    // manager and customer
+    [HttpGet("bookings-for-tables")]
+    [AllowAnonymous]
+    public async Task<ActionResult<GetTableBookingsResponse>> GetBookingsForTables(long restaurantId)
+    {
+
+        var getTableBookings = await _businessLogic.GetBookingsForTables(restaurantId);
+
+        if (!getTableBookings.Success)
+        {
+            return Unauthorized(
+                new
+                {
+                    getTableBookings.ErrorCode,
+                    getTableBookings.Error
+                }
+            );
+        }
+
+        return Ok(getTableBookings);
+    }
+
+    // both customer and manager
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<ActionResult> CreateBooking(CreateBookingRequest request)
+    {
+
+        var createBooking = await _businessLogic.CreateBooking(request);
+
+        if (!createBooking.Success)
+        {
+            return Unauthorized(
+                new
+                {
+                    createBooking.ErrorCode,
+                    createBooking.Error
+                }
+            );
+        }
+
+        return Ok(createBooking);
+    }
+
+    // manager
+    [HttpPost("incall-booking")]
+    [AllowAnonymous]
+    public async Task<ActionResult> CreateInCallBooking(CreateInCallBookingRequest request)
+    {
+
+        var createBooking = await _businessLogic.CreateInCallBooking(request);
+
+        if (!createBooking.Success)
+        {
+            return Unauthorized(
+                new
+                {
+                    createBooking.ErrorCode,
+                    createBooking.Error
+                }
+            );
+        }
+
+        return Ok(createBooking);
+    }
+
+
+
+    // [HttpPut("{id}")]
+    // public async Task<IActionResult> PutBooking(long id, Booking booking)
+    // {
+    //     if (id != booking.Id)
+    //     {
+    //         return BadRequest();
+    //     }
+
+    //     var putBooking = await _context.Bookings.FindAsync(booking.Id);
+    //     if (putBooking == null)
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     putBooking = booking;
+
+    //     try
+    //     {
+    //         await _context.SaveChangesAsync();
+    //     }
+    //     catch (DbUpdateConcurrencyException) when (!BookingExists(id))
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     return NoContent();
+    // }
+
+    // for manager
+    [HttpDelete("delete")]
+    [AllowAnonymous]
+    public async Task<ActionResult> DeleteBooking(long bookingId) {
+
+        var deleteBooking = await _businessLogic.DeleteBooking(bookingId);
+
+        if(!deleteBooking.Success) {
+            return Unauthorized(
+                new {
+                    deleteBooking.ErrorCode,
+                    deleteBooking.Error
+                }
+            );
+        }
+
+        return Ok(deleteBooking.SuccessMessage);
+
+    }
+
+    [HttpDelete("cancel")]
+    [AllowAnonymous]
+    public async Task<ActionResult> CancelBooking(long bookingId) {
+
+        var cancelBooking = await _businessLogic.CancelBooking(bookingId);
+
+        if(!cancelBooking.Success) {
+            return Unauthorized(
+                new {
+                    cancelBooking.ErrorCode,
+                    cancelBooking.Error
+                }
+            );
+        }
+
+        return Ok(cancelBooking.SuccessMessage);
+
+    }
+
+    // private bool BookingExists(long id)
+    // {
+    //     return _context.Bookings.Any(e => e.Id == id);
+    // }
+
+    
 
 }

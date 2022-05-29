@@ -1,122 +1,213 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
-
-using Backend.Models;
-using Backend.Services;
+using Backend.Helpers;
+using Backend.DataAccess.Models;
+using Backend.DataAccess;
+using Backend.Helpers.Models.Requests;
+using Backend.Helpers.Models.Responses;
+using Backend.BusinessLogic;
 
 namespace Backend.Controllers;
 
 [EnableCors]
+[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
 [ApiController]
 [Route("[controller]")]
 public class TableController : ControllerBase
 {
-	private readonly DBContext _context;
+    private readonly DBContext _context;
+    private readonly IBusinessLogic _businessLogic;
 
-	public TableController(DBContext context)
-	{
-		_context = context;
-
-		if(context.Tables.Count() == 0)
-		{
-			List<string> r1 = new List<string>(new string[] {"Handicap"});
-			string r1String = JsonSerializer.Serialize(r1);
-			List<string> r2 = new List<string>(new string[] {"Senior"});
-			string r2String = JsonSerializer.Serialize(r2);
-			// Delon's tables
-			PostTable(1, new Table(1, 4, true, "", r1String));
-			PostTable(1, new Table(2, 4, true, "", r2String));
-			PostTable(1, new Table(3, 2, true, "", ""));
-			PostTable(1, new Table(4, 6, true, "", ""));
-			// McDonald's tables
-			PostTable(2, new Table(1, 4, true, "", r1String));
-			PostTable(2, new Table(2, 4, true, "", r2String));
-			PostTable(2, new Table(3, 2, true, "", ""));
-			PostTable(2, new Table(4, 2, true, "", ""));
-			PostTable(2, new Table(5, 8, true, "", ""));
-			PostTable(2, new Table(6, 6, true, "", ""));
-			// Bone's tables
-			PostTable(3, new Table(1, 4, true, "", r1String));
-			PostTable(3, new Table(2, 2, true, "", ""));
-			PostTable(3, new Table(3, 2, true, "", ""));
-		}
-	}
-
-	[HttpGet]
-    public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
+    public TableController(DBContext context, IBusinessLogic businessLogic)
     {
-		var r = await _context.Restaurants.FindAsync(restaurantId);
-		if(r == null) return NotFound();
-
-		List<long> ids = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
-		List<Table> tables = _context.Tables.ToList().FindAll((element) => ids.Contains(element.Id));
-        return tables;
+        _context = context;
+        _businessLogic = businessLogic;
     }
 
-	[HttpGet("{id}")]
-	public async Task<ActionResult<Table>> GetTable(long id)
-	{
-		var table = await _context.Tables.FindAsync(id);
 
-		if(table == null) return NotFound();
+    // [HttpGet("{id}")]
+    // public async Task<ActionResult<Table>> GetTable(long id)
+    // {
+    //     var table = await _context.Tables.FindAsync(id);
 
-		return table;
-	}
+    //     if (table == null) return NotFound();
 
-	[HttpPost]
-	public async Task<ActionResult<Restaurant>> PostTable(long restaurantId, [FromBody] Table table)
-	{
-		var r = await _context.Restaurants.FindAsync(restaurantId);
-		if(r == null) return NotFound();
+    //     return table;
+    // }
 
-		_context.Tables.Add(table);
-		await _context.SaveChangesAsync();
+    // manager
+    [HttpGet("tables")]
+    [AllowAnonymous]
+    public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
+    {
+        var tables = await _businessLogic.GetTables(restaurantId);
 
-		List<long> newIds = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
-		newIds.Add(table.Id);
-		r.TableIds = JsonSerializer.Serialize(newIds);
-		await _context.SaveChangesAsync();
+        if (!tables.Success)
+        {
+            return Unauthorized(new
+            {
+                tables.ErrorCode,
+                tables.Error
+            });
+        }
 
-		return CreatedAtAction(
-			nameof(GetTable),
-			new { id = table.Id },
-			table
-		);
-	}
+        return Ok(tables);
 
-	[HttpPut("{id}")]
-	public async Task<IActionResult> PutTable(long id, Table table)
-	{
-		if(id != table.Id)
-		{
-			return BadRequest();
-		}
+    }
 
-		var putTable = await _context.Tables.FindAsync(table.Id);
-		if(putTable == null)
-		{
-			return NotFound();
-		}
+    // both customer and manager
+    [HttpGet("available-tables")]
+    [AllowAnonymous]
+    public async Task<ActionResult> GetAvailableTables([FromQuery] long restaurantId, int guests, DateTime start, DateTime end)
+    {
+        var availableTables = await _businessLogic.GetAvailableTables(restaurantId, guests, start, end);
 
-		putTable = table;
+        if (!availableTables.Success)
+        {
+            return Unauthorized(
+                new
+                {
+                    availableTables.ErrorCode,
+                    availableTables.Error
+                }
+            );
+        }
 
-		try
-		{
-			await _context.SaveChangesAsync();
-		}
-		catch (DbUpdateConcurrencyException) when (!TableExists(id))
-		{
-			return NotFound();
-		}
+        return Ok(availableTables);
+    }
 
-		return NoContent();
-	}
+    // manager
+    [HttpPut("update-booking-times")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request)
+    {
 
-	private bool TableExists(long id)
-	{
-		return _context.Tables.Any(e => e.Id == id);
-	}
+        var updateBookingTimes = await _businessLogic.UpdateTableBookingTimes(request);
+
+        if (!updateBookingTimes.Success)
+        {
+            return Unauthorized(new
+            {
+                updateBookingTimes.ErrorCode,
+                updateBookingTimes.Error
+            });
+        }
+
+        return Ok(updateBookingTimes);
+    }
+
+    // manager
+    [HttpPut("update-deadline")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTablesDeadline(long restaurantId, DateTime deadline)
+    {
+        var updateDeadline = await _businessLogic.UpdateTablesDeadline(restaurantId, deadline);
+
+        if (!updateDeadline.Success)
+        {
+            return Unauthorized(new
+            {
+                updateDeadline.ErrorCode,
+                updateDeadline.Error
+            });
+        }
+
+        return Ok(updateDeadline);
+    }
+
+    // manager
+    [HttpPut("update-age")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTableAge(long tableId, bool age)
+    {
+        var updateAge = await _businessLogic.UpdateTableAge(tableId, age);
+
+        if (!updateAge.Success)
+        {
+            return Unauthorized(new
+            {
+                updateAge.ErrorCode,
+                updateAge.Error
+            });
+        }
+
+        return Ok(updateAge);
+    }
+
+    // manager
+    [HttpPut("update-handicap")]
+    [AllowAnonymous]
+    public async Task<ActionResult> UpdateTableHandicap(long tableId, bool handicap)
+    {
+        var updateHandicap = await _businessLogic.UpdateTableHandicap(tableId, handicap);
+
+        if (!updateHandicap.Success)
+        {
+            return Unauthorized(new
+            {
+                updateHandicap.ErrorCode,
+                updateHandicap.Error
+            });
+        }
+
+        return Ok(updateHandicap);
+    }
+
+    // [HttpPost]
+    // public async Task<ActionResult<Restaurant>> PostTable(long restaurantId, [FromBody] Table table)
+    // {
+    // 	var r = await _context.Restaurants.FindAsync(restaurantId);
+    // 	if(r == null) return NotFound();
+
+    // 	_context.Tables.Add(table);
+    // 	await _context.SaveChangesAsync();
+
+    // 	List<long> newIds = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
+    // 	newIds.Add(table.Id);
+    // 	r.TableIds = JsonSerializer.Serialize(newIds);
+    // 	await _context.SaveChangesAsync();
+
+    // 	return CreatedAtAction(
+    // 		nameof(GetTable),
+    // 		new { id = table.Id },
+    // 		table
+    // 	);
+    // }
+
+    // [HttpPut("{id}")]
+    // public async Task<IActionResult> PutTable(long id, Table table)
+    // {
+    //     if (id != table.Id)
+    //     {
+    //         return BadRequest();
+    //     }
+
+    //     var putTable = await _context.Tables.FindAsync(table.Id);
+    //     if (putTable == null)
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     putTable = table;
+
+    //     try
+    //     {
+    //         await _context.SaveChangesAsync();
+    //     }
+    //     catch (DbUpdateConcurrencyException) when (!TableExists(id))
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     return NoContent();
+    // }
+
+    // private bool TableExists(long id)
+    // {
+    //     return _context.Tables.Any(e => e.Id == id);
+    // }
 
 }
