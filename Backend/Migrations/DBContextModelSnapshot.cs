@@ -419,7 +419,7 @@ namespace backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<int?>("RestaurantId")
                         .HasColumnType("int");

@@ -141,7 +141,7 @@ namespace backend.Migrations
                     TableNo = table.Column<int>(type: "int", nullable: false),
                     Seats = table.Column<int>(type: "int", nullable: false),
                     Available = table.Column<bool>(type: "bit", nullable: false),
-                    Notes = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Notes = table.Column<string>(type: "varchar(200)", nullable: true),
                     Deadline = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BookingTimes = table.Column<string>(type: "varchar(400)", nullable: true),
                     RestaurantId = table.Column<int>(type: "int", nullable: true),

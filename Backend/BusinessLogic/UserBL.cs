@@ -77,81 +77,36 @@ public class UserBL : IUserBL
                 // create JWT token
                 var token = _tokenService.GetToken(authClaims);
 
-                return new TokenResponse()
+                // get rid of loop of user -> role -> list of users -> user...
+                user.Role.Users = null;
+
+                // construct response based on user role
+                if (userRole.Role.Claims == UserRoles.Customer)
                 {
-                    Success = true,
-                    Token = new JwtSecurityTokenHandler().WriteToken(token)
-                };
-
-            }
-
-            else
-            {
-                return new TokenResponse()
+                    return new TokenResponse()
+                    {
+                        Success = true,
+                        Token = new JwtSecurityTokenHandler().WriteToken(token),
+                        User = user
+                    };
+                }
+                else if (userRole.Role.Claims == UserRoles.RestaurantManager)
                 {
-                    Success = false,
-                    Error = "Couldn't retrive user's role",
-                    ErrorCode = "500"
-                };
-            }
-        }
-        else
-        {
-            return new TokenResponse()
-            {
-                Success = false,
-                Error = "Incorrect password",
-                ErrorCode = "401"
-            };
-        }
-    }
+                    // retrieve restaurant(s) manager manages
+                    var restaurants = _context.Restaurants.AsNoTracking().Where(r => r.UserId == user.Id).ToList();
 
-    public async Task<TokenResponse> LoginManager(LoginRequest request)
-    {
-        // find user with provided email
-        var user = await _context.Users.SingleOrDefaultAsync(user => user.Email == request.Email);
-
-        // check user is found
-        if (user == null)
-        {
-            return new TokenResponse()
-            {
-                Success = false,
-                Error = "Email not found",
-                ErrorCode = "404"
-            };
-        }
-
-        // check password is correct
-        if (BCrypt.Verify(request.Password, user.Password))
-        {
-            // extract user role
-            var userRole = _context.Users.Include(u => u.Role).Where(u => u.Email == user.Email).FirstOrDefault();
-
-            // if successfully extracted user role
-            if (userRole != null)
-            {
-                // prepare user claims for JWT token
-                var authClaims = new List<Claim>
+                    return new TokenResponse()
+                    {
+                        Success = true,
+                        Token = new JwtSecurityTokenHandler().WriteToken(token),
+                        User = null,
+                        Restaurants = restaurants
+                    };
+                }
+                else
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, userRole.Role.Claims),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
-
-                // create JWT token
-                var token = _tokenService.GetToken(authClaims);
-
-                // retrieve restaurant(s) manager manages
-                var restaurants = _context.Restaurants.AsNoTracking().Where(r => r.UserId == user.Id).ToList();
-
-                return new TokenResponse()
-                {
-                    Success = true,
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
-                    Restaurants = restaurants
-                };
-
+                    return null;
+                }
             }
 
             else

@@ -6,6 +6,8 @@ public class TokenResponse : BaseResponse
 {
     public string? Token { get; set; }
 
+    public User? User { get; set; }
+
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<Restaurant>? Restaurants { get; set; }
 }

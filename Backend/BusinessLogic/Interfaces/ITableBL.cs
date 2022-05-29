@@ -13,4 +13,5 @@ public interface ITableBL
     Task<UpdateTableResponse> UpdateTablesDeadline(long restaurantId, DateTime deadline);
     Task<UpdateTableResponse> UpdateTableAge(long tableId, bool age);
     Task<UpdateTableResponse> UpdateTableHandicap(long tableId, bool handicap);
+    Task<UpdateTableResponse> UpdateTablesNotes(long tableId, string note);
 }

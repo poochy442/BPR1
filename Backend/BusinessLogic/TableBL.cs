@@ -382,4 +382,42 @@ public class TableBL : ITableBL
             SuccessMessage = "Table handicap restriction updated"
         };
     }
+
+    public async Task<UpdateTableResponse> UpdateTablesNotes(long tableId, string note)
+    {
+        // check if could find table
+        var table = await _context.Tables.AsNoTracking().FirstOrDefaultAsync(t => t.Id == tableId);
+        if (table == null)
+        {
+            return new UpdateTableResponse()
+            {
+                Success = false,
+                Error = "Couldnt find restaurant with id:" + tableId,
+                ErrorCode = "404"
+            };
+        }
+
+        // check if note is valid
+        if (note == null || note.Length < 1 || note.Length > 200)
+        {
+            return new UpdateTableResponse()
+            {
+                Success = false,
+                Error = "Note invalid or length = 0 or exceeds 200 characters",
+                ErrorCode = "400"
+            };
+        }
+
+
+        // update table
+        table.Notes = note;
+        _context.Entry(table).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+
+        return new UpdateTableResponse()
+        {
+            Success = true,
+            SuccessMessage = "Tables updated with new deadline"
+        };
+    }
 }
