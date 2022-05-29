@@ -1,0 +1,24 @@
+@import '../../Reusable/Colors.scss';
+
+.account {
+	width: 80%;
+
+	.informationItem {
+		display: flex;
+		flex-flow: row nowrap;
+		color: $light-color;
+		margin-bottom: 1rem;
+
+		.itemLabel {
+			width: 15%;
+		}
+
+		.itemValue {
+			margin-left: 1rem !important;
+		}
+	}
+
+	.informationItem:last-child {
+		margin-bottom: 0;
+	}
+}
