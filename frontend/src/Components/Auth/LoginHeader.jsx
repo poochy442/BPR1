@@ -10,14 +10,6 @@ const LoginHeader = () => {
 	const navigate = useNavigate();
 	const auth = useSelector(state => state.auth)
 	const dispatch = useDispatch()
-
-	useEffect(() => {
-		if(!auth.loaded){
-			let cookie = getCookie(COOKIE_NAMES.required);
-			if(cookie && cookie.authKey)
-				dispatch(autoLogIn(cookie.authKey));
-		}
-	}, [auth])
 	
 	const links = auth.loggedIn ? (
 		<div className='authLinks'>

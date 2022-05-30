@@ -1,13 +1,17 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import '../../Styles/Cookies/CookieBar.scss'
-import {setupCookies, getCookie, COOKIE_NAMES} from './Cookies.jsx'
+import {setupCookies, getCookie, COOKIE_NAMES, initCookies} from './Cookies.jsx'
 
 const CookieBar = () => {
 	const requiredPermission = true;
 	const [analyticsPermission, setAnalyticsPermission] = useState(false);
 	const [cookieSet, setCookieSet] = useState(false);
 
+	useEffect(() => {
+		initCookies();
+	}, [])
+	
 	useEffect(() => {
 		if(getCookie(COOKIE_NAMES.required)){
 			setCookieSet(true);

@@ -108,7 +108,7 @@ const Search = () => {
 	}
 
 	const searchRestaurants = async (filters) => {
-		const res = await Client.post("Restaurant/Search", {}, filters);
+		const res = await Client.post("Restaurant/Search", {params: filters});
 		return res.data;
 	}
 

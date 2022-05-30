@@ -51,7 +51,7 @@ const SignUp = (props) => {
 	}
 
 	// Authentication guard
-	if (auth.userID) return <Navigate to='/' />;
+	if (auth.loggedIn) return <Navigate to='/' />;
 
 	return (
 		<div className='signUp'>
