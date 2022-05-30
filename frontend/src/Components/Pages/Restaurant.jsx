@@ -1,29 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
 import RestaurantDetails from '../Restaurant/RestaurantDetails';
 import RestaurantMap from '../Restaurant/RestaurantMap';
 import { Client } from '../Api/Client';
+import tableMap from '../../Assets/tablemap.png';
 
 import '../../Styles/Pages/Restaurant.scss';
 
 const Restaurant = (props) => {
 	const {manage} = props;
-	const params = useParams();
-	const restaurantId = params.restaurantId;
 	const navigate = useNavigate();
+	const auth = useSelector(state => state.auth);
 	const [restaurantLoaded, setRestaurantLoaded] = useState(false);
 	const [restaurant, setRestaurant] = useState(null);
 	const [tablesLoaded, setTablesLoaded] = useState(false);
 	const [tables, setTables] = useState(null);
 	const [reservationPlaced, setReservationPlaced] = useState(false);
+	const params = useParams();
+	const restaurantId = params.restaurantId;
 	
 	const date = new Date();
 	const minDate = date.toISOString().substring(0, date.toISOString().length - 14); // Removing ending precision to conform to yyyy-MM-dd
 	const [input, setInput] = useState({date: minDate, guestNo: 1, table: '', note: ''});
 
 	useEffect(() => {
-		Client.get('Restaurant/' + restaurantId, {}).then((res) => {
+		Client.get('Restaurant', {params: {id: restaurantId}}, auth.authKey).then((res) => {
 			setRestaurant(res.data)
 			setRestaurantLoaded(true);
 		}).catch((err) => {
@@ -32,6 +35,11 @@ const Restaurant = (props) => {
 			setRestaurantLoaded(true);
 		})
 	}, [restaurantId])
+
+	if(!auth.loggedIn)
+		return <Navigate to='/login' />
+	else if(auth.isManager && !manage)
+		return <Navigate to={'/Manage/Restaurant/' + restaurantId} />
 
 	const details = !restaurantLoaded ? (
 		<div className = 'loading'>
@@ -111,9 +119,7 @@ const Restaurant = (props) => {
 					))}
 				</select>
 			</label>
-			<div className='restaurantMap'>
-				This is the restaurant map
-			</div>
+			<img src={tableMap} className='restaurantMap' />
 			<label className='reservationLabel' htmlFor='note'>
 				<p>Write a note</p>
 				<textarea id='note' className='reservationInput' value={input.note} onChange={handleChange} />

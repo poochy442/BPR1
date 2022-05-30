@@ -9,7 +9,7 @@ export const logIn = createAsyncThunk(
 		const res = await Client.post("User/Login", { body: payload });
 		if(!res || res.status !== 200)
 		{
-			return {error: "Login error"}
+			return {error: "Login unsuccesful"}
 		} else
 			return res.data
 	}
@@ -22,13 +22,13 @@ export const signUp = createAsyncThunk(
 		const res = await Client.post("User/register", { body: payload });
 		if(!res || res.status !== 200)
 		{
-			return {error: "Registration error"}
+			return {error: "Registration unsuccesful"}
 		} else {
 			let loginPayload = { email: data.email, password: data.password }
 			const loginRes = Client.post("User/login", { body: loginPayload })
 			if(!loginRes || loginRes.status !== 200)
 			{
-				return {error: "Registration succesful, error while logging in"}
+				return {error: "Registration succesful, subsequent Login unsuccesful"}
 			} else
 				return loginRes.data
 		}
@@ -38,11 +38,10 @@ export const signUp = createAsyncThunk(
 export const autoLogIn = createAsyncThunk(
 	'auth/autoLogInStatus',
 	async (data) => {
-		console.log("autoLogIn Thunk", data);
 		const res = await Client.post("User/AutoLogin", {}, data);
 		if(!res || res.status !== 200)
 		{
-			return {error: "Login error"}
+			return {error: "Login unsuccesful"}
 		} else
 			return res.data
 	}
@@ -163,8 +162,9 @@ const AuthSlice = createSlice({
 		[autoLogIn.fulfilled.type] : (state, action) => {
 			if(action.payload.error)
 			{
+				state.isLoaded = true;
 				state.loggedIn = false
-				state.error = action.payload.error
+				state.error = null
 			} else {
 				state.isLoaded = true;
 				state.loggedIn = true

@@ -3,15 +3,18 @@ import Score from './Score';
 
 import '../../Styles/Restaurant/RestaurantDetails.scss';
 import Reviews from './Reviews';
+import { RestaurantImageByFoodType } from './Foodtype';
 
 const RestaurantDetails = (props) => {
 	const {miniScore} = props;
-	const {name, address, totalScore} = props.restaurant;
+	const {name, address, foodType, totalScore} = props.restaurant;
 	const [showReviews, setShowReviews] = useState(false);
+
+	console.log(props.restaurant);
 
 	return (
 		<div className='restaurantDetails'>
-			<span className='restaurantImage'>This is the restaurant Image</span>
+			<RestaurantImageByFoodType foodtype={foodType} />
 			<div className="information">
 				<h2 className='restaurantTitle'>{name}</h2>
 				<p>{address}</p>

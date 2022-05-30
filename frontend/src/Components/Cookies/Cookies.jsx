@@ -48,7 +48,6 @@ export const setupCookies = (analyticsPermission) => {
 
 export const initCookies = () => {
 	const rc = getCookie(COOKIE_NAMES.required), ac = getCookie(COOKIE_NAMES.analytics);
-	console.log("Init cookies", rc, ac);
 	if(!!rc)
 	{
 		if(rc.auth && rc.auth.isLoggedIn)

@@ -3,32 +3,12 @@ import { useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router';
 
 import LocationSearch from '../Input/LocationSearch';
+import { Client } from '../Api/Client';
+import Score from '../Restaurant/Score';
+import { foodTypes, RestaurantImageByFoodType } from '../Restaurant/Foodtype';
 
 import '../../Styles/Pages/Search.scss';
 
-import pizzaImage from '../../Assets/Foodtypes/Pizza.jpg';
-import sushiImage from '../../Assets/Foodtypes/Sushi.jpg';
-import thaiImage from '../../Assets/Foodtypes/Thai.jpg';
-import Score from '../Restaurant/Score';
-import { Client } from '../Api/Client';
-const foodTypes = [
-	{
-		name: 'Pizza',
-		img: pizzaImage
-	}, {
-		name: 'Asian',
-		img: sushiImage
-	}, {
-		name: 'Fast Food',
-		img: thaiImage
-	}, {
-		name: 'Fast Food',
-		img: thaiImage
-	}, {
-		name: 'Fast Food',
-		img: thaiImage
-	}
-]
 const restrictions = ['senior', 'handicap']
 
 const Search = () => {
@@ -153,10 +133,10 @@ const Search = () => {
 						<div className="resultContainer">
 							{restaurants && restaurants.map(((restaurant, index) => (
 								<div key={index} className="restaurantCard" onClick={() => handleRestaurantClick(restaurant)}>
-									<div className="restaurantImage"></div>
+									<RestaurantImageByFoodType foodtype={restaurant.foodType} />
 									<div className="restaurantInformation">
 										<p className="restaurantName"><b>{restaurant.name}</b></p>
-										<p className="location">{restaurant.address}</p>
+										<p className="location">{restaurant.address.street} {restaurant.address.streetNo}, {restaurant.address.postalCode} {restaurant.address.city}</p>
 									</div>
 									<Score score={restaurant.totalScore} mini={true}/>
 								</div>

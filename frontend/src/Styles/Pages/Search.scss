@@ -58,7 +58,7 @@
 					cursor: pointer;
 
 					.foodImage{
-						$foodImageWidth: 12.5rem;
+						$foodImageWidth: 8rem;
 						$foodImageHeight: $foodImageWidth * (9/16);
 						width: $foodImageWidth;
 						height: $foodImageHeight;
@@ -69,12 +69,6 @@
 						font-size: 1.5rem;
 						margin-top: 0.5rem !important;
 					}
-				}
-				.foodtypeOption:first-child{
-					margin-left: 0px;
-				}
-				.foodtypeOption:last-child{
-					margin-right: 0px;
 				}
 			}
 
@@ -143,19 +137,19 @@
 		.resultContainer{
 			width: 100%;
 			display: flex;
-			flex-flow: wrap;
+			flex-flow: row wrap;
 
 			.restaurantCard {
 				display: flex;
 				flex-flow: column nowrap;
 				justify-content: center;
 				align-items: center;
-				margin-left: 1rem;
-				margin-right: 1rem;
+				margin: 1rem;
 				border-radius: 1rem;
 				background-color: $light-color;
 				padding: 1rem;
 				cursor: pointer;
+				width: 25%;
 
 				.restaurantImage {
 					width: 8rem;
@@ -176,12 +170,6 @@
 						color: $main-color;
 					}
 				}
-			}
-			.restaurantContainer:first-child {
-				margin-left: 0px;
-			}
-			.restaurantContainer:last-child {
-				margin-left: 0px;
 			}
 		}
 	}
