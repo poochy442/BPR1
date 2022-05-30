@@ -1,15 +1,8 @@
 namespace Backend.BusinessLogic;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Cors;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using System.Linq;
 using BCrypt.Net;
 using Backend.Helpers;
@@ -18,7 +11,6 @@ using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
 using Backend.DataAccess;
 using Backend.DataAccess.Models;
-using System.Security.Claims;
 
 public class UserBL : IUserBL
 {
@@ -182,7 +174,6 @@ public class UserBL : IUserBL
         // check if there exists a user with provided email
         var userExists = _context.Users.SingleOrDefault(user => user.Email == request.Email);
         if (userExists != null)
-            //return StatusCode(StatusCodes.Status500InternalServerError, "User already exists!");
             return new RegisterUserResponse()
             {
                 Success = false,
@@ -199,7 +190,6 @@ public class UserBL : IUserBL
         // if couldnt get user role 
         if (role == null)
         {
-            //return StatusCode(StatusCodes.Status500InternalServerError, "Couldn't retrive role from db");
             return new RegisterUserResponse()
             {
                 Success = false,

@@ -20,13 +20,6 @@ public class RestaurantController : ControllerBase
         _businessLogic = businessLogic;
     }
 
-    // [AllowAnonymous]
-    // [HttpGet]
-    // public async Task<ActionResult<Restaurant>> GetRestaurnats()
-    // {
-    //     return await _context.Restaurants.FindAsync(1);
-    // }
-
     // customer and manager
     // [AllowAnonymous]
     [HttpGet("restaurants")]

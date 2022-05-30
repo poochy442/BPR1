@@ -1,18 +1,7 @@
 namespace Backend.BusinessLogic;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Cors;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Linq;
-using System.Text.Json;
-using Backend.Helpers;
 using Backend.Helpers.Models;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
@@ -99,7 +88,6 @@ public class BookingBL : IBookingBL
 
         if (restaurantExists == null)
         {
-            //return NotFound("Couldnt find restaurant with id:" + restaurantId);
             return new GetTableBookingsResponse()
             {
                 Success = false,
@@ -127,7 +115,6 @@ public class BookingBL : IBookingBL
         // check if there are bookings of tables
         if (joinBookings == null || joinBookings.Count == 0)
         {
-            //return StatusCode(500, "Couldn't retrieve bookings of tables");
             return new GetTableBookingsResponse()
             {
                 Success = false,
@@ -212,7 +199,6 @@ public class BookingBL : IBookingBL
 
         if (bookingExists != null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "There is already such a booking");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -229,7 +215,6 @@ public class BookingBL : IBookingBL
 
         if (userExists == null)
         {
-            //return StatusCode(StatusCodes.Status500InternalServerError, "There isn't a user with provided Id");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -247,7 +232,6 @@ public class BookingBL : IBookingBL
 
         if (tableValid == null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "Either table Id is invalid or table doesn't belong to the restaurant(restaurantId)");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -295,7 +279,6 @@ public class BookingBL : IBookingBL
 
         if (bookingExists != null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "There is already such a booking");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -312,7 +295,6 @@ public class BookingBL : IBookingBL
 
         if (tableValid == null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "Either table Id is invalid or table doesn't belong to the restaurant(restaurantId)");
             return new CreateBookingResponse()
             {
                 Success = false,

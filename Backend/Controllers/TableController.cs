@@ -1,13 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
-using System.Text.Json;
 using Backend.Helpers.Models;
 using Backend.DataAccess.Models;
-using Backend.DataAccess;
 using Backend.Helpers.Models.Requests;
-using Backend.Helpers.Models.Responses;
 using Backend.BusinessLogic;
 
 namespace Backend.Controllers;

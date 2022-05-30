@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-using System.Text.Json;
-
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
 

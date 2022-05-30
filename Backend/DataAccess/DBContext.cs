@@ -105,7 +105,7 @@ public class DBContext : DbContext
         {
             Id = 1,
             Email = "user@email.com",
-            Password = "$2a$11$YPB10zErqK1sD2h61D0xkupRJMObqFlaGoXcZ5TcVuIij.oWZlZGy", // = 'password'
+            Password = "$2a$11$YPB10zErqK1sD2h61D0xkupRJMObqFlaGoXcZ5TcVuIij.oWZlZGy", // hashed = 'password'
             Name = "Steve G",
             PhoneNo = "+4596254585",
             RoleId = 1
@@ -115,7 +115,7 @@ public class DBContext : DbContext
         {
             Id = 2,
             Email = "manager@email.com",
-            Password = "$2a$11$Y7zhcGWJn.Ym8gp6XmvOe.m09CcAnynFZtV6eL7Hc9Tk9ffMCYWVK", // = 'password'
+            Password = "$2a$11$Y7zhcGWJn.Ym8gp6XmvOe.m09CcAnynFZtV6eL7Hc9Tk9ffMCYWVK", // hashed = 'password'
             Name = "Clive L",
             PhoneNo = "+4532124565",
             RoleId = 2
@@ -275,6 +275,30 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 1,
+            Date = new DateTime(2022, 05, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 05, 24, 9, 0, 0),
+            EndDate = new DateTime(2022, 05, 24, 10, 0, 0),
+            GuestNo = 2,
+            RestaurantId = 1,
+            TableId = 1,
+            UserId = 1
+        });
+
+        modelBuilder.Entity<Booking>().HasData(new Booking()
+        {
+            Id = 2,
+            Date = new DateTime(2022, 05, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 05, 24, 12, 0, 0),
+            EndDate = new DateTime(2022, 05, 24, 15, 0, 0),
+            GuestNo = 2,
+            RestaurantId = 1,
+            TableId = 1,
+            UserId = 1
+        });
+
+        modelBuilder.Entity<Booking>().HasData(new Booking()
+        {
+            Id = 3,
             Date = new DateTime(2022, 06, 24, 0, 0, 0),
             StartDate = new DateTime(2022, 06, 24, 9, 0, 0),
             EndDate = new DateTime(2022, 06, 24, 10, 0, 0),
@@ -286,7 +310,7 @@ public class DBContext : DbContext
 
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
-            Id = 2,
+            Id = 4,
             Date = new DateTime(2022, 06, 24, 0, 0, 0),
             StartDate = new DateTime(2022, 06, 24, 12, 0, 0),
             EndDate = new DateTime(2022, 06, 24, 15, 0, 0),
@@ -298,7 +322,7 @@ public class DBContext : DbContext
 
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
-            Id = 3,
+            Id = 5,
             Date = new DateTime(2022, 06, 24, 0, 0, 0),
             StartDate = new DateTime(2022, 06, 24, 17, 0, 0),
             EndDate = new DateTime(2022, 06, 24, 20, 0, 0),
@@ -310,7 +334,7 @@ public class DBContext : DbContext
 
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
-            Id = 4,
+            Id = 6,
             Date = new DateTime(2022, 06, 24, 0, 0, 0),
             StartDate = new DateTime(2022, 06, 24, 10, 0, 0),
             EndDate = new DateTime(2022, 06, 24, 12, 0, 0),
@@ -322,7 +346,7 @@ public class DBContext : DbContext
 
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
-            Id = 5,
+            Id = 7,
             Date = new DateTime(2022, 06, 24, 0, 0, 0),
             StartDate = new DateTime(2022, 06, 24, 15, 0, 0),
             EndDate = new DateTime(2022, 06, 24, 17, 0, 0),

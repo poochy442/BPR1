@@ -1,6 +1,5 @@
 namespace Backend.BusinessLogic;
 
-using Microsoft.AspNetCore.Mvc;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
 using System.Security.Claims;
