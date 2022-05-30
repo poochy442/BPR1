@@ -95,6 +95,10 @@ public class BusinessLogic : IBusinessLogic
         return await _bookingBL.CancelBooking(id);
     }
 
+    public async Task<GetRestaurantsResponse> GetRestaurant(long id) {
+        return await _restaurantBL.GetRestaurant(id);
+    }
+
     public async Task<GetRestaurantsResponse> GetRestaurants(string city) {
         return await _restaurantBL.GetRestaurants(city);
     }
