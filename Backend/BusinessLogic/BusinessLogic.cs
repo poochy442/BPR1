@@ -1,9 +1,7 @@
 namespace Backend.BusinessLogic;
 
-using Microsoft.AspNetCore.Mvc;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
-using Backend.Helpers;
 using System.Security.Claims;
 public class BusinessLogic : IBusinessLogic
 {
@@ -69,8 +67,12 @@ public class BusinessLogic : IBusinessLogic
         return await _tableBL.UpdateTablesNotes(tableId, note);
     }
 
-    public async Task<GetBookingsResponse> GetBookingsForCustomer(int customerId) {
-        return await _bookingBL.GetBookingsForCustomer(customerId);
+    public async Task<GetBookingsResponse> GetCurrentBookingsForCustomer(int customerId) {
+        return await _bookingBL.GetCurrentBookingsForCustomer(customerId);
+    }
+
+    public async Task<GetBookingsResponse> GetPastBookingsForCustomer(int customerId) {
+        return await _bookingBL.GetPastBookingsForCustomer(customerId);
     }
 
     public async Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId) {

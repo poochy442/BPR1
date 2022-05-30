@@ -1,9 +1,7 @@
 namespace Backend.BusinessLogic;
 
-using Microsoft.AspNetCore.Mvc;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
-using Backend.Helpers;
 using System.Security.Claims;
 
 public interface IBusinessLogic
@@ -19,7 +17,8 @@ public interface IBusinessLogic
     Task<UpdateTableResponse> UpdateTableAge(long tableId, bool age);
     Task<UpdateTableResponse> UpdateTableHandicap(long tableId, bool handicap);
     Task<UpdateTableResponse> UpdateTablesNotes(long tableId, string note);
-    Task<GetBookingsResponse> GetBookingsForCustomer(int customerId);
+    Task<GetBookingsResponse> GetCurrentBookingsForCustomer(int customerId);
+    Task<GetBookingsResponse> GetPastBookingsForCustomer(int customerId);
     Task<GetTableBookingsResponse> GetBookingsForTables(long restaurantId);
     Task<CreateBookingResponse> CreateBooking(CreateBookingRequest request);
     Task<CreateBookingResponse> CreateInCallBooking(CreateInCallBookingRequest request);

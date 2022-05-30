@@ -1,18 +1,7 @@
 namespace Backend.BusinessLogic;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Cors;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Linq;
-using System.Text.Json;
-using Backend.Helpers;
 using Backend.Helpers.Models;
 using Backend.Helpers.Models.Requests;
 using Backend.Helpers.Models.Responses;
@@ -28,7 +17,7 @@ public class BookingBL : IBookingBL
         _context = context;
     }
 
-    public async Task<GetBookingsResponse> GetBookingsForCustomer(int customerId)
+    public async Task<GetBookingsResponse> GetCurrentBookingsForCustomer(int customerId)
     {
         // check if customer exists
         var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == customerId);
@@ -49,6 +38,38 @@ public class BookingBL : IBookingBL
         .Include(b => b.Restaurant)
         .ThenInclude(r => r.Address)
         .Where(b => b.UserId == customerId && b.StartDate > DateTime.Now)
+        .OrderBy(b => b.StartDate)
+        .ToListAsync();
+
+        return new GetBookingsResponse()
+        {
+            Success = true,
+            Bookings = bookings
+        };
+    }
+
+    public async Task<GetBookingsResponse> GetPastBookingsForCustomer(int customerId)
+    {
+        // check if customer exists
+        var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == customerId);
+        if (user == null)
+        {
+            return new GetBookingsResponse()
+            {
+                Success = false,
+                Error = "Couldnt find user",
+                ErrorCode = "404"
+            };
+        }
+
+        // retrieve customer bookings
+        var bookings = await _context.Bookings
+        .AsNoTracking()
+        .Include(b => b.Table)
+        .Include(b => b.Restaurant)
+        .ThenInclude(r => r.Address)
+        .Where(b => b.UserId == customerId && b.StartDate <= DateTime.Now)
+        .OrderByDescending(b => b.StartDate)
         .ToListAsync();
 
         return new GetBookingsResponse()
@@ -67,7 +88,6 @@ public class BookingBL : IBookingBL
 
         if (restaurantExists == null)
         {
-            //return NotFound("Couldnt find restaurant with id:" + restaurantId);
             return new GetTableBookingsResponse()
             {
                 Success = false,
@@ -95,7 +115,6 @@ public class BookingBL : IBookingBL
         // check if there are bookings of tables
         if (joinBookings == null || joinBookings.Count == 0)
         {
-            //return StatusCode(500, "Couldn't retrieve bookings of tables");
             return new GetTableBookingsResponse()
             {
                 Success = false,
@@ -180,7 +199,6 @@ public class BookingBL : IBookingBL
 
         if (bookingExists != null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "There is already such a booking");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -197,7 +215,6 @@ public class BookingBL : IBookingBL
 
         if (userExists == null)
         {
-            //return StatusCode(StatusCodes.Status500InternalServerError, "There isn't a user with provided Id");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -215,7 +232,6 @@ public class BookingBL : IBookingBL
 
         if (tableValid == null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "Either table Id is invalid or table doesn't belong to the restaurant(restaurantId)");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -263,7 +279,6 @@ public class BookingBL : IBookingBL
 
         if (bookingExists != null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "There is already such a booking");
             return new CreateBookingResponse()
             {
                 Success = false,
@@ -280,7 +295,6 @@ public class BookingBL : IBookingBL
 
         if (tableValid == null)
         {
-            // return StatusCode(StatusCodes.Status500InternalServerError, "Either table Id is invalid or table doesn't belong to the restaurant(restaurantId)");
             return new CreateBookingResponse()
             {
                 Success = false,

@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-using System.Text.Json;
-
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
 
@@ -45,7 +43,7 @@ public class RatingController : ControllerBase
     // }
 
 	[HttpGet("{id}")]
-	public async Task<ActionResult<Rating>> GetRating(long id)
+	public async Task<ActionResult<Rating>> GetRating([FromQuery] long id)
 	{
 		var rating = await _context.Ratings.FindAsync(id);
 
@@ -58,7 +56,7 @@ public class RatingController : ControllerBase
 	}
 
 	[HttpPost]
-	public async Task<ActionResult<Rating>> PostRating(Rating rating)
+	public async Task<ActionResult<Rating>> PostRating([FromBody] Rating rating)
 	{
 		var restaurant = _context.Restaurants.Single(res => res.Id == rating.RestaurantId);
 		var ratings = _context.Ratings.Select(rating => rating.RestaurantId == restaurant.Id).ToList();
@@ -75,7 +73,7 @@ public class RatingController : ControllerBase
 	}
 
 	[HttpPut("{id}")]
-	public async Task<IActionResult> PutRating(long id, Rating rating)
+	public async Task<IActionResult> PutRating([FromRoute]long id, [FromBody] Rating rating)
 	{
 		if(id != rating.Id)
 		{
@@ -102,7 +100,7 @@ public class RatingController : ControllerBase
 		return NoContent();
 	}
 
-	private bool RatingExists(long id)
+	private bool RatingExists([FromQuery] long id)
 	{
 		return _context.Ratings.Any(e => e.Id == id);
 	}
