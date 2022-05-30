@@ -17,6 +17,8 @@ public class RestaurantBL : IRestaurantBL
         _restaurantService = restaurantService;
     }
 
+    
+
     public async Task<GetRestaurantsResponse> GetRestaurants(string city)
     {
 
