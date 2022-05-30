@@ -268,11 +268,13 @@ namespace backend.Migrations
                 columns: new[] { "Id", "Date", "EndDate", "GuestNo", "Note", "RestaurantId", "StartDate", "TableId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 9, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 2, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 3, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 20, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 4, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 },
-                    { 5, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 }
+                    { 1, new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 5, 24, 9, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 3, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 9, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 4, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 5, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 20, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 6, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 },
+                    { 7, new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1, new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 }
                 });
 
             migrationBuilder.CreateIndex(

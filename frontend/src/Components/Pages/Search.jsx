@@ -21,6 +21,12 @@ const foodTypes = [
 	}, {
 		name: 'Fast Food',
 		img: thaiImage
+	}, {
+		name: 'Fast Food',
+		img: thaiImage
+	}, {
+		name: 'Fast Food',
+		img: thaiImage
 	}
 ]
 const restrictions = ['senior', 'handicap']

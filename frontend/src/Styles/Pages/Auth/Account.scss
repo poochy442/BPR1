@@ -25,4 +25,26 @@
 	.informationItem:last-child {
 		margin-bottom: 0;
 	}
+
+	.buttonContainer {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+		width: 50%;
+
+		.confirm {
+			background-color: $success-color;
+		}
+		.cancel {
+			background-color: $danger-color;
+		}
+	}
+
+	.button {
+		padding: 1rem;
+		border-radius: 1rem;
+		border: 0;
+		background-color: $main-color;
+	}
 }

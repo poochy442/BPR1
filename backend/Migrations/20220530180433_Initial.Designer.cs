@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20220529224300_Initial")]
+    [Migration("20220530180433_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,6 +153,28 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -163,7 +185,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 4,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -174,7 +196,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 5,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -185,7 +207,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 6,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -196,7 +218,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 7,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
