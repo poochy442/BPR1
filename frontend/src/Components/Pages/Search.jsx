@@ -109,7 +109,7 @@ const Search = () => {
 	}
 
 	const searchRestaurants = async (filters) => {
-		const res = await Client.post("Restaurant/Search", {body: {
+		const res = await Client.post("Restaurant/restaurants-location", {body: {
 			country: "DK",
 			postalCode: "8700",
 			city: city,
@@ -193,7 +193,7 @@ const Search = () => {
 					<div>
 						<h2 className='resultTitle'>Restaurants</h2>
 						<div className="resultContainer">
-							{restaurants.map(((restaurant, index) => (
+							{restaurants && restaurants.map(((restaurant, index) => (
 								<div key={index} className="restaurantCard" onClick={() => handleRestaurantClick(restaurant)}>
 									<div className="restaurantImage"></div>
 									<div className="restaurantInformation">
