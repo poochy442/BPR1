@@ -20,7 +20,6 @@ Client.get = function (endpoint, {headers = '', params = ''}, authKey = null ){
 }
 
 Client.post = function (endpoint, {headers = '', params = '', body = ''}, authKey = null ){
-	console.log("Posting", body, " to ", endpoint);
 	return Client(endpoint, {method: 'POST', headers, params, body}, authKey)
 }
 

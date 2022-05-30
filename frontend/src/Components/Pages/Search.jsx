@@ -57,6 +57,7 @@ const Search = () => {
 	const [restaurants, setRestaurants] = useState([]);
 	const [foodTypeFilters, setFoodTypeFilters] = useState({})
 	const [restrictionFilters, setRestrictionFilters] = useState({})
+	const [searchRadius, setSearchRadius] = useState(1000);
 
 	useEffect(() => {
 		async function getRestaurants()
@@ -108,8 +109,16 @@ const Search = () => {
 	}
 
 	const searchRestaurants = async (filters) => {
-		const res = await Client.post("Restaurant/Search", {params: filters});
-		return res.data;
+		const res = await Client.post("Restaurant/Search", {body: {
+			country: "DK",
+			postalCode: "8700",
+			city: city,
+			street: "Kamtjatka",
+			streetNo: "10",
+			radius: searchRadius
+		}});
+		console.log(res);
+		return [];
 	}
 
 	return (
@@ -162,6 +171,10 @@ const Search = () => {
 								LGBT-owned
 								</div>
 						</div>
+						<label className="searchRadiusInput" htmlFor='searchRadius'>
+							<p>Search radius (m)</p>
+							<input id='searchRadius' type='number' value={searchRadius} onChange={(e) => setSearchRadius(e.target.value)} />
+						</label>
 						<button type='button' className="confirmButton" onClick={handleSearchSubmit}>
 							Confirm
 						</button>

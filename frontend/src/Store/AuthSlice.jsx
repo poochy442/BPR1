@@ -18,13 +18,20 @@ export const logIn = createAsyncThunk(
 export const signUp = createAsyncThunk(
 	'auth/signUpStatus',
 	async (data) => {
-		let payload = { Email: data.email, Password: data.password };
-		const res = await Client.post("User/Login", { body: payload });
+		let payload = { email: data.email, password: data.password, name: data.name, phoneNo: data.phoneNo };
+		const res = await Client.post("User/register", { body: payload });
 		if(!res || res.status !== 200)
 		{
-			return {error: "Login error"}
-		} else
-			return res.data
+			return {error: "Registration error"}
+		} else {
+			let loginPayload = { email: data.email, password: data.password }
+			const loginRes = Client.post("User/login", { body: loginPayload })
+			if(!loginRes || loginRes.status !== 200)
+			{
+				return {error: "Registration succesful, error while logging in"}
+			} else
+				return loginRes.data
+		}
 	}
 )
 
@@ -43,16 +50,7 @@ export const autoLogIn = createAsyncThunk(
 
 const generateInitials = (fullName) => {
 	let names = fullName.split(' ');
-	return names[0][0] + names[1][0]
-}
-const initState = {
-	isLoaded: false,
-	loggedIn: false,
-	isManager: false,
-	authKey: null,
-	email: null,
-	initials: null,
-	error: null
+	return names.length >= 2 ? names[0][0] + names[1][0] : fullName.substring(0, 2)
 }
 
 const AuthSlice = createSlice({
@@ -69,8 +67,13 @@ const AuthSlice = createSlice({
 	reducers: {
 		// TODO: Connect to database
 		logOut(state){
-			state = initState;
 			state.isLoaded = true;
+			state.loggedIn = false;
+			state.isManager = false;
+			state.authKey = null;
+			state.email = null;
+			state.initials = null;
+			state.error = null;
 
 			setCookie(
 				COOKIE_NAMES.required, 
@@ -92,7 +95,6 @@ const AuthSlice = createSlice({
 				state.loggedIn = false
 				state.error = action.payload.error
 			} else {
-				console.log(action.payload);
 				state.isLoaded = true;
 				state.loggedIn = true;
 				state.authKey = action.payload.token;
@@ -125,7 +127,6 @@ const AuthSlice = createSlice({
 				state.loggedIn = false
 				state.error = action.payload.error
 			} else {
-				console.log(action.payload);
 				state.isLoaded = true;
 				state.loggedIn = true
 				state.authKey = action.payload.token;
@@ -157,7 +158,6 @@ const AuthSlice = createSlice({
 				state.loggedIn = false
 				state.error = action.payload.error
 			} else {
-				console.log(action.payload);
 				state.isLoaded = true;
 				state.loggedIn = true
 				state.authKey = action.payload.token;

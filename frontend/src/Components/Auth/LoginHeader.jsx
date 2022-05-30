@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { autoLogIn, logOut } from '../../Store/AuthSlice';
+import { Link } from 'react-router-dom'
+import { logOut } from '../../Store/AuthSlice';
 
 import '../../Styles/Auth/LoginHeader.scss';
-import { COOKIE_NAMES, getCookie } from '../Cookies/Cookies';
 
 const LoginHeader = () => {
 	const navigate = useNavigate();
@@ -20,8 +20,8 @@ const LoginHeader = () => {
 		</div>
 	) : (
 		<div className='authLinks'>
-			<a className='link' href='/login'><p>Log in</p></a>
-			<a className='link' href='/signup'><p>Sign up</p></a>
+			<Link className='link' to='/login'><p>Log in</p></Link>
+			<Link className='link' to='/signup'><p>Sign up</p></Link>
 		</div>
 	);
 

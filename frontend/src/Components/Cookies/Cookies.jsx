@@ -52,7 +52,7 @@ export const initCookies = () => {
 	if(!!rc)
 	{
 		if(rc.auth && rc.auth.isLoggedIn)
-			store.dispatch(autoLogIn(rc.authKey))
+			store.dispatch(autoLogIn(rc.auth.authKey))
 	}
 
 	if(!!ac){

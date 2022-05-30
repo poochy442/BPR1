@@ -7,9 +7,11 @@ import '../../../Styles/Pages/Auth/SignUp.scss'
 
 const SignUp = (props) => {
 	const [input, setInput] = useState({
-		username: '',
+		email: '',
 		password: '',
-		repeatPassword: ''
+		repeatPassword: '',
+		name: '',
+		phoneNo: ''
 	});
 	const [error, setError] = useState(null);
 
@@ -26,14 +28,16 @@ const SignUp = (props) => {
 	const handleSignup = () => {
 		if(confirmContent())
 			dispatch(signUp({
-				username: input.username,
-				password: input.password
+				email: input.email,
+				password: input.password,
+				name: input.name,
+				phoneNo: input.phoneNo
 			}))
 	}
 
 	const confirmContent = () => {
-		if(input.username === ''){
-			setError('Must provide a username.')
+		if(input.email === ''){
+			setError('Must provide an email.')
 			return false
 		}
 		if(input.password === '' || input.repeatPassword === ''){
@@ -42,6 +46,18 @@ const SignUp = (props) => {
 		}
 		if(input.password !== input.repeatPassword){
 			setError('Passwords must match')
+			return false
+		}
+		if(input.name === ''){
+			setError('Must provide your name');
+			return false
+		}
+		if(input.phoneNo === ''){
+			setError('Must provide phone number');
+			return false;
+		}
+		if(input.phoneNo.length !== 8){
+			setError('Phone number must be 8 digits long')
 			return false
 		}
 
@@ -59,8 +75,8 @@ const SignUp = (props) => {
 				<h1>Sign Up</h1>
 				<div className='inputContainer'>
 					<div className='signUpInput'>
-						<label htmlFor='username'>Username</label>
-						<input type='text' placeholder='Input username...' id='username' value={input.username} onChange={handleValueChange} />
+						<label htmlFor='email'>Email</label>
+						<input type='text' placeholder='Input email...' id='email' value={input.email} onChange={handleValueChange} />
 					</div>
 					<div className='signUpInput'>
 						<label htmlFor='password'>Password</label>
@@ -69,6 +85,14 @@ const SignUp = (props) => {
 					<div className='signUpInput'>
 						<label htmlFor='repeatPassword'>Repeat password</label>
 						<input type='password' id='repeatPassword' placeholder='Input password...' value={input.repeatPassword} onChange={handleValueChange} />
+					</div>
+					<div className='signUpInput'>
+						<label htmlFor='repeatPassword'>Name</label>
+						<input type='text' id='name' placeholder='Input name...' value={input.name} onChange={handleValueChange} />
+					</div>
+					<div className='signUpInput'>
+						<label htmlFor='repeatPassword'>Phone number</label>
+						<input type='text' id='phoneNo' placeholder='Input phone number...' value={input.phoneNo} onChange={handleValueChange} />
 					</div>
 					{auth.error ? (
 						<p className='errorText'>{auth.error}</p>

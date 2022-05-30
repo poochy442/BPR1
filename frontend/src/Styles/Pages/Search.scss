@@ -83,7 +83,7 @@
 				display: flex;
 				flex-flow: row nowrap;
 				justify-content: center;
-				align-items: baseline;
+				align-items: center;
 
 				.advancedFilters{
 					width: 100%;
@@ -103,6 +103,24 @@
 					}
 					.advancedOption:last-child{
 						margin-right: 0px;
+					}
+				}
+				.searchRadiusInput {
+					display: flex;
+					flex-flow: row nowrap;
+					justify-content: center;
+					align-items: center;
+					height: 100%;
+					
+					p {
+						color: $light-color;
+						width: 50%;
+					}
+					input {
+						margin-left: 1rem;
+						padding: 0.5rem 0;
+						font-size: $font-size-xsmall;
+						width: 50%;
 					}
 				}
 				.confirmButton{
