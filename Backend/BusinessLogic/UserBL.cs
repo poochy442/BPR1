@@ -213,11 +213,17 @@ public class UserBL : IUserBL
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
+        //login the newly created user
+        var login = await LoginUser(new LoginRequest(){
+            Email = request.Email,
+            Password = request.Password
+        });
 
         return new RegisterUserResponse()
         {
             Success = true,
-            SuccessMessage = "User created successfully!"
+            SuccessMessage = "User created successfully!",
+            TokenResponse = login
         };
 
 

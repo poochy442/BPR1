@@ -35,7 +35,7 @@ public class TableController : ControllerBase
     // manager
     [HttpGet("tables")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult<List<Table>>> GetTables(long restaurantId)
+    public async Task<ActionResult<List<Table>>> GetTables([FromQuery] long restaurantId)
     {
         var tables = await _businessLogic.GetTables(restaurantId);
 
@@ -76,7 +76,7 @@ public class TableController : ControllerBase
     // manager
     [HttpPut("update-booking-times")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult> UpdateTableBookingTimes(UpdateTableBookingTimesRequest request)
+    public async Task<ActionResult> UpdateTableBookingTimes([FromBody] UpdateTableBookingTimesRequest request)
     {
 
         var updateBookingTimes = await _businessLogic.UpdateTableBookingTimes(request);
@@ -96,7 +96,7 @@ public class TableController : ControllerBase
     // manager
     [HttpPut("update-deadline")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult> UpdateTablesDeadline(long restaurantId, DateTime deadline)
+    public async Task<ActionResult> UpdateTablesDeadline([FromQuery] long restaurantId, DateTime deadline)
     {
         var updateDeadline = await _businessLogic.UpdateTablesDeadline(restaurantId, deadline);
 
@@ -115,7 +115,7 @@ public class TableController : ControllerBase
     // manager
     [HttpPut("update-age")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult> UpdateTableAge(long tableId, bool age)
+    public async Task<ActionResult> UpdateTableAge([FromQuery] long tableId, bool age)
     {
         var updateAge = await _businessLogic.UpdateTableAge(tableId, age);
 
@@ -134,7 +134,7 @@ public class TableController : ControllerBase
     // manager
     [HttpPut("update-handicap")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult> UpdateTableHandicap(long tableId, bool handicap)
+    public async Task<ActionResult> UpdateTableHandicap([FromQuery] long tableId, bool handicap)
     {
         var updateHandicap = await _businessLogic.UpdateTableHandicap(tableId, handicap);
 
@@ -153,7 +153,7 @@ public class TableController : ControllerBase
     // manager
     [HttpPut("update-notes")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult> UpdateTablesNotes(long tableId, string note)
+    public async Task<ActionResult> UpdateTablesNotes([FromQuery] long tableId, string note)
     {
         var updateNotes = await _businessLogic.UpdateTablesNotes(tableId, note);
 

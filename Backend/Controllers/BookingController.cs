@@ -90,7 +90,7 @@ public class BookingController : ControllerBase
     // manager
     [HttpGet("bookings-for-tables")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult<GetTableBookingsResponse>> GetBookingsForTables(long restaurantId)
+    public async Task<ActionResult<GetTableBookingsResponse>> GetBookingsForTables([FromQuery] long restaurantId)
     {
 
         var getTableBookings = await _businessLogic.GetBookingsForTables(restaurantId);
@@ -111,7 +111,7 @@ public class BookingController : ControllerBase
 
     // both customer and manager
     [HttpPost]
-    public async Task<ActionResult> CreateBooking(CreateBookingRequest request)
+    public async Task<ActionResult> CreateBooking([FromBody] CreateBookingRequest request)
     {
 
         var createBooking = await _businessLogic.CreateBooking(request);
@@ -133,7 +133,7 @@ public class BookingController : ControllerBase
     // manager
     [HttpPost("incall-booking")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult> CreateInCallBooking(CreateInCallBookingRequest request)
+    public async Task<ActionResult> CreateInCallBooking([FromBody] CreateInCallBookingRequest request)
     {
 
         var createBooking = await _businessLogic.CreateInCallBooking(request);
@@ -156,7 +156,7 @@ public class BookingController : ControllerBase
     // for manager
     [HttpDelete("delete")]
     [Authorize(Roles = UserRoles.RestaurantManager)]
-    public async Task<ActionResult> DeleteBooking(long bookingId)
+    public async Task<ActionResult> DeleteBooking([FromQuery] long bookingId)
     {
 
         var deleteBooking = await _businessLogic.DeleteBooking(bookingId);
@@ -179,7 +179,7 @@ public class BookingController : ControllerBase
     // for customer
     [HttpDelete("cancel")]
     [Authorize(Roles = UserRoles.Customer)]
-    public async Task<ActionResult> CancelBooking(long bookingId)
+    public async Task<ActionResult> CancelBooking([FromQuery] long bookingId)
     {
 
         var cancelBooking = await _businessLogic.CancelBooking(bookingId);

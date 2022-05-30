@@ -34,7 +34,7 @@ public class UserController : ControllerBase
     // anonymous
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult> LoginUser(LoginRequest request)
+    public async Task<ActionResult> LoginUser([FromBody] LoginRequest request)
     {
         var loginUser = await _businessLogic.LoginUser(request);
 
@@ -87,7 +87,7 @@ public class UserController : ControllerBase
     // anonymous
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult> RegisterUser(RegisterRequest request)
+    public async Task<ActionResult> RegisterUser([FromBody] RegisterRequest request)
     {
         var registerUser = await _businessLogic.RegisterUser(request);
 

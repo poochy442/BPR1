@@ -23,7 +23,7 @@ public class RestaurantController : ControllerBase
     // customer and manager
     // [AllowAnonymous]
     [HttpGet("restaurants")]
-    public async Task<ActionResult<List<Restaurant>>> GetRestaurants(string city)
+    public async Task<ActionResult<List<Restaurant>>> GetRestaurants([FromQuery] string city)
     {
         var restaurants = await _businessLogic.GetRestaurants(city);
 
@@ -33,7 +33,7 @@ public class RestaurantController : ControllerBase
 	// customer and manager
     [HttpGet("restaurants-location")]
     // [AllowAnonymous]
-    public async Task<ActionResult> GetRestaurantsByLocation(RestaurantsByLocationRequest request)
+    public async Task<ActionResult> GetRestaurantsByLocation([FromBody] RestaurantsByLocationRequest request)
     {
 
         var restaurants = await _businessLogic.GetRestaurantsByLocation(request);
