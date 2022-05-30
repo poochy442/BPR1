@@ -13,11 +13,18 @@ namespace Backend.Controllers;
 [Route("[controller]")]
 public class RestaurantController : ControllerBase
 {
-	private readonly IBusinessLogic _businessLogic;
+    private readonly IBusinessLogic _businessLogic;
 
     public RestaurantController(IBusinessLogic businessLogic)
     {
         _businessLogic = businessLogic;
+    }
+
+    // customer and manager
+    [HttpGet]
+    public async Task<ActionResult<Restaurant>> GetRestaurant(long id)
+    {
+       return null;
     }
 
     // customer and manager and unauthorized
@@ -30,7 +37,7 @@ public class RestaurantController : ControllerBase
         return Ok(restaurants.Restaurants);
     }
 
-	// customer and manager and unauthorized
+    // customer and manager and unauthorized
     [HttpPost("restaurants-location")]
     [AllowAnonymous]
     public async Task<ActionResult> GetRestaurantsByLocation([FromBody] RestaurantsByLocationRequest request)
@@ -40,7 +47,7 @@ public class RestaurantController : ControllerBase
 
         if (!restaurants.Success)
         {
-            return Unauthorized(new
+            return BadRequest(new
             {
                 restaurants.ErrorCode,
                 restaurants.Error

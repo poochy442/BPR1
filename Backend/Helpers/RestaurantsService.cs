@@ -1,5 +1,6 @@
 namespace Backend.Helpers;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +11,17 @@ using Backend.Helpers.Models.Requests;
 
 public class RestaurantService : IRestaurantService
 {
+    private readonly IConfiguration _configuration;
+
+    public RestaurantService(IConfiguration configuration) {
+        _configuration = configuration;
+    }
+
     public List<Restaurant> ExecuteDbQuery(decimal origLat, decimal origLong, int radius)
     {
         //set the connection string
-        string connString = @"Data Source=LAPTOP-D5VQT9SU;Initial Catalog=BookingSystem;Integrated Security=True;";
+        //string connString = @"Data Source=LAPTOP-D5VQT9SU;Initial Catalog=BookingSystem;Integrated Security=True;";
+        var connString = this._configuration.GetConnectionString("Default");
 
         // variable to store the query results
         var restaurants = new List<Restaurant>();
