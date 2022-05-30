@@ -16,37 +16,14 @@ const foodTypes = [
 		name: 'Pizza',
 		img: pizzaImage
 	}, {
-		name: 'Sushi',
+		name: 'Asian',
 		img: sushiImage
 	}, {
-		name: 'Thai',
+		name: 'Fast Food',
 		img: thaiImage
 	}
 ]
-const restrictions = ['studyDiscount', 'open_24_7', 'LGBT']
-// const restaurants = [
-// 	{
-// 		name: 'Pizza King',
-// 		location: 'Slotsgade 10, 8700 Horsens',
-// 		foodtype: 'Pizza',
-// 		score: 4.25,
-// 		id: 1
-// 	},
-// 	{
-// 		name: 'McDonald\'s',
-// 		location: 'Slotsgade 9, 8700 Horsens',
-// 		foodtype: 'Fast Food',
-// 		score: 3.4,
-// 		id: 2
-// 	},
-// 	{
-// 		name: 'Mamma Mia',
-// 		location: 'Slotsgade 12, 8700 Horsens',
-// 		foodtype: 'Italian',
-// 		score: 2.25,
-// 		id: 3
-// 	}
-// ]
+const restrictions = ['senior', 'handicap']
 
 const Search = () => {
 	let routerLocation = useLocation(), query = routerLocation.state ? routerLocation.state.query : null;
@@ -62,7 +39,7 @@ const Search = () => {
 	useEffect(() => {
 		async function getRestaurants()
 		{
-			setRestaurants(await searchRestaurants(collectFilters()));
+			setRestaurants(await searchRestaurants());
 		}
 
 		// TODO: Call backend for food types and restrictions
@@ -81,44 +58,19 @@ const Search = () => {
 
 	const handleSearchSubmit = (e) => {
 		e.preventDefault();
-		setRestaurants(searchRestaurants(collectFilters()));
+		setRestaurants(searchRestaurants());
 	}
 
 	const handleRestaurantClick = (restaurant) => {
 		navigate("/restaurant/" + restaurant.id);
 	}
 
-	const collectFilters = () => {
-		let selectedfoodTypeFilter = {}
-		foodTypes.forEach((element) => {
-			if(foodTypeFilters[element])
-				selectedfoodTypeFilter = {...selectedfoodTypeFilter, [element.name]: true}
-		})
-
-		let selectedrestrictionFilter = {}
-		restrictions.forEach((element) => {
-			if(restrictionFilters[element])
-				selectedrestrictionFilter = {...selectedrestrictionFilter, [element]: true}
-		})
-
-		return {
-			location: location,
-			foodtype: selectedfoodTypeFilter,
-			advanced: selectedrestrictionFilter
-		};
-	}
-
-	const searchRestaurants = async (filters) => {
-		const res = await Client.post("Restaurant/restaurants-location", {body: {
-			country: "DK",
-			postalCode: "8700",
-			city: city,
-			street: "Kamtjatka",
-			streetNo: "10",
-			radius: searchRadius
-		}});
-		console.log(res);
-		return [];
+	const searchRestaurants = async () => {
+		const res = await Client.get("Restaurant/restaurants", {params: { city: city }});
+		if(res.status === 200)
+			return res.data
+		else
+			return [];
 	}
 
 	return (
@@ -171,10 +123,10 @@ const Search = () => {
 								LGBT-owned
 								</div>
 						</div>
-						<label className="searchRadiusInput" htmlFor='searchRadius'>
+						{/* <label className="searchRadiusInput" htmlFor='searchRadius'>
 							<p>Search radius (m)</p>
 							<input id='searchRadius' type='number' value={searchRadius} onChange={(e) => setSearchRadius(e.target.value)} />
-						</label>
+						</label> */}
 						<button type='button' className="confirmButton" onClick={handleSearchSubmit}>
 							Confirm
 						</button>

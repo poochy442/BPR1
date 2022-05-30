@@ -5,7 +5,7 @@ export async function Client(endpoint, { method, headers, params, body}, authKey
 	return axios({
 		method,
 		url: apiURL + endpoint,
-		headers: authKey ? {...headers, Authorization: 'Bearer ' + authKey} : headers,
+		headers: authKey ? {...headers, Authorization: 'Bearer ' + authKey, accept: '*/*'} : headers,
 		params: params,
 		data: body
 	}).then((res) => {

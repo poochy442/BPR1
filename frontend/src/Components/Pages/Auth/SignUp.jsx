@@ -31,7 +31,7 @@ const SignUp = (props) => {
 				email: input.email,
 				password: input.password,
 				name: input.name,
-				phoneNo: input.phoneNo
+				phoneNo: '+45' + input.phoneNo
 			}))
 	}
 

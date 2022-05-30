@@ -23,7 +23,7 @@ const Restaurant = (props) => {
 	const [input, setInput] = useState({date: minDate, guestNo: 1, table: '', note: ''});
 
 	useEffect(() => {
-		Client.get('Restaurant/' + restaurantId).then((res) => {
+		Client.get('Restaurant/' + restaurantId, {}).then((res) => {
 			setRestaurant(res.data)
 			setRestaurantLoaded(true);
 		}).catch((err) => {

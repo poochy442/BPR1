@@ -60,7 +60,9 @@ const AuthSlice = createSlice({
 		loggedIn: false,
 		isManager: false,
 		authKey: null,
+		name: null,
 		email: null,
+		phoneNo: null,
 		initials: null,
 		error: null
 	},
@@ -71,7 +73,9 @@ const AuthSlice = createSlice({
 			state.loggedIn = false;
 			state.isManager = false;
 			state.authKey = null;
+			state.name = null;
 			state.email = null;
+			state.phoneNo = null;
 			state.initials = null;
 			state.error = null;
 
@@ -98,7 +102,9 @@ const AuthSlice = createSlice({
 				state.isLoaded = true;
 				state.loggedIn = true;
 				state.authKey = action.payload.token;
+				state.name = action.payload.user.name;
 				state.email = action.payload.user.email;
+				state.phoneNo = action.payload.user.phoneNo;
 				state.initials = generateInitials(action.payload.user.name);
 				state.error = null
 
@@ -130,7 +136,9 @@ const AuthSlice = createSlice({
 				state.isLoaded = true;
 				state.loggedIn = true
 				state.authKey = action.payload.token;
+				state.name = action.payload.user.name;
 				state.email = action.payload.user.email;
+				state.phoneNo = action.payload.user.phoneNo;
 				state.initials = generateInitials(action.payload.user.name);
 				state.error = null
 
@@ -161,7 +169,9 @@ const AuthSlice = createSlice({
 				state.isLoaded = true;
 				state.loggedIn = true
 				state.authKey = action.payload.token;
+				state.name = action.payload.user.name;
 				state.email = action.payload.user.email;
+				state.phoneNo = action.payload.user.phoneNo;
 				state.initials = generateInitials(action.payload.user.name);
 				state.error = null
 
