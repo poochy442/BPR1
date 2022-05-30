@@ -17,12 +17,41 @@ public class RestaurantBL : IRestaurantBL
         _restaurantService = restaurantService;
     }
 
-    
+    public async Task<GetRestaurantsResponse> GetRestaurant(long id)
+    {
+        var restaurant = await _context.Restaurants.Include(r => r.Address).Where(r => r.Id == id).ToListAsync();
+
+        if (restaurant == null)
+        {
+            return new GetRestaurantsResponse()
+            {
+                Success = false,
+                Error = "Couldn't find restaurant with id:" + id,
+                ErrorCode = "404"
+            };
+        }
+
+        return new GetRestaurantsResponse()
+        {
+            Success = true,
+            Restaurants = restaurant
+        };
+    }
 
     public async Task<GetRestaurantsResponse> GetRestaurants(string city)
     {
 
-        var restaurants = await _context.Restaurants.Where(r => r.Address.City == city).ToListAsync();
+        var restaurants = await _context.Restaurants.Include(r => r.Address).Where(r => r.Address.City == city).ToListAsync();
+
+        if (restaurants == null)
+        {
+            return new GetRestaurantsResponse()
+            {
+                Success = false,
+                Error = "Couldn't find restaurants for city:" + city,
+                ErrorCode = "404"
+            };
+        }
 
         return new GetRestaurantsResponse()
         {
@@ -39,7 +68,8 @@ public class RestaurantBL : IRestaurantBL
 
         if (location.Count == 0)
         {
-            return new GetRestaurantsResponse() {
+            return new GetRestaurantsResponse()
+            {
                 Success = false,
                 ErrorCode = "Couldnt get location for address",
                 Error = "500"

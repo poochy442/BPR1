@@ -22,9 +22,18 @@ public class RestaurantController : ControllerBase
 
     // customer and manager
     [HttpGet]
-    public async Task<ActionResult<Restaurant>> GetRestaurant(long id)
+    public async Task<ActionResult<Restaurant>> GetRestaurant([FromQuery] long id)
     {
-       return null;
+       var restaurant = await _businessLogic.GetRestaurant(id);
+
+	   if(!restaurant.Success) {
+		   return Unauthorized(new {
+			   restaurant.ErrorCode,
+			   restaurant.Error
+		   });
+	   }
+
+	   return Ok(restaurant);
     }
 
     // customer and manager and unauthorized
@@ -33,6 +42,13 @@ public class RestaurantController : ControllerBase
     public async Task<ActionResult<List<Restaurant>>> GetRestaurants([FromQuery] string city)
     {
         var restaurants = await _businessLogic.GetRestaurants(city);
+
+		if(!restaurants.Success) {
+		   return Unauthorized(new {
+			   restaurants.ErrorCode,
+			   restaurants.Error
+		   });
+	   }
 
         return Ok(restaurants.Restaurants);
     }
