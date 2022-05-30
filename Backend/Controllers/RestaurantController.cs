@@ -31,7 +31,7 @@ public class RestaurantController : ControllerBase
     }
 
 	// customer and manager
-    [HttpGet("restaurants-location")]
+    [HttpPost("restaurants-location")]
     // [AllowAnonymous]
     public async Task<ActionResult> GetRestaurantsByLocation([FromBody] RestaurantsByLocationRequest request)
     {
