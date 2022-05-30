@@ -20,8 +20,8 @@ public class RestaurantController : ControllerBase
         _businessLogic = businessLogic;
     }
 
-    // customer and manager
-    // [AllowAnonymous]
+    // customer and manager and unauthorized
+    [AllowAnonymous]
     [HttpGet("restaurants")]
     public async Task<ActionResult<List<Restaurant>>> GetRestaurants([FromQuery] string city)
     {
@@ -30,9 +30,9 @@ public class RestaurantController : ControllerBase
         return Ok(restaurants.Restaurants);
     }
 
-	// customer and manager
+	// customer and manager and unauthorized
     [HttpPost("restaurants-location")]
-    // [AllowAnonymous]
+    [AllowAnonymous]
     public async Task<ActionResult> GetRestaurantsByLocation([FromBody] RestaurantsByLocationRequest request)
     {
 
