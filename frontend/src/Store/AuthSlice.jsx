@@ -25,7 +25,7 @@ export const signUp = createAsyncThunk(
 			return {error: "Registration unsuccesful"}
 		} else {
 			let loginPayload = { email: data.email, password: data.password }
-			const loginRes = Client.post("User/login", { body: loginPayload })
+			const loginRes = await Client.post("User/login", { body: loginPayload })
 			if(!loginRes || loginRes.status !== 200)
 			{
 				return {error: "Registration succesful, subsequent Login unsuccesful"}
@@ -43,7 +43,7 @@ export const autoLogIn = createAsyncThunk(
 		{
 			return {error: "Login unsuccesful"}
 		} else
-			return res.data
+			return {...res.data, token: data}
 	}
 )
 
@@ -58,7 +58,9 @@ const AuthSlice = createSlice({
 		isLoaded: false,
 		loggedIn: false,
 		isManager: false,
+		restaurantId: null,
 		authKey: null,
+		userId: null,
 		name: null,
 		email: null,
 		phoneNo: null,
@@ -71,7 +73,9 @@ const AuthSlice = createSlice({
 			state.isLoaded = true;
 			state.loggedIn = false;
 			state.isManager = false;
+			state.restaurantId = null;
 			state.authKey = null;
+			state.userId = null;
 			state.name = null;
 			state.email = null;
 			state.phoneNo = null;
@@ -101,6 +105,7 @@ const AuthSlice = createSlice({
 				state.isLoaded = true;
 				state.loggedIn = true;
 				state.authKey = action.payload.token;
+				state.userId = action.payload.user.id;
 				state.name = action.payload.user.name;
 				state.email = action.payload.user.email;
 				state.phoneNo = action.payload.user.phoneNo;
@@ -108,7 +113,11 @@ const AuthSlice = createSlice({
 				state.error = null
 
 				if(action.payload.user.role.name === "RestaurantManagerRole")
+				{
 					state.isManager = true;
+					// TODO: Change backend?
+					state.restaurantId = action.payload.restaurants.map(r => r.id)[0];
+				}
 				else
 					state.isManager = false;
 
@@ -135,6 +144,7 @@ const AuthSlice = createSlice({
 				state.isLoaded = true;
 				state.loggedIn = true
 				state.authKey = action.payload.token;
+				state.userId = action.payload.user.id;
 				state.name = action.payload.user.name;
 				state.email = action.payload.user.email;
 				state.phoneNo = action.payload.user.phoneNo;
@@ -142,7 +152,11 @@ const AuthSlice = createSlice({
 				state.error = null
 
 				if(action.payload.user.role.name === "RestaurantManagerRole")
+				{
 					state.isManager = true;
+					// TODO: Change backend?
+					state.restaurantId = action.payload.restaurants.map(r => r.id)[0];
+				}
 				else
 					state.isManager = false;
 
@@ -169,6 +183,7 @@ const AuthSlice = createSlice({
 				state.isLoaded = true;
 				state.loggedIn = true
 				state.authKey = action.payload.token;
+				state.userId = action.payload.user.id;
 				state.name = action.payload.user.name;
 				state.email = action.payload.user.email;
 				state.phoneNo = action.payload.user.phoneNo;
@@ -176,21 +191,25 @@ const AuthSlice = createSlice({
 				state.error = null
 
 				if(action.payload.user.role.name === "RestaurantManagerRole")
+				{
 					state.isManager = true;
+					// TODO: Change backend?
+					state.restaurantId = action.payload.user.restaurants.map(r => r.id)[0];
+				}
 				else
 					state.isManager = false;
 
-				setCookie(
-					COOKIE_NAMES.required, 
-					{
-						...getCookie(COOKIE_NAMES.required), 
-						auth:
-						{
-							isLoggedIn: true,
-							authKey: action.payload.token
-						}
-					}
-				)
+				// setCookie(
+				// 	COOKIE_NAMES.required, 
+				// 	{
+				// 		...getCookie(COOKIE_NAMES.required), 
+				// 		auth:
+				// 		{
+				// 			isLoggedIn: true,
+				// 			authKey: action.payload.token
+				// 		}
+				// 	}
+				// )
 			}
 		}
 	}

@@ -13,6 +13,8 @@ const LoginHeader = () => {
 	
 	const links = auth.loggedIn ? (
 		<div className='authLinks'>
+			{auth.isManager ? <Link className='link' to='/manage/restaurant'><p>Restaurant</p></Link> : null}
+			{auth.isManager ? <Link className='link' to='/manage/bookings'><p>Bookings</p></Link> : <Link className='link' to='/bookings'><p>Bookings</p></Link>}
 			<button className='buttonLink' onClick={() => dispatch(logOut())}><p>Log out</p></button>
 			<div className='avatar' onClick={() => {navigate("/account")}}>
 				<p>{auth.initials}</p>

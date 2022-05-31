@@ -1,13 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { Client } from '../Api/Client';
 
 import '../../Styles/Booking/ManagerBooking.scss';
 
 const ManagerBooking = () => {
-	const [bookings, setBookings] = useState([]);
+	const auth = useSelector(state => state.auth);
+	const navigate = useNavigate();
 	
 	const date = new Date();
 	const minDate = date.toISOString().substring(0, date.toISOString().length - 14); // Removing ending precision to conform to yyyy-MM-dd
 	const [input, setInput] = useState({type: "All", table: "All", date: minDate});
+	const [isLoaded, setIsLoaded] = useState(false);
+	const [bookings, setBookings] = useState([]);
+	const [tables, setTables] = useState([]);
+
+	useEffect(() => {
+		if(auth.isLoaded && !auth.isManager)
+			navigate('/Bookings');
+	}, [auth])
+
+	useEffect(() => {
+		if(!isLoaded)
+		{
+			Client.get('Booking/bookings-for-tables', {params: {restaurantId: auth.restaurantId}}, auth.authKey).then((res) => {
+				if(res.status === 200){
+					setBookings(res.data.tableBookings);
+					bookings.foreach(booking => {
+						if(!tables.includes(booking.tableNo)){
+							setTables([...tables, booking.tableNo]);
+						}
+					})
+				}
+			}).catch((err) => {
+				console.log(err);
+			})
+		}
+
+		return () => {
+			setIsLoaded(false);
+		}
+	}, [])
 
 	const handleChange = (e) => {
 		setInput({
@@ -35,9 +69,9 @@ const ManagerBooking = () => {
 					<p>Table</p>
 					<select className="filterInput" id="table" value={input.table} onChange={handleChange}>
 						<option value="All">All</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
+						{tables.map((table, index) => {
+							<option key={index} value={table}>{table}</option>
+						})}
 					</select>
 				</label>
 				<label className="bookingFilter" htmlFor="date">
@@ -58,7 +92,17 @@ const ManagerBooking = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{bookings.map((booking, index) => (
+					{input.table === 'All' ? bookings.map((booking, index) => (
+						<tr className="bookingItem" key={index}>
+							<td>{booking.id}</td>
+							<td>{booking.type}</td>
+							<td>{booking.customer}</td>
+							<td>{booking.customerInfo}</td>
+							<td>{booking.startTime} - {booking.endTime}</td>
+							<td>{booking.guestNo}</td>
+							<td onClick={() => handleManage(booking.id)}>&#9881;</td>
+						</tr>
+					)) : bookings.filter((booking => booking.tableNo == input.table)).map((booking, index) => (
 						<tr className="bookingItem" key={index}>
 							<td>{booking.id}</td>
 							<td>{booking.type}</td>

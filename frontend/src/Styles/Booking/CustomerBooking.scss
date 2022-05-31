@@ -33,5 +33,23 @@
 
 	.bookingList {
 		width: 100%;
+
+		.errorText {
+			color: $danger-color;
+		}
+
+		.bookingItem {
+			background-color: $light-color;
+			padding: 1rem;
+			border-radius: 1rem;
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+		}
+		.bookingItem:first-child {
+			margin-top: 0;
+		}
+		.bookingItem:last-child {
+			margin-bottom: 0;
+		}
 	}
 }

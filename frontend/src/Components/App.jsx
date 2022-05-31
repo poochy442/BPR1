@@ -37,7 +37,7 @@ const App = () => {
 					<Route path='/account' element={<Account />} />
 					<Route path='/manage'>
 						<Route path='bookings' element={<Bookings manage={true} />} />
-						<Route path='restaurant/:restaurantId' element={<Restaurant manage={true} />} />
+						<Route path='restaurant' element={<Restaurant manage={true} />} />
 					</Route>
 				</Routes>
 			</div>

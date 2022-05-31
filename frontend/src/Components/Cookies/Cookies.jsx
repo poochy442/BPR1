@@ -48,13 +48,11 @@ export const setupCookies = (analyticsPermission) => {
 
 export const initCookies = () => {
 	const rc = getCookie(COOKIE_NAMES.required), ac = getCookie(COOKIE_NAMES.analytics);
-	if(!!rc)
-	{
-		if(rc.auth && rc.auth.isLoggedIn)
-			store.dispatch(autoLogIn(rc.auth.authKey))
+	if(rc && rc.auth && rc.auth.isLoggedIn){
+		store.dispatch(autoLogIn(rc.auth.authKey))
 	}
 
-	if(!!ac){
+	if(ac){
 		// Start analytics
 	}
 }

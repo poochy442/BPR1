@@ -1,58 +1,65 @@
-import { useEffect } from "react";
-import { useState } from "react";
-
-import RestaurantDetails from "../Restaurant/RestaurantDetails";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { Client } from "../Api/Client";
 
 import '../../Styles/Booking/CustomerBooking.scss';
 
 const CustomerBooking = () => {
+	const auth = useSelector(state => state.auth);
+	const navigate = useNavigate();
+	const [hasLoaded, setHasLoaded] = useState(false);
 	const [upcomingSelected, setUpcomingSelected] = useState(true);
-	const [restaurantsLoaded, setRestaurantsLoaded] = useState(false);
-	const [restaurants, setRestaurants] = useState([]);
+	const [bookingsLoaded, setBookingsLoaded] = useState(false);
+	const [upcomingBookings, setUpcomingBookings] = useState([]);
+	const [previousBookings, setPreviousBookings] = useState([]);
+	const [error, setError] = useState({upcoming: null, previous: null});
 
 	useEffect(() => {
-		// TODO: Call booking endpoint
-		if(!restaurantsLoaded)
-		{
-			var upcomingRestaurant = {
-				"id": 5,
-				"managerId": 1,
-				"tableIds": "[1,2,3,4]",
-				"address": "Upcoming",
-				"latitude": 12.8,
-				"longitude": 28,
-				"name": "Upcoming",
-				"foodTypes": "[\"Kebab\",\"Pizza\",\"Durum\"]",
-				"totalScore": 0
-			}
-			var previousRestaurant = {
-				"id": 5,
-				"managerId": 1,
-				"tableIds": "[1,2,3,4]",
-				"address": "Previous",
-				"latitude": 12.8,
-				"longitude": 28,
-				"name": "Previous",
-				"foodTypes": "[\"Kebab\",\"Pizza\",\"Durum\"]",
-				"totalScore": 0
-			}
-
-			Client.get('Restaurant').then((res) => {
-				if(upcomingSelected)
-					setRestaurants([...res.data, upcomingRestaurant])
-				else
-					setRestaurants([...res.data, previousRestaurant])
-				setRestaurantsLoaded(true);
-			}).catch((err) => {
-				setRestaurantsLoaded(true);
-			})
+		if(auth.isLoaded && !auth.loggedIn){
+			navigate('/login');
 		}
-	}, [upcomingSelected])
+	}, [auth])
 
-	const handleFilterClick = () => {
-		setUpcomingSelected(!upcomingSelected);
-		setRestaurantsLoaded(false);
+	useEffect(() => {
+		if(!bookingsLoaded && auth.isLoaded)
+		{
+			Client.get('Booking/customer-current-bookings', {}, auth.authKey).then((res) => {
+				console.log(res);
+				if(res.status !== 200){
+					setError("Error loading bookings, please try again.");
+					return;
+				}
+				setUpcomingBookings(res.data.bookings);
+				setError({...error, upcoming: null});
+			}).catch((err) => {
+				console.log(err);
+				setError({...error, upcoming: "Error loading bookings, please try again."});
+			})
+
+			Client.get('Booking/customer-past-bookings', {}, auth.authKey).then((res) => {
+				if(res.status !== 200){
+					setError("Error loading bookings, please try again.");
+					return;
+				}
+				setPreviousBookings(res.data.bookings)
+				setError({...error, previous: null});
+			}).catch((err) => {
+				console.log(err);
+				setError({...error, previous: "Error loading bookings, please try again."});
+			})
+
+			setBookingsLoaded(true);
+		}
+
+		return () => {
+			setBookingsLoaded(false);
+		}
+	}, [])
+
+	const handleFilterClick = (toUpcoming) => {
+		setUpcomingSelected(toUpcoming);
+		setBookingsLoaded(false);
 	}
 	
 
@@ -61,23 +68,39 @@ const CustomerBooking = () => {
 			<div className="filters">
 				<div
 					className={upcomingSelected ? "filter active" : "filter"}
-					onClick={handleFilterClick}
+					onClick={() => handleFilterClick(true)}
 					>
 					Upcoming reservations
 				</div>
 				<div
 					className={upcomingSelected ? "filter" : "filter active"}
-					onClick={handleFilterClick}
+					onClick={() => handleFilterClick(false)}
 					>
 					Previous reservations
 				</div>
 			</div>
 			<div className="bookingList">
-				{restaurants.map((restaurant, index) => (
-					<div className="restaurantItem" key={index}>
-						<RestaurantDetails restaurant={restaurant} miniScore={true} />
+				{upcomingSelected && error.upcoming ? (
+					<p className="errorText">{error.upcoming}</p>
+				) : upcomingSelected ? (upcomingBookings.map((booking, index) => (
+					<div className="bookingItem" key={index}>
+						<h3>{booking.restaurant.name}</h3>
+						<p>Starts: {booking.startDate.split("T")[0]} {booking.startDate.split("T")[1]}</p>
+						<p>Ends: {booking.endDate.split("T")[0]} {booking.endDate.split("T")[1]}</p>
+						<p>Guests: {booking.guestNo}</p>
+						<p>Note: {booking.note}</p>
 					</div>
-				))}
+				))) : error.previous ? (
+					<p className="errorText">{error.previous}</p>
+				) : (previousBookings.map((booking, index) => (
+					<div className="bookingItem" key={index}>
+						<h3>{booking.restaurant.name}</h3>
+						<p>Starts: {booking.startDate}</p>
+						<p>Ends: {booking.endDate}</p>
+						<p>Guests: {booking.guestNo}</p>
+						<p>Note: {booking.note}</p>
+					</div>
+				)))}
 			</div>
 		</div>
 	)

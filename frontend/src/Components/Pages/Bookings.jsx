@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import '../../Styles/Pages/Booking.scss';
 import CustomerBooking from '../Booking/CustomerBooking';
 import ManagerBooking from '../Booking/ManagerBooking';

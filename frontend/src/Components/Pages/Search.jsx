@@ -16,11 +16,11 @@ const Search = () => {
 	const guardCheck = !!query;
 	const navigate = useNavigate();
 	const [city, setCity] = useState(query);
-	const [location, setLocation] = useState({lat: 10, long: 10});
+	// const [location, setLocation] = useState({lat: 10, long: 10});
 	const [restaurants, setRestaurants] = useState([]);
 	const [foodTypeFilters, setFoodTypeFilters] = useState({})
 	const [restrictionFilters, setRestrictionFilters] = useState({})
-	const [searchRadius, setSearchRadius] = useState(1000);
+	// const [searchRadius, setSearchRadius] = useState(1000);
 
 	useEffect(() => {
 		async function getRestaurants()
