@@ -151,6 +151,28 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2022, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2022, 5, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            GuestNo = 2,
+                            RestaurantId = 1,
+                            StartDate = new DateTime(2022, 5, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            TableId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -161,7 +183,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 4,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -172,7 +194,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 5,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -183,7 +205,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 6,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -194,7 +216,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 7,
                             Date = new DateTime(2022, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndDate = new DateTime(2022, 6, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             GuestNo = 2,
@@ -291,7 +313,6 @@ namespace backend.Migrations
                             Name = "Mc Donald's",
                             StudentDiscount = 7,
                             TotalScore = 4.4m,
-                            UserId = 2,
                             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n}\r\n]"
                         },
                         new
@@ -302,7 +323,6 @@ namespace backend.Migrations
                             Name = "Venezia",
                             StudentDiscount = 5,
                             TotalScore = 4.2m,
-                            UserId = 2,
                             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"00:00\",\r\n\"Till\": \"00:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n}\r\n]"
                         },
                         new
@@ -313,7 +333,6 @@ namespace backend.Migrations
                             Name = "Ming Hao",
                             StudentDiscount = 5,
                             TotalScore = 4.0m,
-                            UserId = 2,
                             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"12:30\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n}\r\n]"
                         },
                         new
@@ -324,7 +343,6 @@ namespace backend.Migrations
                             Name = "GranBar",
                             StudentDiscount = 5,
                             TotalScore = 4.2m,
-                            UserId = 2,
                             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n}\r\n]"
                         });
                 });

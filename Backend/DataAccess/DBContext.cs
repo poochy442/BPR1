@@ -143,7 +143,7 @@ public class DBContext : DbContext
             StudentDiscount = 7,
             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n}\r\n]",
             TotalScore = 4.4m,
-            UserId = 2,
+            UserId = null,
             AddressId = 2
         });
 
@@ -155,7 +155,7 @@ public class DBContext : DbContext
             StudentDiscount = 5,
             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"00:00\",\r\n\"Till\": \"00:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n}\r\n]",
             TotalScore = 4.2m,
-            UserId = 2,
+            UserId = null,
             AddressId = 3
         });
 
@@ -167,7 +167,7 @@ public class DBContext : DbContext
             StudentDiscount = 5,
             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"12:30\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n}\r\n]",
             TotalScore = 4.0m,
-            UserId = 2,
+            UserId = null,
             AddressId = 4
         });
 
@@ -179,7 +179,7 @@ public class DBContext : DbContext
             StudentDiscount = 5,
             WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n}\r\n]",
             TotalScore = 4.2m,
-            UserId = 2,
+            UserId = null,
             AddressId = 5
         });
 
