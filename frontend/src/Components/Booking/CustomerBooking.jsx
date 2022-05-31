@@ -8,7 +8,6 @@ import '../../Styles/Booking/CustomerBooking.scss';
 const CustomerBooking = () => {
 	const auth = useSelector(state => state.auth);
 	const navigate = useNavigate();
-	const [hasLoaded, setHasLoaded] = useState(false);
 	const [upcomingSelected, setUpcomingSelected] = useState(true);
 	const [bookingsLoaded, setBookingsLoaded] = useState(false);
 	const [upcomingBookings, setUpcomingBookings] = useState([]);
@@ -16,9 +15,9 @@ const CustomerBooking = () => {
 	const [error, setError] = useState({upcoming: null, previous: null});
 
 	useEffect(() => {
-		if(auth.isLoaded && !auth.loggedIn){
+		if(auth.isLoaded && !auth.loggedIn)
 			navigate('/login');
-		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth])
 
 	useEffect(() => {
@@ -55,6 +54,7 @@ const CustomerBooking = () => {
 		return () => {
 			setBookingsLoaded(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const handleFilterClick = (toUpcoming) => {

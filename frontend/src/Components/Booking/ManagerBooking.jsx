@@ -19,6 +19,7 @@ const ManagerBooking = () => {
 	useEffect(() => {
 		if(auth.isLoaded && !auth.isManager)
 			navigate('/Bookings');
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth])
 
 	useEffect(() => {
@@ -41,6 +42,7 @@ const ManagerBooking = () => {
 		return () => {
 			setIsLoaded(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const handleChange = (e) => {
@@ -69,9 +71,9 @@ const ManagerBooking = () => {
 					<p>Table</p>
 					<select className="filterInput" id="table" value={input.table} onChange={handleChange}>
 						<option value="All">All</option>
-						{tables.map((table, index) => {
+						{tables.map((table, index) => (
 							<option key={index} value={table}>{table}</option>
-						})}
+						))}
 					</select>
 				</label>
 				<label className="bookingFilter" htmlFor="date">
@@ -102,7 +104,7 @@ const ManagerBooking = () => {
 							<td>{booking.guestNo}</td>
 							<td onClick={() => handleManage(booking.id)}>&#9881;</td>
 						</tr>
-					)) : bookings.filter((booking => booking.tableNo == input.table)).map((booking, index) => (
+					)) : bookings.filter((booking => booking.tableNo === input.table)).map((booking, index) => (
 						<tr className="bookingItem" key={index}>
 							<td>{booking.id}</td>
 							<td>{booking.type}</td>

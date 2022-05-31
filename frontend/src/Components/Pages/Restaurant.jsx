@@ -41,6 +41,7 @@ const Restaurant = (props) => {
 		return () => {
 			setRestaurantLoaded(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	if(auth.isLoaded && !auth.loggedIn)

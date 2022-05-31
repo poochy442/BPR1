@@ -13,10 +13,11 @@ const Account = () => {
 		phoneNo: auth.phoneNo
 	})
 	const [isEditing, setIsEditing] = useState(false);
-
+	
 	useEffect(() => {
 		if(!auth.loggedIn)
 			navigate('/login');
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth])
 
 	const handleChange = (e) => {

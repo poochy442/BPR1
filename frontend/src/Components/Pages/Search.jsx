@@ -36,6 +36,7 @@ const Search = () => {
 			setRestrictionFilters({...restrictionFilters, [element]: false})
 		})
 		getRestaurants();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	// Guard statement
