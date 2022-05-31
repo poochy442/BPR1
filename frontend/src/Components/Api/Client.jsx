@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = 'http://localhost:5094/';
+const URL = 'https://localhost:7076/';
 
 export async function Client(endpoint, { method, params, body}){
 	return axios({
@@ -15,18 +15,18 @@ export async function Client(endpoint, { method, params, body}){
 	})
 }
 
-Client.get = function (endpoint, { params = '' }){
+Client.get = function (endpoint, params = '' ){
 	return Client(endpoint, {method: 'GET', params, body: ''})
 }
 
-Client.post = function (endpoint, { params = '', body = '' }){
+Client.post = function (endpoint, params = '', body = '' ){
 	return Client(endpoint, {method: 'POST', params, body})
 }
 
-Client.put = function (endpoint, { params = '', body = ''}){
+Client.put = function (endpoint, params = '', body = ''){
 	return Client(endpoint, {method: 'PUT', params, body})
 }
 
-Client.delete = function (endpoint, { params = '', body = ''}){
+Client.delete = function (endpoint, params = '', body = ''){
 	return Client(endpoint, {method: 'DELETE', params, body})
 }

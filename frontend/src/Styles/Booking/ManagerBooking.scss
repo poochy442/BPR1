@@ -1,0 +1,38 @@
+@import '../Reusable/Colors.scss';
+@import '../Reusable/Font.scss';
+
+.managerBooking {
+	.filters {
+		display: flex;
+		flex-flow: row nowrap;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid $dark-accent;
+		margin-bottom: 1rem;
+
+		.bookingFilter {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+
+			p {
+				font-size: $font-size-small;
+				color: $light-accent;
+			}
+
+			.filterInput {
+				margin-left: 1rem;
+				width: 100%;
+				font-size: $font-size-xsmall;
+				height: 60%;
+			}
+		}
+	}
+
+	.bookingList {
+		width: 100%;
+		color: $light-color;
+	}
+}

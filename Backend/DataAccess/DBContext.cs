@@ -45,9 +45,57 @@ public class DBContext : DbContext
             Id = 1,
             PostalCode = "8700",
             City = "Horsens",
-            Street = "Slotsgade",
-            StreetNo = "10",
-            Location = "longtitude: 1025623; latitude: 1025623"
+            Street = "Borgergade",
+            StreetNo = "15",
+            Latitude = 55.86155m,
+            Longtitude = 9.85451m
+        });
+
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 2,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Flintebakken",
+            StreetNo = "1",
+            Latitude = 55.87022m,
+            Longtitude = 9.8643m
+
+        });
+
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 3,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Borgergade",
+            StreetNo = "25",
+            Latitude = 55.86142m,
+            Longtitude = 9.85619m
+
+        });
+
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 4,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Levysgade",
+            StreetNo = "2",
+            Latitude = 55.8617897m,
+            Longtitude = 9.84358882m
+
+        });
+
+        modelBuilder.Entity<Address>().HasData(new Address()
+        {
+            Id = 5,
+            PostalCode = "8700",
+            City = "Horsens",
+            Street = "Søndergade",
+            StreetNo = "15",
+            Latitude = 55.862095m,
+            Longtitude = 9.8471868m
 
         });
 
@@ -57,7 +105,7 @@ public class DBContext : DbContext
         {
             Id = 1,
             Email = "user@email.com",
-            Password = "$2a$11$YPB10zErqK1sD2h61D0xkupRJMObqFlaGoXcZ5TcVuIij.oWZlZGy", // = 'password'
+            Password = "$2a$11$YPB10zErqK1sD2h61D0xkupRJMObqFlaGoXcZ5TcVuIij.oWZlZGy", // hashed = 'password'
             Name = "Steve G",
             PhoneNo = "+4596254585",
             RoleId = 1
@@ -67,7 +115,7 @@ public class DBContext : DbContext
         {
             Id = 2,
             Email = "manager@email.com",
-            Password = "$2a$11$Y7zhcGWJn.Ym8gp6XmvOe.m09CcAnynFZtV6eL7Hc9Tk9ffMCYWVK", // = 'password'
+            Password = "$2a$11$Y7zhcGWJn.Ym8gp6XmvOe.m09CcAnynFZtV6eL7Hc9Tk9ffMCYWVK", // hashed = 'password'
             Name = "Clive L",
             PhoneNo = "+4532124565",
             RoleId = 2
@@ -87,6 +135,77 @@ public class DBContext : DbContext
             AddressId = 1
         });
 
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 2,
+            Name = "Mc Donald's",
+            FoodType = "Fast Food",
+            StudentDiscount = 7,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"07:00\",\r\n\"Till\": \"15:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"07:00\",\r\n\"Till\": \"13:00\"\r\n}\r\n]",
+            TotalScore = 4.4m,
+            UserId = null,
+            AddressId = 2
+        });
+
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 3,
+            Name = "Venezia",
+            FoodType = "Italian",
+            StudentDiscount = 5,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"00:00\",\r\n\"Till\": \"00:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"16:30\",\r\n\"Till\": \"22:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"16:30\",\r\n\"Till\": \"21:00\"\r\n}\r\n]",
+            TotalScore = 4.2m,
+            UserId = null,
+            AddressId = 3
+        });
+
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 4,
+            Name = "Ming Hao",
+            FoodType = "Asian",
+            StudentDiscount = 5,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"12:30\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"12:00\",\r\n\"Till\": \"21:30\"\r\n}\r\n]",
+            TotalScore = 4.0m,
+            UserId = null,
+            AddressId = 4
+        });
+
+        modelBuilder.Entity<Restaurant>().HasData(new Restaurant()
+        {
+            Id = 5,
+            Name = "GranBar",
+            FoodType = "Danish",
+            StudentDiscount = 5,
+            WorkingHours = "[\r\n{\r\n\"Day\" : 0,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 1,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 2,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 3,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 4,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 5,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n},\r\n{\r\n\"Day\" : 6,\r\n\"From\": \"10:00\",\r\n\"Till\": \"21:00\"\r\n}\r\n]",
+            TotalScore = 4.2m,
+            UserId = null,
+            AddressId = 5
+        });
+
+
+        // Restrictions
+        modelBuilder.Entity<Restriction>().HasData(new Restriction()
+        {
+            Id = 1,
+            Age = true,
+            Handicap = false
+        });
+
+        modelBuilder.Entity<Restriction>().HasData(new Restriction()
+        {
+            Id = 2,
+            Age = false,
+            Handicap = true
+        });
+
+        modelBuilder.Entity<Restriction>().HasData(new Restriction()
+        {
+            Id = 3,
+            Age = true,
+            Handicap = true
+        });
+
 
         // Tables
         modelBuilder.Entity<Table>().HasData(new Table()
@@ -95,7 +214,9 @@ public class DBContext : DbContext
             TableNo = 1,
             Seats = 2,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
+            RestrictionId = 1
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()
@@ -104,6 +225,7 @@ public class DBContext : DbContext
             TableNo = 2,
             Seats = 2,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
         });
 
@@ -113,7 +235,9 @@ public class DBContext : DbContext
             TableNo = 3,
             Seats = 4,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
+            RestrictionId = 2
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()
@@ -122,6 +246,7 @@ public class DBContext : DbContext
             TableNo = 4,
             Seats = 4,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
         });
 
@@ -131,7 +256,8 @@ public class DBContext : DbContext
             TableNo = 5,
             Seats = 6,
             Available = true,
-            RestaurantId = 1,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
+            RestaurantId = 1
         });
 
         modelBuilder.Entity<Table>().HasData(new Table()
@@ -140,6 +266,7 @@ public class DBContext : DbContext
             TableNo = 6,
             Seats = 6,
             Available = true,
+            Deadline = new DateTime(1970, 01, 01, 01, 00, 00),
             RestaurantId = 1,
         });
 
@@ -172,9 +299,9 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 3,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 17, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 20, 0, 0),
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 9, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 10, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 1,
@@ -184,9 +311,33 @@ public class DBContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
             Id = 4,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 10, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 12, 0, 0),
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 12, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 15, 0, 0),
+            GuestNo = 2,
+            RestaurantId = 1,
+            TableId = 1,
+            UserId = 1
+        });
+
+        modelBuilder.Entity<Booking>().HasData(new Booking()
+        {
+            Id = 5,
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 17, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 20, 0, 0),
+            GuestNo = 2,
+            RestaurantId = 1,
+            TableId = 1,
+            UserId = 1
+        });
+
+        modelBuilder.Entity<Booking>().HasData(new Booking()
+        {
+            Id = 6,
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 10, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 12, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 2,
@@ -195,10 +346,10 @@ public class DBContext : DbContext
 
         modelBuilder.Entity<Booking>().HasData(new Booking()
         {
-            Id = 5,
-            Date = new DateTime(2022, 05, 24, 0, 0, 0),
-            StartDate = new DateTime(2022, 05, 24, 15, 0, 0),
-            EndDate = new DateTime(2022, 05, 24, 17, 0, 0),
+            Id = 7,
+            Date = new DateTime(2022, 06, 24, 0, 0, 0),
+            StartDate = new DateTime(2022, 06, 24, 15, 0, 0),
+            EndDate = new DateTime(2022, 06, 24, 17, 0, 0),
             GuestNo = 2,
             RestaurantId = 1,
             TableId = 2,

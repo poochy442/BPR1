@@ -22,7 +22,7 @@ ConfigurationManager configuration = builder.Configuration;
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultScheme  = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     })
 
     // Adding Jwt Bearer
@@ -51,6 +51,9 @@ ConfigurationManager configuration = builder.Configuration;
 
     // Inject TokenService
     services.AddSingleton<ITokenService, TokenService>();
+    
+    // Inject RestaurantService
+    services.AddSingleton<IRestaurantService, RestaurantService>();
 
     // Inject BusinessLogic
     services.AddScoped<IBusinessLogic, BusinessLogic>();
@@ -59,7 +62,8 @@ ConfigurationManager configuration = builder.Configuration;
     services.AddScoped<IUserBL, UserBL>();
     services.AddScoped<ITableBL, TableBL>();
     services.AddScoped<IBookingBL, BookingBL>();
-    
+    services.AddScoped<IRestaurantBL, RestaurantBL>();
+
 
     // Adding swagger
     services.AddSwaggerGen(options =>

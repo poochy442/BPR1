@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-using System.Text.Json;
-
 using Backend.DataAccess.Models;
 using Backend.DataAccess;
 
@@ -18,21 +16,34 @@ public class RatingController : ControllerBase
 	public RatingController(DBContext context)
 	{
 		_context = context;
+
+		if(context.Ratings.Count() == 0)
+		{
+			// PostRating(new Rating(1, 4, "Pretty good service, decent food"));
+			// PostRating(new Rating(2, 4, "Pretty good service, decent food"));
+			// PostRating(new Rating(3, 4, "Pretty good service, decent food"));
+			// PostRating(new Rating(1, 2, "Pretty bad service"));
+			// PostRating(new Rating(3, 2, "Pretty bad service"));
+			// PostRating(new Rating(1, 1, "Absolutely awful"));
+			// PostRating(new Rating(2, 1, "Absolutely awful"));
+		}
 	}
 
-	/*[HttpGet]
-    public async Task<ActionResult<List<Rating>>> GetRatings(long restaurantId)
-    {
-		var r = await _context.Restaurants.FindAsync(restaurantId);
-		if(r == null) return NotFound();
+	
 
-        List<long> ids = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
-		List<Rating> ratings = _context.Ratings.ToList().FindAll((element) => ids.Contains(element.Id));
-        return ratings;
-    }
+	// [HttpGet]
+    // public async Task<ActionResult<List<Rating>>> GetRatings(long restaurantId)
+    // {
+	// 	var r = await _context.Restaurants.FindAsync(restaurantId);
+	// 	if(r == null) return NotFound();
+
+    //     List<long> ids = JsonSerializer.Deserialize<List<long>>(r.TableIds) ?? new List<long>();
+	// 	List<Rating> ratings = _context.Ratings.ToList().FindAll((element) => ids.Contains(element.Id));
+    //     return ratings;
+    // }
 
 	[HttpGet("{id}")]
-	public async Task<ActionResult<Rating>> GetRating(long id)
+	public async Task<ActionResult<Rating>> GetRating([FromQuery] long id)
 	{
 		var rating = await _context.Ratings.FindAsync(id);
 
@@ -45,8 +56,12 @@ public class RatingController : ControllerBase
 	}
 
 	[HttpPost]
-	public async Task<ActionResult<Rating>> PostRating(Rating rating)
+	public async Task<ActionResult<Rating>> PostRating([FromBody] Rating rating)
 	{
+		var restaurant = _context.Restaurants.Single(res => res.Id == rating.RestaurantId);
+		var ratings = _context.Ratings.Select(rating => rating.RestaurantId == restaurant.Id).ToList();
+		restaurant.TotalScore = (restaurant.TotalScore * ratings.Count + rating.Score) / (ratings.Count + 1);
+
 		_context.Ratings.Add(rating);
 		await _context.SaveChangesAsync();
 
@@ -58,7 +73,7 @@ public class RatingController : ControllerBase
 	}
 
 	[HttpPut("{id}")]
-	public async Task<IActionResult> PutRating(long id, Rating rating)
+	public async Task<IActionResult> PutRating([FromRoute]long id, [FromBody] Rating rating)
 	{
 		if(id != rating.Id)
 		{
@@ -85,9 +100,9 @@ public class RatingController : ControllerBase
 		return NoContent();
 	}
 
-	private bool RatingExists(long id)
+	private bool RatingExists([FromQuery] long id)
 	{
 		return _context.Ratings.Any(e => e.Id == id);
-	}*/
+	}
 
 }

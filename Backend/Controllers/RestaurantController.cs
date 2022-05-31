@@ -1,41 +1,87 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
-
+using Backend.BusinessLogic;
 using Backend.DataAccess.Models;
-using Backend.DataAccess;
+using Backend.Helpers.Models.Requests;
 
 namespace Backend.Controllers;
 
 [EnableCors]
+[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
 [ApiController]
 [Route("[controller]")]
 public class RestaurantController : ControllerBase
 {
-	private readonly DBContext _context;
+    private readonly IBusinessLogic _businessLogic;
 
-	public RestaurantController(DBContext context)
-	{
-		_context = context;
-	}
-
-	[AllowAnonymous]
-	[HttpGet]
-    public async Task<ActionResult<Restaurant>> GetRestaurnats()
+    public RestaurantController(IBusinessLogic businessLogic)
     {
-        return await _context.Restaurants.FindAsync(1);
+        _businessLogic = businessLogic;
     }
 
-	/*[HttpGet]
+    // customer and manager
+    [HttpGet]
+    public async Task<ActionResult<Restaurant>> GetRestaurant([FromQuery] long id)
+    {
+       var restaurant = await _businessLogic.GetRestaurant(id);
+
+	   if(!restaurant.Success) {
+		   return Unauthorized(new {
+			   restaurant.ErrorCode,
+			   restaurant.Error
+		   });
+	   }
+
+	   return Ok(restaurant);
+    }
+
+    // customer and manager and unauthorized
+    [AllowAnonymous]
+    [HttpGet("restaurants")]
+    public async Task<ActionResult<List<Restaurant>>> GetRestaurants([FromQuery] string city)
+    {
+        var restaurants = await _businessLogic.GetRestaurants(city);
+
+		if(!restaurants.Success) {
+		   return Unauthorized(new {
+			   restaurants.ErrorCode,
+			   restaurants.Error
+		   });
+	   }
+
+        return Ok(restaurants.Restaurants);
+    }
+
+    // customer and manager and unauthorized
+    [HttpPost("restaurants-location")]
+    [AllowAnonymous]
+    public async Task<ActionResult> GetRestaurantsByLocation([FromBody] RestaurantsByLocationRequest request)
+    {
+
+        var restaurants = await _businessLogic.GetRestaurantsByLocation(request);
+
+        if (!restaurants.Success)
+        {
+            return BadRequest(new 
+            {
+                restaurants.ErrorCode,
+                restaurants.Error
+            });
+        }
+
+        return Ok(restaurants.Restaurants);
+
+    }
+
+    /*[HttpGet]
     public Task<List<Restaurant>> GetRestaurants()
     {
         return _context.Restaurants.ToListAsync();
     }
 
-	[HttpGet("{id}")]
+	[Route("{id}")]
+	[HttpGet]
 	public async Task<ActionResult<Restaurant>> GetRestaurant(long id)
 	{
 		var restaurant = await _context.Restaurants.FindAsync(id);
@@ -48,6 +94,7 @@ public class RestaurantController : ControllerBase
 		return restaurant;
 	}
 
+	[Route("")]
 	[HttpPost]
 	public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
 	{
@@ -61,7 +108,8 @@ public class RestaurantController : ControllerBase
 		);
 	}
 
-	[HttpPut("{id}")]
+	[Route("{id}")]
+	[HttpPut]
 	public async Task<IActionResult> PutRestaurant(long id, Restaurant restaurant)
 	{
 		if(id != restaurant.Id)
@@ -87,6 +135,13 @@ public class RestaurantController : ControllerBase
 		}
 
 		return NoContent();
+	}
+
+	[Route("Search")]
+	[HttpPost]
+	public Task<List<Restaurant>> SearchRestaurant()
+	{
+		return _context.Restaurants.ToListAsync();
 	}
 
 	private bool RestaurantExists(long id)
