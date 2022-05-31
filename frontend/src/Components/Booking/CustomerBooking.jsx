@@ -61,7 +61,10 @@ const CustomerBooking = () => {
 		setUpcomingSelected(toUpcoming);
 		setBookingsLoaded(false);
 	}
-	
+
+	const handleRating = (id) => {
+		
+	}
 
 	return (
 		<div className='customerBooking'>
@@ -89,16 +92,18 @@ const CustomerBooking = () => {
 						<p>Ends: {booking.endDate.split("T")[0]} {booking.endDate.split("T")[1]}</p>
 						<p>Guests: {booking.guestNo}</p>
 						<p>Note: {booking.note}</p>
+						<div className="button cancel">Cancel</div>
 					</div>
 				))) : error.previous ? (
 					<p className="errorText">{error.previous}</p>
 				) : (previousBookings.map((booking, index) => (
 					<div className="bookingItem" key={index}>
 						<h3>{booking.restaurant.name}</h3>
-						<p>Starts: {booking.startDate}</p>
-						<p>Ends: {booking.endDate}</p>
+						<p>Starts: {booking.startDate.split("T")[0]} {booking.startDate.split("T")[1]}</p>
+						<p>Ends: {booking.endDate.split("T")[0]} {booking.endDate.split("T")[1]}</p>
 						<p>Guests: {booking.guestNo}</p>
 						<p>Note: {booking.note}</p>
+						<div className="button rate" onClick={() => {handleRating(booking.id)}}>Rate</div>
 					</div>
 				)))}
 			</div>

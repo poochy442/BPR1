@@ -29,7 +29,7 @@ const Restaurant = (props) => {
 
 	useEffect(() => {
 		if(!restaurantLoaded && auth.isLoaded){
-			Client.get('Restaurant', {params: {id: restaurantId}}, auth.authKey).then((res) => {
+			Client.get('Restaurant', {params: {id: manage ? auth.res : restaurantId}}, auth.authKey).then((res) => {
 				setRestaurant(res.data.restaurants[0])
 				setRestaurantLoaded(true);
 			}).catch((err) => {

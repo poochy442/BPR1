@@ -19,20 +19,26 @@ const ManagerBooking = () => {
 	useEffect(() => {
 		if(auth.isLoaded && !auth.isManager)
 			navigate('/Bookings');
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [auth])
-
-	useEffect(() => {
-		if(!isLoaded)
+		else if(auth.isLoaded && !isLoaded)
 		{
 			Client.get('Booking/bookings-for-tables', {params: {restaurantId: auth.restaurantId}}, auth.authKey).then((res) => {
 				if(res.status === 200){
-					setBookings(res.data.tableBookings);
-					bookings.foreach(booking => {
-						if(!tables.includes(booking.tableNo)){
-							setTables([...tables, booking.tableNo]);
-						}
+					let resTables = res.data.tableBookings;
+					let initTables = [];
+					let initBookings = [];
+
+					resTables.forEach(table => {
+						if(!tables.includes(table.tableNo + ''))
+							initTables = [...initTables, table.tableNo]
+						
+						let tableBookings = table.bookings;
+						console.log("tableBookings", table, tableBookings)
+						tableBookings.forEach(booking => {
+							initBookings = [...initBookings, {...booking, tableNo: table.tableNo, type: 'System'}]
+						})
 					})
+					setTables(initTables);
+					setBookings(initBookings);
 				}
 			}).catch((err) => {
 				console.log(err);
@@ -43,7 +49,7 @@ const ManagerBooking = () => {
 			setIsLoaded(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [auth])
 
 	const handleChange = (e) => {
 		setInput({
@@ -55,6 +61,39 @@ const ManagerBooking = () => {
 	const handleManage = (id) => {
 		console.log("Managing booking", id)
 	}
+
+	const tableRow = (booking) => (
+		<tr className="bookingItem">
+			<td>{booking.id}</td>
+			<td>System</td>
+			<td>{booking.tableNo}</td>
+			<td>{booking.user.name}</td>
+			<td>Email: {booking.user.email}<br />Phone: {booking.user.phoneNo}</td>
+			<td>{booking.date.substring(0, 10)}</td>
+			<td>{booking.startDate.substring(11)} - {booking.endDate.substring(11)}</td>
+			<td>{booking.guestNo}</td>
+			<td className='manageIcon' onClick={() => handleManage(booking.id)}>&#9881;</td>
+		</tr>
+	)
+
+	const tablebody = input.type === 'All' && input.table === 'All' ? (
+		<tbody>
+			{bookings.map((booking) => tableRow(booking))}
+		</tbody>
+	) : input.type !== 'All' && input.table === 'All' ? (
+		<tbody>
+			{bookings.filter((booking => booking.type == input.type)).map((booking) => tableRow(booking))}
+		</tbody>
+	) : input.type === 'All' && input.table !== 'All' ? (
+		<tbody>
+			{bookings.filter((booking => booking.tableNo == input.table)).map((booking) => tableRow(booking))}
+		</tbody>
+	) : (
+		<tbody>
+			{bookings.filter((booking => booking.tableNo == input.table && booking.type == input.type)).map((booking) => tableRow(booking))}
+		</tbody>
+		
+	)
 
 	return (
 		<div className='managerBooking'>
@@ -86,36 +125,34 @@ const ManagerBooking = () => {
 					<tr className='listHeader'>
 						<th>Booking id</th>
 						<th>Type</th>
+						<th>Table</th>
 						<th>Customer</th>
 						<th>Customer info</th>
+						<th>Date</th>
 						<th>Time</th>
 						<th>Guests</th>
 						<th>Manage</th>
 					</tr>
 				</thead>
-				<tbody>
+				{tablebody}
+				{/* <tbody>
 					{input.table === 'All' ? bookings.map((booking, index) => (
+						
+						// eslint-disable-next-line eqeqeq
+					)) : bookings.filter((booking => booking.tableNo == input.table)).map((booking, index) => (
 						<tr className="bookingItem" key={index}>
 							<td>{booking.id}</td>
-							<td>{booking.type}</td>
-							<td>{booking.customer}</td>
-							<td>{booking.customerInfo}</td>
-							<td>{booking.startTime} - {booking.endTime}</td>
+							<td>System</td>
+							<td>{booking.tableNo}</td>
+							<td>{booking.user.name}</td>
+							<td>Email: {booking.user.email}<br />Phone: {booking.user.phoneNo}</td>
+							<td>{booking.date.substring(0, 10)}</td>
+							<td>{booking.startDate.substring(11)} - {booking.endDate.substring(11)}</td>
 							<td>{booking.guestNo}</td>
-							<td onClick={() => handleManage(booking.id)}>&#9881;</td>
-						</tr>
-					)) : bookings.filter((booking => booking.tableNo === input.table)).map((booking, index) => (
-						<tr className="bookingItem" key={index}>
-							<td>{booking.id}</td>
-							<td>{booking.type}</td>
-							<td>{booking.customer}</td>
-							<td>{booking.customerInfo}</td>
-							<td>{booking.startTime} - {booking.endTime}</td>
-							<td>{booking.guestNo}</td>
-							<td onClick={() => handleManage(booking.id)}>&#9881;</td>
+							<td className='manageIcon' onClick={() => handleManage(booking.id)}>&#9881;</td>
 						</tr>
 					))}
-				</tbody>
+				</tbody> */}
 			</table>
 		</div>
 	)

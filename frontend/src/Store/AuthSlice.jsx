@@ -116,7 +116,7 @@ const AuthSlice = createSlice({
 				{
 					state.isManager = true;
 					// TODO: Change backend?
-					state.restaurantId = action.payload.restaurants.map(r => r.id)[0];
+					state.restaurantId = action.payload.restaurants[0].id;
 				}
 				else
 					state.isManager = false;
@@ -155,7 +155,7 @@ const AuthSlice = createSlice({
 				{
 					state.isManager = true;
 					// TODO: Change backend?
-					state.restaurantId = action.payload.restaurants.map(r => r.id)[0];
+					state.restaurantId = action.payload.restaurants[0].id;
 				}
 				else
 					state.isManager = false;
@@ -194,7 +194,7 @@ const AuthSlice = createSlice({
 				{
 					state.isManager = true;
 					// TODO: Change backend?
-					state.restaurantId = action.payload.user.restaurants.map(r => r.id)[0];
+					state.restaurantId = action.payload.restaurants[0].id;
 				}
 				else
 					state.isManager = false;

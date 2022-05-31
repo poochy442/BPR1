@@ -34,5 +34,13 @@
 	.bookingList {
 		width: 100%;
 		color: $light-color;
+
+		td {
+			text-align: center;
+		}
+
+		.manageIcon {
+			cursor: pointer;
+		}
 	}
 }
