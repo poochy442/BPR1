@@ -20,6 +20,24 @@
 		flex-flow: column nowrap;
 		align-items: center;
 		width: 100%;
+
+		img {
+			margin: 1rem;
+			width: 100%;
+		}
+
+		.tableTable {
+			width: 100%;
+			color: $light-color;
+
+			td {
+				text-align: center;
+			}
+
+			clickable {
+				cursor: pointer;
+			}
+		}
 	}
 
 	.reservationForm {

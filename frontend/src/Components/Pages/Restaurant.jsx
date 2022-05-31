@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 
 import RestaurantDetails from '../Restaurant/RestaurantDetails';
@@ -28,26 +28,44 @@ const Restaurant = (props) => {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		if(!restaurantLoaded && auth.isLoaded){
-			Client.get('Restaurant', {params: {id: manage ? auth.res : restaurantId}}, auth.authKey).then((res) => {
+		if(auth.isLoaded && !auth.loggedIn)
+			navigate('/login')
+		else if(auth.isLoaded && !restaurantLoaded){
+			Client.get('Restaurant', {params: {id: manage ? auth.restaurantId : restaurantId}}, auth.authKey).then((res) => {
 				setRestaurant(res.data.restaurants[0])
+				console.log("Restaurant:", res.data.restaurants[0])
 				setRestaurantLoaded(true);
 			}).catch((err) => {
 				console.log(err);
 				setRestaurantLoaded(true);
 			})
+
+			if(manage)
+			{
+				Client.get('Table/tables', {params: {
+					restaurantId: auth.restaurantId
+				}}, auth.authKey).then((res) => {
+					if(res.status !== 200){
+						setError(res.data.error ? res.data.error : 'Error loading tables')
+						return;
+					}
+					
+					console.log("Tables:", res.data.tables);
+					setTables(res.data.tables);
+					setInput({...input, table: '1'});
+					setTablesLoaded(true);
+				}).catch((err) => {
+					console.log(err);
+				})
+			}
 		}
 		
 		return () => {
 			setRestaurantLoaded(false);
+			setTablesLoaded(false)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
-	if(auth.isLoaded && !auth.loggedIn)
-		return <Navigate to='/login' />
-	else if(auth.isLoaded && auth.isManager && !manage)
-		return <Navigate to={'/Manage/Restaurant/' + restaurantId} />
+	}, [auth])
 
 	const details = !restaurantLoaded ? (
 		<div className = 'loading'>
@@ -248,9 +266,53 @@ const Restaurant = (props) => {
 		</div>
 	)
 
+	const handleAge = (tableId, age) => {
+		Client.put('Table/update-age', {params: {
+			tableId: tableId,
+			age: age
+		}}, auth.authKey).then((res) => {
+			if(res.status == 200){
+				
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	}
+
 	const managerRestaurant = (
 		<div className='restaurantContainer'>
 			<h2>Manage restaurant</h2>
+			<img src={tableMap} />
+			<table className='tableTable'>
+				<thead>
+					<tr>
+						<td>Table</td>
+						<td>Seats</td>
+						<td>Booking time</td>
+						<td>Age</td>
+						<td>Handicap</td>
+						<td>Cancellation (h)</td>
+						<td>Notes</td>
+					</tr>
+				</thead>
+				<tbody>
+					{tablesLoaded && tables.map((table, index) => (
+						<tr className='tableItem' key={index}>
+							<td>{table.tableNo}</td>
+							<td>{table.bookingTimes}</td>
+							<td>{table.seats}</td>
+							{table.age ? (
+								<td onClick={() => handleAge(table.id, !table.age)}>&#x2713;</td>
+							) : (
+								<td>X</td>
+							)}
+							{table.handicap ? (<td>&#x2713;</td>) : (<td>X</td>)}
+							<td>{table.deadline.substring(11,13)}</td>
+							<td>{table.notes}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
 		</div>
 	)
 

@@ -62,8 +62,8 @@ const ManagerBooking = () => {
 		console.log("Managing booking", id)
 	}
 
-	const tableRow = (booking) => (
-		<tr className="bookingItem">
+	const tableRow = (booking, index) => (
+		<tr className="bookingItem" key={index}>
 			<td>{booking.id}</td>
 			<td>System</td>
 			<td>{booking.tableNo}</td>
@@ -78,19 +78,19 @@ const ManagerBooking = () => {
 
 	const tablebody = input.type === 'All' && input.table === 'All' ? (
 		<tbody>
-			{bookings.map((booking) => tableRow(booking))}
+			{bookings.map((booking, index) => tableRow(booking, index))}
 		</tbody>
 	) : input.type !== 'All' && input.table === 'All' ? (
 		<tbody>
-			{bookings.filter((booking => booking.type == input.type)).map((booking) => tableRow(booking))}
+			{bookings.filter((booking => booking.type == input.type)).map((booking, index) => tableRow(booking, index))}
 		</tbody>
 	) : input.type === 'All' && input.table !== 'All' ? (
 		<tbody>
-			{bookings.filter((booking => booking.tableNo == input.table)).map((booking) => tableRow(booking))}
+			{bookings.filter((booking => booking.tableNo == input.table)).map((booking, index) => tableRow(booking, index))}
 		</tbody>
 	) : (
 		<tbody>
-			{bookings.filter((booking => booking.tableNo == input.table && booking.type == input.type)).map((booking) => tableRow(booking))}
+			{bookings.filter((booking => booking.tableNo == input.table && booking.type == input.type)).map((booking, index) => tableRow(booking, index))}
 		</tbody>
 		
 	)
@@ -135,24 +135,6 @@ const ManagerBooking = () => {
 					</tr>
 				</thead>
 				{tablebody}
-				{/* <tbody>
-					{input.table === 'All' ? bookings.map((booking, index) => (
-						
-						// eslint-disable-next-line eqeqeq
-					)) : bookings.filter((booking => booking.tableNo == input.table)).map((booking, index) => (
-						<tr className="bookingItem" key={index}>
-							<td>{booking.id}</td>
-							<td>System</td>
-							<td>{booking.tableNo}</td>
-							<td>{booking.user.name}</td>
-							<td>Email: {booking.user.email}<br />Phone: {booking.user.phoneNo}</td>
-							<td>{booking.date.substring(0, 10)}</td>
-							<td>{booking.startDate.substring(11)} - {booking.endDate.substring(11)}</td>
-							<td>{booking.guestNo}</td>
-							<td className='manageIcon' onClick={() => handleManage(booking.id)}>&#9881;</td>
-						</tr>
-					))}
-				</tbody> */}
 			</table>
 		</div>
 	)
