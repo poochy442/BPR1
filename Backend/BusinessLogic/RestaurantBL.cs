@@ -71,13 +71,25 @@ public class RestaurantBL : IRestaurantBL
             return new GetRestaurantsResponse()
             {
                 Success = false,
-                ErrorCode = "Couldnt get location for address",
-                Error = "500"
+                Error = "Couldnt get location for address",
+                ErrorCode = "500"
             };
         }
 
         // get restaurants in the area
         var restaurants = _restaurantService.ExecuteDbQuery(location["latitude"], location["longitude"], request.Radius);
+
+        // check if returned some restaurants
+        if (restaurants.Count == 0)
+        {
+            return new GetRestaurantsResponse()
+            {
+                Success = false,
+                Error = "Restaurants not found",
+                ErrorCode = "404"
+            };
+        }
+
 
         return new GetRestaurantsResponse()
         {

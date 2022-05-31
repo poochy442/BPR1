@@ -13,7 +13,8 @@ public class RestaurantService : IRestaurantService
 {
     private readonly IConfiguration _configuration;
 
-    public RestaurantService(IConfiguration configuration) {
+    public RestaurantService(IConfiguration configuration)
+    {
         _configuration = configuration;
     }
 
@@ -135,12 +136,16 @@ public class RestaurantService : IRestaurantService
         {
             var toolkitLocation = (result?.ResourceSets?.FirstOrDefault())
                 ?.Resources?.FirstOrDefault() as BingMapsRESTToolkit.Location;
-            var latitude = (decimal)toolkitLocation.Point.Coordinates[0];
-            var longitude = (decimal)toolkitLocation.Point.Coordinates[1];
 
-            // Use latitude and longitude
-            location.Add("latitude", latitude);
-            location.Add("longitude", longitude);
+            if (toolkitLocation != null)
+            {
+                var latitude = (decimal)toolkitLocation.Point.Coordinates[0];
+                var longitude = (decimal)toolkitLocation.Point.Coordinates[1];
+
+                // Use latitude and longitude
+                location.Add("latitude", latitude);
+                location.Add("longitude", longitude);
+            }
         }
 
         return location;

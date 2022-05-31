@@ -63,14 +63,14 @@ public class RestaurantController : ControllerBase
 
         if (!restaurants.Success)
         {
-            return BadRequest(new
+            return BadRequest(new 
             {
                 restaurants.ErrorCode,
                 restaurants.Error
             });
         }
 
-        return Ok(restaurants);
+        return Ok(restaurants.Restaurants);
 
     }
 

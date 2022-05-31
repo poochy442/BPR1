@@ -108,8 +108,8 @@ public class BookingBL : IBookingBL
             Booking = b
         }
         )
-        .Where(join => join.Table.RestaurantId == 1
-                    && join.Booking.RestaurantId == 1)
+        .Where(join => join.Table.RestaurantId == restaurantId
+                    && join.Booking.RestaurantId == restaurantId)
         .ToListAsync();
 
         // check if there are bookings of tables

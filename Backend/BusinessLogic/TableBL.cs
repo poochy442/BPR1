@@ -113,7 +113,7 @@ public class TableBL : ITableBL
         }
 
         // retrieve tables from db
-        var tables = _context.Tables.ToList();
+        var tables = _context.Tables.Where(t => t.RestaurantId == restaurantId).ToList();
 
         // check retrieved some tables
         if (tables == null || tables.Count == 0)
