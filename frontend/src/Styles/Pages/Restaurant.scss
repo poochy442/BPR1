@@ -21,7 +21,7 @@
 		align-items: center;
 		width: 100%;
 
-		img {
+		.restaurantMap {
 			margin: 1rem;
 			width: 100%;
 		}
@@ -34,7 +34,7 @@
 				text-align: center;
 			}
 
-			clickable {
+			.clickable {
 				cursor: pointer;
 			}
 		}
@@ -112,7 +112,7 @@
 
 		.confirmationModal {
 			position: relative;
-			width: 60%;
+			width: 75%;
 			padding: 1rem;
 			border-radius: 1rem;
 			background-color: $light-color;

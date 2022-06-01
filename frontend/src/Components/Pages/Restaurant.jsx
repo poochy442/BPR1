@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import RestaurantDetails from '../Restaurant/RestaurantDetails';
 import { Client } from '../Api/Client';
 import tableMap from '../../Assets/tablemap.png';
+import ManageTable from '../Restaurant/ManageTable';
 
 import '../../Styles/Pages/Restaurant.scss';
 
@@ -16,6 +17,8 @@ const Restaurant = (props) => {
 	const [restaurant, setRestaurant] = useState(null);
 	const [tablesLoaded, setTablesLoaded] = useState(false);
 	const [tables, setTables] = useState(null);
+	const [tableNosLoaded, setTableNosLoaded] = useState(false);
+	const [tableNos, setTableNos] = useState(null);
 	const [reservationPlaced, setReservationPlaced] = useState(false);
 	const params = useParams();
 	const restaurantId = params.restaurantId;
@@ -33,7 +36,6 @@ const Restaurant = (props) => {
 		else if(auth.isLoaded && !restaurantLoaded){
 			Client.get('Restaurant', {params: {id: manage ? auth.restaurantId : restaurantId}}, auth.authKey).then((res) => {
 				setRestaurant(res.data.restaurants[0])
-				console.log("Restaurant:", res.data.restaurants[0])
 				setRestaurantLoaded(true);
 			}).catch((err) => {
 				console.log(err);
@@ -49,8 +51,7 @@ const Restaurant = (props) => {
 						setError(res.data.error ? res.data.error : 'Error loading tables')
 						return;
 					}
-					
-					console.log("Tables:", res.data.tables);
+
 					setTables(res.data.tables);
 					setInput({...input, table: '1'});
 					setTablesLoaded(true);
@@ -111,9 +112,9 @@ const Restaurant = (props) => {
 				return;
 			}
 
-			setTables(res.data.availableTables);
+			setTableNos(res.data.availableTables);
 			setInput({...input, table: '1'});
-			setTablesLoaded(true);
+			setTableNosLoaded(true);
 		}).catch((err) => {
 			console.log(err);
 		})
@@ -165,7 +166,7 @@ const Restaurant = (props) => {
 			});
 	}
 
-	const form = !tablesLoaded ? (
+	const form = !tableNosLoaded ? (
 		<form className='reservationForm' onSubmit={handleTableSearch}>
 			<label className='reservationLabel' htmlFor='startTime'>
 				<p>Choose start time</p>
@@ -182,7 +183,7 @@ const Restaurant = (props) => {
 			<input className='button searchButton' type='submit' value='Search for tables' />
 			{error ? <p className='errorText'>{error}</p> : null}
 		</form>
-	) : tables == null || tables.count === 0 ? (
+	) : tableNos == null || tableNos.count === 0 ? (
 		<form className='reservationForm' onSubmit={handlePlaceReservation}>
 			<label className='reservationLabel' htmlFor='startTime'>
 				<p>Choose start time</p>
@@ -217,7 +218,7 @@ const Restaurant = (props) => {
 			<label className='reservationLabel' htmlFor='table'>
 				<p>Select table</p>
 				<select id='table' className='reservationInput' value={input.table} onChange={handleChange}>
-					{tables.map((table, index) => (
+					{tableNos.map((table, index) => (
 						<option key={index} value={table.tableId}>{table.tableId}</option>
 					))}
 				</select>
@@ -251,7 +252,7 @@ const Restaurant = (props) => {
 						<h2>Guests:</h2><p> {input.guestNo}</p>
 					</div>
 					<div>
-						<h2>Date:</h2><p> {input.startTime}</p>
+						<h2>Date:</h2><p> {input.startTime.split("T")[0]}<br />{input.startTime.split("T")[1]}</p>
 					</div>
 				</div>
 			</div>
@@ -266,16 +267,32 @@ const Restaurant = (props) => {
 		</div>
 	)
 
-	const handleAge = (tableId, age) => {
-		Client.put('Table/update-age', {params: {
-			tableId: tableId,
-			age: age
+	const [managingTable, setManagingTable] = useState(null);
+	const [isManaging, setIsManaging] = useState(false);
+
+	const handleManage = (table) => {
+		setManagingTable(table);
+		setIsManaging(true);
+	}
+
+	const handleConfirm = () => {
+		setManagingTable(null);
+		setIsManaging(false);
+		
+		Client.get('Table/tables', {params: {
+			restaurantId: auth.restaurantId
 		}}, auth.authKey).then((res) => {
-			if(res.status == 200){
-				
+			if(res.status !== 200){
+				setError(res.data.error ? res.data.error : 'Error loading tables')
+				return;
 			}
+			
+			console.log("Tables:", res.data.tables);
+			setTableNos(res.data.tables);
+			setInput({...input, table: '1'});
+			setTablesLoaded(true);
 		}).catch((err) => {
-			console.log(err)
+			console.log(err);
 		})
 	}
 
@@ -288,31 +305,34 @@ const Restaurant = (props) => {
 					<tr>
 						<td>Table</td>
 						<td>Seats</td>
-						<td>Booking time</td>
+						<td>Booking times</td>
 						<td>Age</td>
 						<td>Handicap</td>
 						<td>Cancellation (h)</td>
 						<td>Notes</td>
+						<td>Manage</td>
 					</tr>
 				</thead>
 				<tbody>
 					{tablesLoaded && tables.map((table, index) => (
 						<tr className='tableItem' key={index}>
 							<td>{table.tableNo}</td>
-							<td>{table.bookingTimes}</td>
 							<td>{table.seats}</td>
+							<td>{table.bookingTimes ? table.bookingTimes : 'TBD'}</td>
 							{table.age ? (
-								<td onClick={() => handleAge(table.id, !table.age)}>&#x2713;</td>
-							) : (
+								<td>&#x2713;</td>
+								) : (
 								<td>X</td>
 							)}
 							{table.handicap ? (<td>&#x2713;</td>) : (<td>X</td>)}
 							<td>{table.deadline.substring(11,13)}</td>
 							<td>{table.notes}</td>
+							<td className='clickable' onClick={() => {handleManage(table)}}>&#9881;</td>
 						</tr>
 					))}
 				</tbody>
 			</table>
+			{isManaging ? <ManageTable table={managingTable} exit={handleConfirm} /> : null}
 		</div>
 	)
 

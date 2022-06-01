@@ -39,8 +39,60 @@
 			text-align: center;
 		}
 
-		.manageIcon {
+		.cancelIcon {
 			cursor: pointer;
+			color: $danger-color;
+		}
+	}
+
+	.newBookingButton {
+		margin-top: 1rem;
+		border-radius: 1rem;
+		padding: 1rem;
+		background-color: $main-color;
+		width: fit-content;
+		cursor: pointer;
+	}
+
+	.cancelConfirmation {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.75);
+
+		.container {
+			position: relative;
+			top: 50%;
+			left: 50%;
+			width: 60%;
+			transform: translate(-50%, -50%);
+			padding: 1rem;
+			border-radius: 1rem;
+			background-color: $light-color;
+
+			.buttonContainer {
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: center;
+				align-items: center;
+				margin-top: 1rem;
+
+				.button {
+					padding: 1rem;
+					border-radius: 1rem;
+					margin: 0 1rem;
+					cursor: pointer;
+				}
+
+				.confirm {
+					background-color: $danger-color;
+				}
+				.cancel {
+					background-color: $primary-color;
+				}
+			}
 		}
 	}
 }

@@ -15,6 +15,7 @@ const ManagerBooking = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [bookings, setBookings] = useState([]);
 	const [tables, setTables] = useState([]);
+	const [cancelState, setCancelState] = useState({isCancelling: false, bookingId: null, error: null});
 
 	useEffect(() => {
 		if(auth.isLoaded && !auth.isManager)
@@ -32,7 +33,6 @@ const ManagerBooking = () => {
 							initTables = [...initTables, table.tableNo]
 						
 						let tableBookings = table.bookings;
-						console.log("tableBookings", table, tableBookings)
 						tableBookings.forEach(booking => {
 							initBookings = [...initBookings, {...booking, tableNo: table.tableNo, type: 'System'}]
 						})
@@ -59,7 +59,7 @@ const ManagerBooking = () => {
 	}
 
 	const handleManage = (id) => {
-		console.log("Managing booking", id)
+		setCancelState({isCancelling: true, bookingId: id, error: null})
 	}
 
 	const tableRow = (booking, index) => (
@@ -72,7 +72,7 @@ const ManagerBooking = () => {
 			<td>{booking.date.substring(0, 10)}</td>
 			<td>{booking.startDate.substring(11)} - {booking.endDate.substring(11)}</td>
 			<td>{booking.guestNo}</td>
-			<td className='manageIcon' onClick={() => handleManage(booking.id)}>&#9881;</td>
+			<td className='cancelIcon' onClick={() => handleManage(booking.id)}>X</td>
 		</tr>
 	)
 
@@ -91,9 +91,57 @@ const ManagerBooking = () => {
 	) : (
 		<tbody>
 			{bookings.filter((booking => booking.tableNo == input.table && booking.type == input.type)).map((booking, index) => tableRow(booking, index))}
-		</tbody>
-		
+		</tbody>	
 	)
+
+	const confirmCancel = () => {
+		Client.delete('Booking/delete', {params: {bookingId: cancelState.bookingId}}, auth.authKey).then((res) => {
+			if(res.status !== 200){
+				setCancelState({...cancelState, error: 'Error deleting booking, please try again.'})
+				return
+			}
+			
+			Client.get('Booking/bookings-for-tables', {params: {restaurantId: auth.restaurantId}}, auth.authKey).then((res) => {
+				if(res.status === 200){
+					let resTables = res.data.tableBookings;
+					let initTables = [];
+					let initBookings = [];
+
+					resTables.forEach(table => {
+						if(!tables.includes(table.tableNo + ''))
+							initTables = [...initTables, table.tableNo]
+						
+						let tableBookings = table.bookings;
+						tableBookings.forEach(booking => {
+							initBookings = [...initBookings, {...booking, tableNo: table.tableNo, type: 'System'}]
+						})
+					})
+					setTables(initTables);
+					setBookings(initBookings);
+				}
+			}).catch((err) => {
+				console.log(err);
+			})
+			setCancelState({isCancelling: false, bookingId: null, error: null})
+		}).catch((err) => {
+			console.log(err);
+			setCancelState({...cancelState, error: 'Error deleting booking, please try again.'})
+		})
+	}
+
+	const cancelConfirmation = cancelState.isCancelling ? (
+		<div className="cancelConfirmation">
+			<div className="container">
+				<h2>Cancel reservation</h2>
+				<p>Are you sure you want to cancel this reservaiton?</p>
+				{cancelState.error ? <p className='errorText'>{cancelState.error}</p> : null}
+				<div className="buttonContainer">
+					<div className="button confirm" onClick={confirmCancel}>Confirm</div>
+					<div className="button cancel" onClick={() => setCancelState({isCancelling: false, bookingId: null, error: null})}>Cancel</div>
+				</div>
+			</div>
+		</div>
+	) : null
 
 	return (
 		<div className='managerBooking'>
@@ -131,11 +179,13 @@ const ManagerBooking = () => {
 						<th>Date</th>
 						<th>Time</th>
 						<th>Guests</th>
-						<th>Manage</th>
+						<th>Cancel</th>
 					</tr>
 				</thead>
 				{tablebody}
 			</table>
+			{cancelConfirmation}
+			<div className="newBookingButton">Book reservation</div>
 		</div>
 	)
 }
