@@ -1,0 +1,50 @@
+@import '../Reusable/Colors.scss';
+
+.manageBooking {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+
+	.reservationForm {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		align-items: center;
+		min-width: 50%;
+		width: fit-content;
+		transform: translate(-50%, -50%);
+		padding: 1rem;
+		border-radius: 1rem;
+		background-color: $light-color;
+
+		.reservationLabel {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: flex-start;
+			align-items: center;
+			width: 100%;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+
+			p {
+				width: 25%;
+			}
+			.reservationInput {
+				width: 60%;
+			}
+		}
+
+		.reservationLabel:first-child {
+			margin-top: 0;
+		}
+		.reservationLabel:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

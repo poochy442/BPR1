@@ -63,7 +63,7 @@ const Restaurant = (props) => {
 		
 		return () => {
 			setRestaurantLoaded(false);
-			setTablesLoaded(false)
+			setTablesLoaded(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth])
@@ -146,7 +146,7 @@ const Restaurant = (props) => {
 		if(e.target.id === 'startTime'){
 			const newDate = new Date(e.target.value);
 			const maxDated = new Date(input.endTime);
-			const newEnd = new Date(newDate.getTime() + (150 * 60 * 1000));
+			const newEnd = new Date(newDate.getTime() + (120 * 60 * 1000));
 
 			if(newDate >= maxDated)
 				setInput({
@@ -184,7 +184,7 @@ const Restaurant = (props) => {
 			{error ? <p className='errorText'>{error}</p> : null}
 		</form>
 	) : tableNos == null || tableNos.count === 0 ? (
-		<form className='reservationForm' onSubmit={handlePlaceReservation}>
+		<form className='reservationForm' onSubmit={handleTableSearch}>
 			<label className='reservationLabel' htmlFor='startTime'>
 				<p>Choose start time</p>
 				<input id='startTime' className='reservationInput' type='datetime-local' value={input.startTime} min={minDate} onChange={handleChange} />
@@ -286,9 +286,8 @@ const Restaurant = (props) => {
 				setError(res.data.error ? res.data.error : 'Error loading tables')
 				return;
 			}
-			
-			console.log("Tables:", res.data.tables);
-			setTableNos(res.data.tables);
+
+			setTables(res.data.tables);
 			setInput({...input, table: '1'});
 			setTablesLoaded(true);
 		}).catch((err) => {
@@ -319,12 +318,8 @@ const Restaurant = (props) => {
 							<td>{table.tableNo}</td>
 							<td>{table.seats}</td>
 							<td>{table.bookingTimes ? table.bookingTimes : 'TBD'}</td>
-							{table.age ? (
-								<td>&#x2713;</td>
-								) : (
-								<td>X</td>
-							)}
-							{table.handicap ? (<td>&#x2713;</td>) : (<td>X</td>)}
+							{table.restriction && table.restriction.age ? (<td>&#x2713;</td>) : (<td>X</td>)}
+							{table.restriction && table.restriction.handicap ? (<td>&#x2713;</td>) : (<td>X</td>)}
 							<td>{table.deadline.substring(11,13)}</td>
 							<td>{table.notes}</td>
 							<td className='clickable' onClick={() => {handleManage(table)}}>&#9881;</td>

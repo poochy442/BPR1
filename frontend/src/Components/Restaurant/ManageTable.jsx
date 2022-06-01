@@ -6,17 +6,17 @@ import { Client } from '../Api/Client';
 
 const ManageTable = (props) => {
 	const { table, exit } = props;
-	console.log(table);
 	const auth = useSelector(state => state.auth);
-	const [input, setInput] = useState({
+	const initInput = {
 		seats: table.seats,
 		startBooking: table.bookingTimes ? table.bookingTimes : '',
 		endBooking: table.bookingTimes ? table.bookingTimes : '',
 		age: table.restriction ? table.restriction.age : false,
 		handicap: table.restriction ? table.restriction.handicap : false,
 		deadline: table.deadline.substring(11,13),
-		notes: table.notes
-	})
+		notes: table.notes ? table.notes : ''
+	}
+	const [input, setInput] = useState(initInput);
 	const [hasChanged, setHasChanged] = useState({
 		seats: false,
 		startBooking: false,
@@ -25,27 +25,33 @@ const ManageTable = (props) => {
 		handicap: false,
 		deadline: false,
 		notes: false,
-	})
+	});
 	const [error, setError] = useState(null);
 
 	const handleChange = (e) => {
 		if(!hasChanged[e.target.id])
 			setHasChanged({...hasChanged, [e.target.id]: true});
-		
-		setInput({
-			...input,
-			[e.target.id]: e.target.value
-		})
+
+		if(e.target.id == 'age' || e.target.id == 'handicap')
+			setInput({
+				...input,
+				[e.target.id]: e.target.checked
+			})
+		else
+			setInput({
+				...input,
+				[e.target.id]: e.target.value
+			})
 	}
 
 	const handleConfirm = () => {
 		let success = true;
-		console.log(hasChanged, input);
+		console.log(input)
 
 		if(hasChanged.age){
 			Client.put('Table/update-age', {params: {
 				tableId: table.id,
-				age: input.age === "true"
+				age: input.age
 			}}, auth.authKey).then((res) => {
 				if(res.status !== 200){
 					setError("Error updating age");
@@ -61,7 +67,7 @@ const ManageTable = (props) => {
 		if(hasChanged.handicap){
 			Client.put('Table/update-handicap', {params: {
 				tableId: table.id,
-				handicap: input.handicap === "true"
+				handicap: input.handicap
 			}}, auth.authKey).then((res) => {
 				if(res.status !== 200){
 					setError("Error updating handicap");
@@ -77,7 +83,7 @@ const ManageTable = (props) => {
 		if(hasChanged.notes){
 			Client.put('Table/update-notes', {params: {
 				tableId: table.id,
-				notes: input.notes
+				note: input.notes
 			}}, auth.authKey).then((res) => {
 				if(res.status !== 200){
 					setError("Error updating notes");
@@ -90,8 +96,18 @@ const ManageTable = (props) => {
 			})
 		}
 		
-		if(!success)
+		if(success){
+			setHasChanged({
+				seats: false,
+				startBooking: false,
+				endBooking: false,
+				age: false,
+				handicap: false,
+				deadline: false,
+				notes: false,
+			})
 			exit();
+		}
 	}
 	
 	return (
@@ -112,11 +128,11 @@ const ManageTable = (props) => {
 				</label>
 				<label className="tableLabel" htmlFor="age" >
 					<p>Senior discount</p>
-					<input id='age' className='tableInput' type='checkbox' value={input.age} onChange={handleChange} />
+					<input id='age' className='tableInput' type='checkbox' checked={input.age} onChange={handleChange} />
 				</label>
 				<label className="tableLabel" htmlFor="handicap" >
 					<p>Handicap accesible</p>
-					<input id='handicap' className='tableInput' type='checkbox' value={input.handicap} onChange={handleChange} />
+					<input id='handicap' className='tableInput' type='checkbox' checked={input.handicap} onChange={handleChange} />
 				</label>
 				<label className="tableLabel" htmlFor="deadline" >
 					<p>Cancellation (hours)</p>

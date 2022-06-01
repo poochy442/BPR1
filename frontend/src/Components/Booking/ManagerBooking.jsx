@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { Client } from '../Api/Client';
 
 import '../../Styles/Booking/ManagerBooking.scss';
+import ManageBooking from './ManageBooking';
 
 const ManagerBooking = () => {
 	const auth = useSelector(state => state.auth);
@@ -16,6 +17,7 @@ const ManagerBooking = () => {
 	const [bookings, setBookings] = useState([]);
 	const [tables, setTables] = useState([]);
 	const [cancelState, setCancelState] = useState({isCancelling: false, bookingId: null, error: null});
+	const [isReserving, setIsReserving] = useState(false);
 
 	useEffect(() => {
 		if(auth.isLoaded && !auth.isManager)
@@ -67,8 +69,8 @@ const ManagerBooking = () => {
 			<td>{booking.id}</td>
 			<td>System</td>
 			<td>{booking.tableNo}</td>
-			<td>{booking.user.name}</td>
-			<td>Email: {booking.user.email}<br />Phone: {booking.user.phoneNo}</td>
+			<td>{booking.user ? booking.user.name : 'N/A'}</td>
+			<td>Email: {booking.user ? booking.user.email : 'N/A'}<br />Phone: {booking.user ? booking.user.phoneNo : 'N/A'}</td>
 			<td>{booking.date.substring(0, 10)}</td>
 			<td>{booking.startDate.substring(11)} - {booking.endDate.substring(11)}</td>
 			<td>{booking.guestNo}</td>
@@ -129,6 +131,11 @@ const ManagerBooking = () => {
 		})
 	}
 
+	const handleReservationPlaced = () => {
+		setIsReserving(false);
+		setIsLoaded(false);
+	}
+
 	const cancelConfirmation = cancelState.isCancelling ? (
 		<div className="cancelConfirmation">
 			<div className="container">
@@ -185,7 +192,8 @@ const ManagerBooking = () => {
 				{tablebody}
 			</table>
 			{cancelConfirmation}
-			<div className="newBookingButton">Book reservation</div>
+			<div className="newBookingButton" onClick={() => setIsReserving(true)}>Book reservation</div>
+			{isReserving ? <ManageBooking restaurantId={auth.restaurantId} exit={handleReservationPlaced} /> : null}
 		</div>
 	)
 }

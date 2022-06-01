@@ -23,7 +23,6 @@ const CustomerBooking = () => {
 		if(auth.isLoaded && !bookingsLoaded)
 		{
 			Client.get('Booking/customer-current-bookings', {}, auth.authKey).then((res) => {
-				console.log(res);
 				if(res.status !== 200){
 					setError("Error loading bookings, please try again.");
 					return;
@@ -62,7 +61,6 @@ const CustomerBooking = () => {
 	}
 
 	const handleCancel = (bookingId) => {
-		console.log(cancelActive)
 		if(!(cancelActive.active && cancelActive.id === bookingId)){
 			setCancelActive({active: true, id: bookingId})
 			return
