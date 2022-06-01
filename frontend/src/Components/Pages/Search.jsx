@@ -115,7 +115,7 @@ const Search = () => {
 							<input id='searchRadius' type='number' value={searchRadius} onChange={(e) => setSearchRadius(e.target.value)} />
 						</label> */}
 						<button type='button' className="confirmButton" onClick={handleSearchSubmit}>
-							Confirm
+							Search
 						</button>
 					</div>
 				</div>

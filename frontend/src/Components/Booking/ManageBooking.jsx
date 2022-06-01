@@ -123,7 +123,10 @@ const ManageBooking = (props) => {
 						<p>Specify guest No.</p>
 						<input id='guestNo' className='reservationInput' type='number' value={input.guestNo} min={1} onChange={handleChange} />
 					</label>
-					<input className='button searchButton' type='submit' value='Search for tables' />
+					<div className="buttonContainer">
+						<input className='button searchButton' type='submit' value='Search for tables' />
+						<div className='button cancelButton' onClick={exit}>Cancel</div>
+					</div>
 					{error ? <p className='errorText'>{error}</p> : null}
 				</form>
 			) : tableNos == null || tableNos.count === 0 ? (
@@ -141,7 +144,10 @@ const ManageBooking = (props) => {
 						<input id='guestNo' className='reservationInput' type='number' value={input.guestNo} min={1} onChange={handleChange} />
 					</label>
 					<p className='errorText'>No available tables found<br />Try again</p>
-					<input className='button searchButton' type='submit' value='Search for tables' />
+					<div className="buttonContainer">
+						<input className='button searchButton' type='submit' value='Search for tables' />
+						<div className='button cancelButton' onClick={exit}>Cancel</div>
+					</div>
 					{error ? <p className='errorText'>{error}</p> : null}
 				</form>
 			) : (
@@ -171,7 +177,10 @@ const ManageBooking = (props) => {
 						<p>Write a note</p>
 						<textarea id='note' className='reservationInput' value={input.note} onChange={handleChange} />
 					</label>
-					<input className='button placeButton' type='submit' value='Place reservation' />
+					<div className="buttonContainer">
+						<input className='button placeButton' type='submit' value='Place reservation' />
+						<div className='button cancelButton' onClick={exit}>Cancel</div>
+					</div>
 					{error ? <p className='errorText'>{error}</p> : null}
 				</form>
 			)}

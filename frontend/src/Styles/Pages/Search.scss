@@ -16,11 +16,11 @@
 		.inputContainer{
 			.input{
 				background-color: transparent;
-				border-color: $light-accent;
+				border-color: $dark-accent;
 				color: $light-color;
 			}
 			.input:hover, .input:focus{
-				outline-color: $light-accent;
+				outline-color: $dark-accent;
 			}
 		}
 	}
@@ -38,7 +38,7 @@
 			width: 100%;
 
 			.chosen{
-				background-color: $light-accent !important;
+				background-color: $dark-accent !important;
 			}
 
 			.foodtypeFilters{
@@ -54,7 +54,8 @@
 					align-items: center;
 					margin: 1rem;
 					border-radius: 0.5rem;
-					background-color: $light-color;
+					background-color: $dark-accent;
+					color: $light-color;
 					padding: 1rem;
 					cursor: pointer;
 
@@ -87,7 +88,8 @@
 	
 					.advancedOption{
 						margin: 0.5rem;
-						background-color: $light-color;
+						background-color: $dark-accent;
+						color: $light-color;
 						border-radius: 2rem;
 						padding: 1rem;
 						font-size: 1.125rem;
@@ -147,7 +149,8 @@
 				align-items: center;
 				margin: 1rem;
 				border-radius: 1rem;
-				background-color: $light-color;
+				background-color: $dark-accent;
+				color: $light-color;
 				padding: 1rem;
 				cursor: pointer;
 				width: 25%;
@@ -155,7 +158,6 @@
 				.restaurantImage {
 					width: 8rem;
 					height: 6rem;
-					background-color: $light-accent;
 				}
 
 				.restaurantInformation{

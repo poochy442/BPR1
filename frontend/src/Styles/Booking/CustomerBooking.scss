@@ -20,7 +20,7 @@
 		.filter {
 			cursor: pointer;
 			font-size: $font-size-small;
-			color: $light-accent;
+			color: $dark-accent;
 			padding: 1rem;
 		}
 
@@ -43,7 +43,8 @@
 			flex-flow: row nowrap;
 			justify-content: space-between;
 			align-items: center;
-			background-color: $light-color;
+			background-color: $dark-accent;
+			color: $light-color;
 			padding: 2rem;
 			border-radius: 1rem;
 			margin-top: 1rem;
@@ -97,7 +98,7 @@
 			align-items: flex-start;
 			width: 40%;
 			padding: 1rem;
-			background-color: $light-color;
+			background-color: $dark-accent;
 
 			.ratingLabel {
 				display: flex;

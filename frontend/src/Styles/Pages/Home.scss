@@ -15,7 +15,7 @@
 		flex-flow: column nowrap;
 		justify-content: center;
 		align-items: center;
-		background-color: $light-color;
+		background-color: $dark-accent;
 		padding: 2rem;
 		border-radius: 1rem;
 		margin-bottom: 2rem;
@@ -39,7 +39,7 @@
 		.descriptionContainer{
 			width: 100%;
 			p{
-				color: $light-color;
+				color: $dark-accent;
 			}
 		}
 	}

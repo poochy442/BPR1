@@ -18,6 +18,10 @@
 		padding: 1rem;
 	}
 	.searchButton:hover{
-		outline: 0.2rem solid $dark-color;
+		outline: 0.2rem solid $dark-accent;
+	}
+
+	.searching {
+		color: $light-color !important;
 	}
 }

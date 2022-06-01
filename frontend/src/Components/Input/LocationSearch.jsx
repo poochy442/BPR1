@@ -24,7 +24,7 @@ function LocationSearch(props) {
 			<input
 				type='text'
 				placeholder='Insert city...'
-				className='input'
+				className={isSearching ? 'input searching' : 'input'}
 				value={query}
 				onChange={handleChange} />
 			<button

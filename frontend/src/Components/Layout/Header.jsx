@@ -6,7 +6,7 @@ const Header = () => {
 	return (
 		<section className='header'>
 			<Link to='/' className='logo'>
-				Reservable
+				SeatedAt
 			</Link>
 			<div className='nav'>
 				<LoginHeader />

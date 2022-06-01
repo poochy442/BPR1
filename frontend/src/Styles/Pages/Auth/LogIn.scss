@@ -13,7 +13,7 @@
 		align-items: center;
 		width: 60vw;
 		min-height: 50vh;
-		background-color: $light-color;
+		background-color: $dark-accent;
 		border-radius: 2rem;
 		padding: 2rem;
 
@@ -38,7 +38,7 @@
 				}
 				input {
 					border-radius: 0.25rem;
-					border: 1px solid $dark-color;
+					border: 1px solid $dark-accent;
 				}
 				input:hover, input:focus {
 					outline: 3px solid $light-accent;
@@ -88,8 +88,8 @@
 					margin-bottom: 0.5rem !important;
 				}
 				.signUpButton {
-					background-color: $dark-color;
-					color: $light-color;
+					background-color: $light-color;
+					color: $dark-accent;
 					text-decoration: none;
 				}
 			}

@@ -21,9 +21,10 @@
 		transform: translate(-50%, -50%);
 		padding: 1rem;
 		border-radius: 1rem;
-		background-color: $light-color;
+		background-color: $dark-accent;
 
 		.reservationLabel {
+			color: $light-color;
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: flex-start;
@@ -45,6 +46,23 @@
 		}
 		.reservationLabel:last-child {
 			margin-bottom: 0;
+		}
+
+		.buttonContainer {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+
+			.button {
+				padding: 1rem;
+				border-radius: 1rem;
+				margin: 0.5rem 1rem;
+				background-color: $main-color;
+			}
+			.cancelButton {
+				background-color: $primary-color;
+			}
 		}
 	}
 }
