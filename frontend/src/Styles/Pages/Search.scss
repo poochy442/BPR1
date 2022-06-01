@@ -11,6 +11,7 @@
 	.locationSearchContainer{
 		position: absolute;
 		top: 1rem;
+		left: 20%;
 
 		.inputContainer{
 			.input{
@@ -58,7 +59,7 @@
 					cursor: pointer;
 
 					.foodImage{
-						$foodImageWidth: 12.5rem;
+						$foodImageWidth: 8rem;
 						$foodImageHeight: $foodImageWidth * (9/16);
 						width: $foodImageWidth;
 						height: $foodImageHeight;
@@ -70,12 +71,6 @@
 						margin-top: 0.5rem !important;
 					}
 				}
-				.foodtypeOption:first-child{
-					margin-left: 0px;
-				}
-				.foodtypeOption:last-child{
-					margin-right: 0px;
-				}
 			}
 
 			.bottomRow{
@@ -83,7 +78,7 @@
 				display: flex;
 				flex-flow: row nowrap;
 				justify-content: center;
-				align-items: baseline;
+				align-items: center;
 
 				.advancedFilters{
 					width: 100%;
@@ -103,6 +98,24 @@
 					}
 					.advancedOption:last-child{
 						margin-right: 0px;
+					}
+				}
+				.searchRadiusInput {
+					display: flex;
+					flex-flow: row nowrap;
+					justify-content: center;
+					align-items: center;
+					height: 100%;
+					
+					p {
+						color: $light-color;
+						width: 50%;
+					}
+					input {
+						margin-left: 1rem;
+						padding: 0.5rem 0;
+						font-size: $font-size-xsmall;
+						width: 50%;
 					}
 				}
 				.confirmButton{
@@ -125,19 +138,19 @@
 		.resultContainer{
 			width: 100%;
 			display: flex;
-			flex-flow: wrap;
+			flex-flow: row wrap;
 
 			.restaurantCard {
 				display: flex;
 				flex-flow: column nowrap;
 				justify-content: center;
 				align-items: center;
-				margin-left: 1rem;
-				margin-right: 1rem;
+				margin: 1rem;
 				border-radius: 1rem;
 				background-color: $light-color;
 				padding: 1rem;
 				cursor: pointer;
+				width: 25%;
 
 				.restaurantImage {
 					width: 8rem;
@@ -158,12 +171,6 @@
 						color: $main-color;
 					}
 				}
-			}
-			.restaurantContainer:first-child {
-				margin-left: 0px;
-			}
-			.restaurantContainer:last-child {
-				margin-left: 0px;
 			}
 		}
 	}

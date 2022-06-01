@@ -1,13 +1,20 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import {setupCookies, getCookie, COOKIE_NAMES, initCookies} from './Cookies.jsx'
+
 import '../../Styles/Cookies/CookieBar.scss'
-import {setupCookies, getCookie, COOKIE_NAMES} from './Cookies.jsx'
 
 const CookieBar = () => {
 	const requiredPermission = true;
 	const [analyticsPermission, setAnalyticsPermission] = useState(false);
 	const [cookieSet, setCookieSet] = useState(false);
+	const auth = useSelector(state => state.auth);
 
+	useEffect(() => {
+		if(!auth.isLoaded)
+			initCookies();
+	}, [auth])
+	
 	useEffect(() => {
 		if(getCookie(COOKIE_NAMES.required)){
 			setCookieSet(true);

@@ -20,6 +20,25 @@
 		flex-flow: column nowrap;
 		align-items: center;
 		width: 100%;
+
+		.restaurantMap {
+			margin: 1rem;
+			width: 100%;
+		}
+
+		.tableTable {
+			width: 100%;
+			color: $light-color;
+
+			td {
+				text-align: center;
+				padding: 1rem;
+			}
+
+			.clickable {
+				cursor: pointer;
+			}
+		}
 	}
 
 	.reservationForm {
@@ -78,7 +97,6 @@
 			align-items: center;
 			width: 40vw;
 			height: 24vh;
-			background-color: $main-color;
 		}
 	}
 
@@ -95,7 +113,7 @@
 
 		.confirmationModal {
 			position: relative;
-			width: 60%;
+			width: 75%;
 			padding: 1rem;
 			border-radius: 1rem;
 			background-color: $light-color;

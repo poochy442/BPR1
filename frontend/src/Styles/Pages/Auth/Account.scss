@@ -1,0 +1,50 @@
+@import '../../Reusable/Colors.scss';
+
+.account {
+	display: flex;
+	flex-flow: column nowrap;
+	width: 80%;
+
+	.informationItem {
+		display: flex;
+		flex-flow: row nowrap;
+		color: $light-color;
+		margin-bottom: 1rem;
+		width: 100%;
+
+		p {
+			width: 15%;
+		}
+
+		.itemInput {
+			margin-left: 1rem !important;
+			width: 50%;
+		}
+	}
+
+	.informationItem:last-child {
+		margin-bottom: 0;
+	}
+
+	.buttonContainer {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+		width: 50%;
+
+		.confirm {
+			background-color: $success-color;
+		}
+		.cancel {
+			background-color: $danger-color;
+		}
+	}
+
+	.button {
+		padding: 1rem;
+		border-radius: 1rem;
+		border: 0;
+		background-color: $main-color;
+	}
+}

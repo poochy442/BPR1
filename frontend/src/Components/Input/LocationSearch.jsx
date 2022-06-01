@@ -23,7 +23,7 @@ function LocationSearch(props) {
 		<form className="inputContainer">
 			<input
 				type='text'
-				placeholder='Where are you searching for?'
+				placeholder='Insert city...'
 				className='input'
 				value={query}
 				onChange={handleChange} />

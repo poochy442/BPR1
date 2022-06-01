@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import '../../Styles/Pages/Booking.scss';
 import CustomerBooking from '../Booking/CustomerBooking';
 import ManagerBooking from '../Booking/ManagerBooking';
 
-const Booking = (props) => {
+const Bookings = (props) => {
 	const { manage } = props;
 
 	return (
@@ -14,4 +13,4 @@ const Booking = (props) => {
 	)
 };
 
-export default Booking;
+export default Bookings;

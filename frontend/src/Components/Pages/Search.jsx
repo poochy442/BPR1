@@ -3,70 +3,40 @@ import { useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router';
 
 import LocationSearch from '../Input/LocationSearch';
+import { Client } from '../Api/Client';
+import Score from '../Restaurant/Score';
+import { foodTypes, RestaurantImageByFoodType } from '../Restaurant/Foodtype';
 
 import '../../Styles/Pages/Search.scss';
 
-import pizzaImage from '../../Assets/Foodtypes/Pizza.jpg';
-import sushiImage from '../../Assets/Foodtypes/Sushi.jpg';
-import thaiImage from '../../Assets/Foodtypes/Thai.jpg';
-import Score from '../Restaurant/Score';
-import { Client } from '../Api/Client';
-const foodTypes = [
-	{
-		name: 'Pizza',
-		img: pizzaImage
-	}, {
-		name: 'Sushi',
-		img: sushiImage
-	}, {
-		name: 'Thai',
-		img: thaiImage
-	}
-]
-const restrictions = ['studyDiscount', 'open_24_7', 'LGBT']
-// const restaurants = [
-// 	{
-// 		name: 'Pizza King',
-// 		location: 'Slotsgade 10, 8700 Horsens',
-// 		foodtype: 'Pizza',
-// 		score: 4.25,
-// 		id: 1
-// 	},
-// 	{
-// 		name: 'McDonald\'s',
-// 		location: 'Slotsgade 9, 8700 Horsens',
-// 		foodtype: 'Fast Food',
-// 		score: 3.4,
-// 		id: 2
-// 	},
-// 	{
-// 		name: 'Mamma Mia',
-// 		location: 'Slotsgade 12, 8700 Horsens',
-// 		foodtype: 'Italian',
-// 		score: 2.25,
-// 		id: 3
-// 	}
-// ]
+const restrictions = ['senior', 'handicap']
 
 const Search = () => {
 	let routerLocation = useLocation(), query = routerLocation.state ? routerLocation.state.query : null;
 	const guardCheck = !!query;
 	const navigate = useNavigate();
 	const [city, setCity] = useState(query);
-	const [location, setLocation] = useState({lat: 10, long: 10});
+	// const [location, setLocation] = useState({lat: 10, long: 10});
 	const [restaurants, setRestaurants] = useState([]);
 	const [foodTypeFilters, setFoodTypeFilters] = useState({})
 	const [restrictionFilters, setRestrictionFilters] = useState({})
+	// const [searchRadius, setSearchRadius] = useState(1000);
 
-	useEffect(async () => {
+	useEffect(() => {
+		async function getRestaurants()
+		{
+			setRestaurants(await searchRestaurants());
+		}
+
+		// TODO: Call backend for food types and restrictions
 		foodTypes.forEach((element) => {
 			setFoodTypeFilters({...foodTypeFilters, [element.name]: false})
 		})
 		restrictions.forEach((element) => {
 			setRestrictionFilters({...restrictionFilters, [element]: false})
 		})
-		let newRestaurants = await searchRestaurants(collectFilters());
-		setRestaurants(newRestaurants);
+		getRestaurants();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	// Guard statement
@@ -75,36 +45,19 @@ const Search = () => {
 
 	const handleSearchSubmit = (e) => {
 		e.preventDefault();
-		setRestaurants(searchRestaurants(collectFilters()));
+		setRestaurants(searchRestaurants());
 	}
 
 	const handleRestaurantClick = (restaurant) => {
 		navigate("/restaurant/" + restaurant.id);
 	}
 
-	const collectFilters = () => {
-		let selectedfoodTypeFilter = {}
-		foodTypes.forEach((element) => {
-			if(foodTypeFilters[element])
-				selectedfoodTypeFilter = {...selectedfoodTypeFilter, [element.name]: true}
-		})
-
-		let selectedrestrictionFilter = {}
-		restrictions.forEach((element) => {
-			if(restrictionFilters[element])
-				selectedrestrictionFilter = {...selectedrestrictionFilter, [element]: true}
-		})
-
-		return {
-			location: location,
-			foodtype: selectedfoodTypeFilter,
-			advanced: selectedrestrictionFilter
-		};
-	}
-
-	const searchRestaurants = async (filters) => {
-		const res = await Client.post("Restaurant/Search", {}, filters);
-		return res.data;
+	const searchRestaurants = async () => {
+		const res = await Client.get("Restaurant/restaurants", {params: { city: city }});
+		if(res.status === 200)
+			return res.data
+		else
+			return [];
 	}
 
 	return (
@@ -157,6 +110,10 @@ const Search = () => {
 								LGBT-owned
 								</div>
 						</div>
+						{/* <label className="searchRadiusInput" htmlFor='searchRadius'>
+							<p>Search radius (m)</p>
+							<input id='searchRadius' type='number' value={searchRadius} onChange={(e) => setSearchRadius(e.target.value)} />
+						</label> */}
 						<button type='button' className="confirmButton" onClick={handleSearchSubmit}>
 							Confirm
 						</button>
@@ -175,12 +132,12 @@ const Search = () => {
 					<div>
 						<h2 className='resultTitle'>Restaurants</h2>
 						<div className="resultContainer">
-							{restaurants.map(((restaurant, index) => (
+							{restaurants && restaurants.map(((restaurant, index) => (
 								<div key={index} className="restaurantCard" onClick={() => handleRestaurantClick(restaurant)}>
-									<div className="restaurantImage"></div>
+									<RestaurantImageByFoodType foodtype={restaurant.foodType} />
 									<div className="restaurantInformation">
 										<p className="restaurantName"><b>{restaurant.name}</b></p>
-										<p className="location">{restaurant.address}</p>
+										<p className="location">{restaurant.address.street} {restaurant.address.streetNo}, {restaurant.address.postalCode} {restaurant.address.city}</p>
 									</div>
 									<Score score={restaurant.totalScore} mini={true}/>
 								</div>

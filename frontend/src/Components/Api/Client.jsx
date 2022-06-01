@@ -1,13 +1,13 @@
 import axios from 'axios'
+import { apiURL } from '../../apiURL';
 
-const URL = 'https://localhost:7076/';
-
-export async function Client(endpoint, { method, params, body}){
+export async function Client(endpoint, { method, headers, params, body}, authKey){
 	return axios({
 		method,
-		url: URL + endpoint,
-		params,
-		body
+		url: apiURL + endpoint,
+		headers: authKey ? {...headers, 'Authorization': 'Bearer ' + authKey, 'accept': '*/*'} : {...headers, 'accept': '*/*'},
+		params: params,
+		data: body
 	}).then((res) => {
 		return res
 	}).catch((err) => {
@@ -15,18 +15,18 @@ export async function Client(endpoint, { method, params, body}){
 	})
 }
 
-Client.get = function (endpoint, params = '' ){
-	return Client(endpoint, {method: 'GET', params, body: ''})
+Client.get = function (endpoint, {headers = '', params = ''}, authKey = null ){
+	return Client(endpoint, {method: 'GET', headers, params, body: ''}, authKey)
 }
 
-Client.post = function (endpoint, params = '', body = '' ){
-	return Client(endpoint, {method: 'POST', params, body})
+Client.post = function (endpoint, {headers = '', params = '', body = ''}, authKey = null ){
+	return Client(endpoint, {method: 'POST', headers, params, body}, authKey)
 }
 
-Client.put = function (endpoint, params = '', body = ''){
-	return Client(endpoint, {method: 'PUT', params, body})
+Client.put = function (endpoint, {headers = '', params = '', body = ''}, authKey = null ){
+	return Client(endpoint, {method: 'PUT', headers, params, body}, authKey)
 }
 
-Client.delete = function (endpoint, params = '', body = ''){
-	return Client(endpoint, {method: 'DELETE', params, body})
+Client.delete = function (endpoint, {headers = '', params = '', body = ''}, authKey = null ){
+	return Client(endpoint, {method: 'DELETE', headers, params, body}, authKey)
 }

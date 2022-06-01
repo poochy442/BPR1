@@ -24,12 +24,13 @@ const initAnalyticsCookies = {
 }
 
 export const getCookie = (cookieName) => {
-	return Cookies.get(cookieName);
+	let c = Cookies.get(cookieName)
+	return c ? JSON.parse(c) : null;
 }
 
 export const setCookie = (cookieName, cookieContent) => {
 	// TODO: Set options like expiry to match backend
-	Cookies.set(cookieName, cookieContent);
+	Cookies.set(cookieName, JSON.stringify(cookieContent));
 }
 
 export const setupCookies = (analyticsPermission) => {
@@ -47,10 +48,11 @@ export const setupCookies = (analyticsPermission) => {
 
 export const initCookies = () => {
 	const rc = getCookie(COOKIE_NAMES.required), ac = getCookie(COOKIE_NAMES.analytics);
-	if(!!rc && rc.auth.isLoggedIn)
-		store.dispatch(autoLogIn(rc.authKey))
+	if(rc && rc.auth && rc.auth.isLoggedIn){
+		store.dispatch(autoLogIn(rc.auth.authKey))
+	}
 
-	if(!!ac){
+	if(ac){
 		// Start analytics
 	}
 }

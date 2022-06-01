@@ -7,7 +7,7 @@ import '../../../Styles/Pages/Auth/LogIn.scss'
 
 const LogIn = (props) => {
 	const [input, setInput] = useState({
-		username: '',
+		email: '',
 		password: ''
 	});
 	const [error, setError] = useState(null);
@@ -23,7 +23,7 @@ const LogIn = (props) => {
 	}
 
 	const confirmContent = () => {
-		if(input.username === ''){
+		if(input.email === ''){
 			setError('Must provide an email.')
 			return false
 		}
@@ -40,13 +40,13 @@ const LogIn = (props) => {
 	const handleLogin = () => {
 		if(confirmContent())
 			dispatch(logIn({
-				username: input.username,
+				email: input.email,
 				password: input.password
 			}))
 	}
 
 	// Authentication guard
-	if (auth.userID) return <Navigate to='/' />;
+	if (auth.loggedIn) return <Navigate to='/' />;
 
 	return (
 		<div className='login'>
@@ -54,8 +54,8 @@ const LogIn = (props) => {
 				<h1>Log in</h1>
 				<div className='inputContainer'>
 					<div className='loginInput'>
-						<label htmlFor='email'>Username</label>
-						<input type='text' placeholder='Input username...' id='username' value={input.username} onChange={handleValueChange} />
+						<label htmlFor='email'>Email</label>
+						<input type='text' placeholder='Input username...' id='email' value={input.email} onChange={handleValueChange} />
 					</div>
 					<div className='loginInput'>
 						<label htmlFor='password'>Password</label>
